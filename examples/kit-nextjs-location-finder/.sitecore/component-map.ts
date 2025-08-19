@@ -81,6 +81,7 @@ import * as SubscriptionBanner from 'components/subscription-banner/Subscription
 import * as TeamSection from 'components/component-library/TeamSection';
 import * as TestimonialCarousel from 'components/testimonial-carousel/TestimonialCarousel';
 import * as Testimonials from 'components/component-library/testimonials';
+import * as TestimonialsSimple from 'components/component-library/testimonials-simple';
 import * as TextBanner from 'components/text-banner/TextBanner';
 import * as ThemeProvider from 'components/theme-provider/theme-provider.dev';
 import * as Title from 'components/sxa/Title';
@@ -173,6 +174,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['TeamSection', TeamSection],
   ['TestimonialCarousel', TestimonialCarousel],
   ['Testimonials', Testimonials],
+  ['TestimonialsSimple', TestimonialsSimple],
   ['TextBanner', TextBanner],
   ['ThemeProvider', ThemeProvider],
   ['Title', Title],
