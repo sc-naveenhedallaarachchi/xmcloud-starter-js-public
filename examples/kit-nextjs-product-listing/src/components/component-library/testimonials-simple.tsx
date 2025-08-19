@@ -42,7 +42,7 @@ export const Default = (props: TestimonialsSimpleProps): JSX.Element => {
             <ContentSdkText field={props.fields.TagLine?.jsonValue} />
           </p>
         </div>
-        
+
         <div className="max-w-3xl mx-auto">
           <div className="flex flex-col items-center text-center">
             {/* Testimonial Icon/Logo */}
@@ -54,12 +54,12 @@ export const Default = (props: TestimonialsSimpleProps): JSX.Element => {
                 className="h-full w-auto object-contain"
               />
             </div>
-            
+
             {/* Testimonial Body */}
             <blockquote className="text-xl font-bold mb-12 text-center">
               <ContentSdkRichText field={props.fields.TestimonialBody?.jsonValue} />
             </blockquote>
-            
+
             {/* Customer Info */}
             <div className="flex flex-col items-center text-center mb-6">
               <div className="shrink-0 w-12 h-12 rounded-full overflow-hidden mb-4">
@@ -79,7 +79,7 @@ export const Default = (props: TestimonialsSimpleProps): JSX.Element => {
                 </div>
               </div>
             </div>
-            
+
             {/* Case Study Link */}
             {(props.fields.CaseStudyLink?.jsonValue?.value?.href || isEditing) && (
               <Button asChild variant={'link'} className="mt-6">
