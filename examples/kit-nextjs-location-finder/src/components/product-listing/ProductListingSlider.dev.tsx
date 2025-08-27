@@ -1,5 +1,5 @@
 import { Text } from '@sitecore-content-sdk/nextjs';
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
 import { ProductListingProps } from './product-listing.props';
@@ -15,15 +15,7 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
   const isReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const { fields, isPageEditing } = props;
-
-  // Defensive data access pattern like LocationSearch
-  const datasource = useMemo(() => fields?.data?.datasource || {}, [fields?.data?.datasource]);
-  const { products, title, viewAllLink } = datasource;
-
-  // More robust product access
-  const sitecoreProducts = useMemo(() => {
-    return products?.targetItems || [];
-  }, [products?.targetItems]);
+  const { products, title, viewAllLink } = fields?.data?.datasource ?? {};
 
   if (fields) {
     const getCardClasses = (productId: string) => {
@@ -65,30 +57,24 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
             </AnimatedSection>
           </div>
           <SlideCarousel>
-            {sitecoreProducts.length > 0 ? (
-              sitecoreProducts.map((product, index) => (
-                <SlideCarouselItemWrap key={index} className="max-w-[546px]">
-                  <div
-                    className={getCardClasses(`product-${index}`)}
-                    onMouseEnter={() => setActiveCard(`product-${index}`)}
-                    onMouseLeave={() => setActiveCard(null)}
-                    onFocus={() => setActiveCard(`product-${index}`)}
-                    onBlur={() => setActiveCard(null)}
-                  >
-                    <ProductListingCard
-                      product={product}
-                      link={viewAllLink?.jsonValue}
-                      prefersReducedMotion={isReducedMotion}
-                      isPageEditing={isPageEditing}
-                    />
-                  </div>
-                </SlideCarouselItemWrap>
-              ))
-            ) : (
-              <div className="text-center py-8">
-                <p className="text-gray-600">No products available</p>
-              </div>
-            )}
+            {products?.targetItems.map((product, index) => (
+              <SlideCarouselItemWrap key={index} className="max-w-[546px]">
+                <div
+                  className={getCardClasses(`product-${index}`)}
+                  onMouseEnter={() => setActiveCard(`product-${index}`)}
+                  onMouseLeave={() => setActiveCard(null)}
+                  onFocus={() => setActiveCard(`product-${index}`)}
+                  onBlur={() => setActiveCard(null)}
+                >
+                  <ProductListingCard
+                    product={product}
+                    link={viewAllLink.jsonValue}
+                    prefersReducedMotion={isReducedMotion}
+                    isPageEditing={isPageEditing}
+                  />
+                </div>
+              </SlideCarouselItemWrap>
+            ))}
           </SlideCarousel>
         </div>
       </div>

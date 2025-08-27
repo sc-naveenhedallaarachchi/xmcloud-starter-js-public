@@ -1,5 +1,5 @@
 import { Text } from '@sitecore-content-sdk/nextjs';
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
 import { ProductListingProps, ProductItemProps } from './product-listing.props';
@@ -12,19 +12,11 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const { fields, isPageEditing } = props;
 
-  // Defensive data access pattern like LocationSearch
-  const datasource = useMemo(() => fields?.data?.datasource || {}, [fields?.data?.datasource]);
-  const { title, viewAllLink, products } = datasource;
+  const { title, viewAllLink, products } = fields?.data?.datasource ?? {};
 
-  // More robust product access
-  const sitecoreProducts = useMemo(() => {
-    return products?.targetItems || [];
-  }, [products?.targetItems]);
-
+  const sitecoreProducts = products?.targetItems || [];
   console.log('sitecoreProducts', sitecoreProducts);
   console.log('fields', fields);
-  console.log('datasource', datasource);
-
   if (fields) {
     const getCardClasses = (productId: string) => {
       if (isReducedMotion) {
