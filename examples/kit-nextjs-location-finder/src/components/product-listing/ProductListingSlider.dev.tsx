@@ -25,24 +25,6 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
     return products?.targetItems || [];
   }, [products?.targetItems]);
 
-  // Handle design library preview when datasource is null
-  if (!fields?.data?.datasource) {
-    return (
-      <div className="@container transform-gpu border-b-2 border-t-2 [.border-b-2+&]:border-t-0">
-        <div className="@md:py-20 @lg:py-28 py-12">
-          <div className="@xl:px-0 @md:pb-0 mx-auto max-w-screen-xl px-0 pb-10 [&:not(.px-6_&):not(.px-8_&):not(.px-10_&)]:px-6">
-            <div className="text-center">
-              <h3 className="text-2xl font-semibold mb-4">Product Listing Slider</h3>
-              <p className="text-gray-600">
-                No datasource configured. Please configure the component datasource in Sitecore.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   if (fields) {
     const getCardClasses = (productId: string) => {
       if (isReducedMotion) {
