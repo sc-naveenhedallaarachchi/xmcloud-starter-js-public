@@ -12,7 +12,8 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const { fields, isPageEditing } = props;
 
-  const { title, viewAllLink, products } = fields?.data?.datasource ?? {};
+  const datasource = fields?.data?.datasource || {};
+  const { title, viewAllLink, products } = datasource;
 
   const sitecoreProducts = products?.targetItems || [];
   console.log('sitecoreProducts', sitecoreProducts);

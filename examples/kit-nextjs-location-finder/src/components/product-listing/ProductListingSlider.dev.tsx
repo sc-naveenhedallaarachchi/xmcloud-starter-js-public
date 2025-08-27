@@ -15,7 +15,8 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
   const isReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const { fields, isPageEditing } = props;
-  const { products, title, viewAllLink } = fields?.data?.datasource ?? {};
+  const datasource = fields?.data?.datasource || {};
+  const { products, title, viewAllLink } = datasource;
 
   if (fields) {
     const getCardClasses = (productId: string) => {

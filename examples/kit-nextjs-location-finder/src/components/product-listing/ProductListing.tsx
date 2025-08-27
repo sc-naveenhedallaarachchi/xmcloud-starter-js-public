@@ -11,20 +11,20 @@ import { ProductListingSlider } from './ProductListingSlider.dev';
 export const Default: React.FC<ProductListingProps> = (props) => {
   console.log('ProductListing props', props);
   const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ProductListingDefault {...props} isPageEditing={isEditing} />;
+  const isPageEditing = page.mode.isEditing;
+  return <ProductListingDefault {...props} isPageEditing={isPageEditing} />;
 };
 
 // Variants
 export const ThreeUp: React.FC<ProductListingProps> = (props) => {
   const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ProductListingThreeUp {...props} isPageEditing={isEditing} />;
+  const isPageEditing = page.mode.isEditing;
+  return <ProductListingThreeUp {...props} isPageEditing={isPageEditing} />;
 };
 
 // Variants
 export const Slider: React.FC<ProductListingProps> = (props) => {
   const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ProductListingSlider {...props} isPageEditing={isEditing} />;
+  const isPageEditing = page.mode.isEditing;
+  return <ProductListingSlider {...props} isPageEditing={isPageEditing} />;
 };
