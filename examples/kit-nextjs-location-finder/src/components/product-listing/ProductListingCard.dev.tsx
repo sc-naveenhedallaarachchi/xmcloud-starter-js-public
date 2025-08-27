@@ -31,6 +31,9 @@ const ProductListingCard = ({
 
         <div className="space-y-6">
           <div className="space-y-2">
+            <Text tag="h1" className="text-secondary-foreground text-2xl font-semibold">
+              testing
+            </Text>
             <Text
               tag="h3"
               className="text-secondary-foreground text-2xl font-semibold"

@@ -15,7 +15,8 @@ export const ProductListingDefault: React.FC<ProductListingProps> = (props) => {
   const { title, viewAllLink, products } = fields?.data?.datasource ?? {};
 
   const sitecoreProducts = products?.targetItems || [];
-
+  console.log('sitecoreProducts', sitecoreProducts);
+  console.log('fields', fields);
   if (fields) {
     const getCardClasses = (productId: string) => {
       if (isReducedMotion) {
