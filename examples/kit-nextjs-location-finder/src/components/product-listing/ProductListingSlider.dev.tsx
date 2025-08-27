@@ -15,7 +15,7 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
   const isReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
   const [activeCard, setActiveCard] = useState<string | null>(null);
   const { fields, isPageEditing } = props;
-  
+
   // Defensive data access pattern like LocationSearch
   const datasource = useMemo(() => fields?.data?.datasource || {}, [fields?.data?.datasource]);
   const { products, title, viewAllLink } = datasource;
@@ -33,7 +33,9 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
           <div className="@xl:px-0 @md:pb-0 mx-auto max-w-screen-xl px-0 pb-10 [&:not(.px-6_&):not(.px-8_&):not(.px-10_&)]:px-6">
             <div className="text-center">
               <h3 className="text-2xl font-semibold mb-4">Product Listing Slider</h3>
-              <p className="text-gray-600">No datasource configured. Please configure the component datasource in Sitecore.</p>
+              <p className="text-gray-600">
+                No datasource configured. Please configure the component datasource in Sitecore.
+              </p>
             </div>
           </div>
         </div>
@@ -81,24 +83,26 @@ export const ProductListingSlider: React.FC<ProductListingProps> = (props) => {
             </AnimatedSection>
           </div>
           <SlideCarousel>
-            {sitecoreProducts.length > 0 ? sitecoreProducts.map((product, index) => (
-              <SlideCarouselItemWrap key={index} className="max-w-[546px]">
-                <div
-                  className={getCardClasses(`product-${index}`)}
-                  onMouseEnter={() => setActiveCard(`product-${index}`)}
-                  onMouseLeave={() => setActiveCard(null)}
-                  onFocus={() => setActiveCard(`product-${index}`)}
-                  onBlur={() => setActiveCard(null)}
-                >
-                  <ProductListingCard
-                    product={product}
-                    link={viewAllLink?.jsonValue}
-                    prefersReducedMotion={isReducedMotion}
-                    isPageEditing={isPageEditing}
-                  />
-                </div>
-              </SlideCarouselItemWrap>
-            )) : (
+            {sitecoreProducts.length > 0 ? (
+              sitecoreProducts.map((product, index) => (
+                <SlideCarouselItemWrap key={index} className="max-w-[546px]">
+                  <div
+                    className={getCardClasses(`product-${index}`)}
+                    onMouseEnter={() => setActiveCard(`product-${index}`)}
+                    onMouseLeave={() => setActiveCard(null)}
+                    onFocus={() => setActiveCard(`product-${index}`)}
+                    onBlur={() => setActiveCard(null)}
+                  >
+                    <ProductListingCard
+                      product={product}
+                      link={viewAllLink?.jsonValue}
+                      prefersReducedMotion={isReducedMotion}
+                      isPageEditing={isPageEditing}
+                    />
+                  </div>
+                </SlideCarouselItemWrap>
+              ))
+            ) : (
               <div className="text-center py-8">
                 <p className="text-gray-600">No products available</p>
               </div>

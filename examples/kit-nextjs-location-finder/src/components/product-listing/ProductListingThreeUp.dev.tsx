@@ -14,7 +14,7 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
   const { fields, isPageEditing } = props;
   const isReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
   const [activeCard, setActiveCard] = useState<string | null>(null);
-  
+
   // Defensive data access pattern like LocationSearch
   const datasource = useMemo(() => fields?.data?.datasource || {}, [fields?.data?.datasource]);
   const { products, title, viewAllLink } = datasource;
@@ -30,7 +30,9 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
       <div className="@container @md:px-6 mx-auto max-w-screen-xl border-b-2 border-t-2 py-12 [.border-b-2+&]:border-t-0">
         <div className="text-center">
           <h3 className="text-2xl font-semibold mb-4">Product Listing Three Up</h3>
-          <p className="text-gray-600">No datasource configured. Please configure the component datasource in Sitecore.</p>
+          <p className="text-gray-600">
+            No datasource configured. Please configure the component datasource in Sitecore.
+          </p>
         </div>
       </div>
     );
@@ -80,31 +82,33 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
         </AnimatedSection>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {sitecoreProducts.length > 0 ? sitecoreProducts.map((product, index) => (
-            <AnimatedSection
-              key={JSON.stringify(`${product.productName}-${index}`)}
-              direction="up"
-              delay={index * 150}
-              duration={400}
-              reducedMotion={isReducedMotion}
-              isPageEditing={isPageEditing}
-            >
-              <div
-                className={getCardClasses(`product-${index}`)}
-                onMouseEnter={() => setActiveCard(`product-${index}`)}
-                onMouseLeave={() => setActiveCard(null)}
-                onFocus={() => setActiveCard(`product-${index}`)}
-                onBlur={() => setActiveCard(null)}
+          {sitecoreProducts.length > 0 ? (
+            sitecoreProducts.map((product, index) => (
+              <AnimatedSection
+                key={JSON.stringify(`${product.productName}-${index}`)}
+                direction="up"
+                delay={index * 150}
+                duration={400}
+                reducedMotion={isReducedMotion}
+                isPageEditing={isPageEditing}
               >
-                <ProductListingCard
-                  product={product}
-                  link={viewAllLink?.jsonValue}
-                  prefersReducedMotion={isReducedMotion}
-                  isPageEditing={isPageEditing}
-                />
-              </div>
-            </AnimatedSection>
-          )) : (
+                <div
+                  className={getCardClasses(`product-${index}`)}
+                  onMouseEnter={() => setActiveCard(`product-${index}`)}
+                  onMouseLeave={() => setActiveCard(null)}
+                  onFocus={() => setActiveCard(`product-${index}`)}
+                  onBlur={() => setActiveCard(null)}
+                >
+                  <ProductListingCard
+                    product={product}
+                    link={viewAllLink?.jsonValue}
+                    prefersReducedMotion={isReducedMotion}
+                    isPageEditing={isPageEditing}
+                  />
+                </div>
+              </AnimatedSection>
+            ))
+          ) : (
             <div className="col-span-full text-center py-8">
               <p className="text-gray-600">No products available</p>
             </div>
