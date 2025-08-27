@@ -9,6 +9,7 @@ import { ProductListingSlider } from './ProductListingSlider.dev';
 
 // Default display of the component
 export const Default: React.FC<ProductListingProps> = (props) => {
+  console.log('ProductListing props', props);
   const { page } = useSitecore();
   const { isEditing } = page.mode;
   return <ProductListingDefault {...props} isPageEditing={isEditing} />;
