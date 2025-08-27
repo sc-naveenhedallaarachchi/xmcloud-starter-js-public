@@ -11,6 +11,7 @@ import { LocationSearchTitleZipCentered } from './LocationSearchTitleZipCentered
 // Default display of the component
 
 export const Default: React.FC<LocationSearchProps> = (props) => {
+  console.log('LocationSearch props', props);
   const { page } = useSitecore();
   const { isEditing } = page.mode;
   return <LocationSearchDefault {...props} isPageEditing={isEditing} />;
