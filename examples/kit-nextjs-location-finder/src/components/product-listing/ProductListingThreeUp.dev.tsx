@@ -2,7 +2,7 @@
 
 import { Text } from '@sitecore-content-sdk/nextjs';
 import type React from 'react';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
 import type { ProductListingProps } from './product-listing.props';
@@ -14,7 +14,27 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
   const { fields, isPageEditing } = props;
   const isReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
   const [activeCard, setActiveCard] = useState<string | null>(null);
-  const { products, title, viewAllLink } = fields.data.datasource;
+  
+  // Defensive data access pattern like LocationSearch
+  const datasource = useMemo(() => fields?.data?.datasource || {}, [fields?.data?.datasource]);
+  const { products, title, viewAllLink } = datasource;
+
+  // More robust product access
+  const sitecoreProducts = useMemo(() => {
+    return products?.targetItems || [];
+  }, [products?.targetItems]);
+
+  // Handle design library preview when datasource is null
+  if (!fields?.data?.datasource) {
+    return (
+      <div className="@container @md:px-6 mx-auto max-w-screen-xl border-b-2 border-t-2 py-12 [.border-b-2+&]:border-t-0">
+        <div className="text-center">
+          <h3 className="text-2xl font-semibold mb-4">Product Listing Three Up</h3>
+          <p className="text-gray-600">No datasource configured. Please configure the component datasource in Sitecore.</p>
+        </div>
+      </div>
+    );
+  }
 
   if (fields) {
     const getCardClasses = (productId: string) => {
@@ -60,7 +80,7 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
         </AnimatedSection>
 
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {products?.targetItems?.map((product, index) => (
+          {sitecoreProducts.length > 0 ? sitecoreProducts.map((product, index) => (
             <AnimatedSection
               key={JSON.stringify(`${product.productName}-${index}`)}
               direction="up"
@@ -78,13 +98,17 @@ export const ProductListingThreeUp: React.FC<ProductListingProps> = (props) => {
               >
                 <ProductListingCard
                   product={product}
-                  link={viewAllLink.jsonValue}
+                  link={viewAllLink?.jsonValue}
                   prefersReducedMotion={isReducedMotion}
                   isPageEditing={isPageEditing}
                 />
               </div>
             </AnimatedSection>
-          ))}
+          )) : (
+            <div className="col-span-full text-center py-8">
+              <p className="text-gray-600">No products available</p>
+            </div>
+          )}
         </div>
       </div>
     );
