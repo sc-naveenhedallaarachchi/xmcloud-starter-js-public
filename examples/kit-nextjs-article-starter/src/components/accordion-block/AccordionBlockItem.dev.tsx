@@ -24,7 +24,9 @@ export const AccordionBlockItem = ({
       </AccordionTrigger>
       <AccordionContent className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm transition-all">
         <div className="font-heading grid gap-4 text-sm">
-          {child?.description?.jsonValue && <RichText tag="div" field={child.description.jsonValue} />}
+          {child?.description?.jsonValue && (
+            <RichText tag="div" field={child.description.jsonValue} />
+          )}
         </div>
       </AccordionContent>
     </AccordionItem>
