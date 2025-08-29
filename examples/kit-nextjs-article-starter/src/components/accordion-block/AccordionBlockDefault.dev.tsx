@@ -30,7 +30,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
               <Text
                 tag="h2"
                 className="font-heading text-primary @lg:text-7xl -ml-1 text-pretty text-5xl font-normal leading-[1.25] tracking-tighter"
-                field={heading.jsonValue}
+                field={heading?.jsonValue}
               />
             )}
             {description?.jsonValue && (
