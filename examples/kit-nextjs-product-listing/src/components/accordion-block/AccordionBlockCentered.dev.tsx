@@ -15,6 +15,8 @@ export const AccordionBlockCentered: React.FC<AccordionProps> = (props) => {
   const acordionItemValues = [
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
   ];
+
+  console.log('product lsiting AccordionBlockCentered props', props);
   if (fields) {
     return (
       <div

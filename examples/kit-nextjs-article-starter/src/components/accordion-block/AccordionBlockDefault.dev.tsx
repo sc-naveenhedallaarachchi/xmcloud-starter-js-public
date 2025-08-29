@@ -14,7 +14,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const accordionItemValues = [
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
   ];
-
+console.log('article starter  AccordionBlockCentered props', props);
   if (fields) {
     return (
       <div

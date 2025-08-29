@@ -20,6 +20,8 @@ export const Accordion5050TitleAbove: React.FC<AccordionProps> = (props) => {
   const leftColumnValues = leftColumnItems.map((_, index) => `left-item-${index + 1}`);
   const rightColumnValues = rightColumnItems.map((_, index) => `right-item-${index + 1}`);
 
+  console.log('product listing Accordion5050TitleAbove props', props);
+  
   if (fields) {
     return (
       <div

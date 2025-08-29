@@ -15,7 +15,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
   ];
 
-  console.log('AccordionBlock props', props);
+  console.log('drivekit AccordionBlock props', props);
 
   if (fields) {
     return (

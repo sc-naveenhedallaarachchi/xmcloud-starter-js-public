@@ -14,6 +14,7 @@ export const AccordionBlockDefault: React.FC<AccordionProps> = (props) => {
   const acordionItemValues = [
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
   ];
+  console.log('product lsiting default props', props);
   if (fields) {
     return (
       <div
