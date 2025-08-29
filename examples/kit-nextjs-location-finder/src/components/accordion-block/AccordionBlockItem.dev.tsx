@@ -31,7 +31,9 @@ export const AccordionBlockItem = ({
       </AccordionTrigger>
       <AccordionContent>
         <div className="font-body py-4 pt-2 text-base font-medium">
-          {child?.description?.jsonValue && <RichText tag="div" field={child.description.jsonValue} />}
+          {child?.description?.jsonValue && (
+            <RichText tag="div" field={child.description.jsonValue} />
+          )}
         </div>
       </AccordionContent>
     </AccordionItem>
