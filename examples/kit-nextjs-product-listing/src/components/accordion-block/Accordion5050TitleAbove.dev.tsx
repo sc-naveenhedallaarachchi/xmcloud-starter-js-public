@@ -9,7 +9,7 @@ import { AccordionBlockItem } from './AccordionBlockItem.dev';
 export const Accordion5050TitleAbove: React.FC<AccordionProps> = (props) => {
   const { fields, isPageEditing } = props;
 
-  const { heading, description, link, children } = fields?.data?.datasource ?? {};
+  const { heading, description, link, children } = fields?.data?.datasource || {};
   const accordionItems = (children?.results ?? []).filter(Boolean);
 
   // Split accordion items into two columns
