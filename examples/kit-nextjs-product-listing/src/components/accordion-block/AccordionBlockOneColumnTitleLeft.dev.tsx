@@ -14,7 +14,7 @@ export const AccordionBlockOneColumnTitleLeft: React.FC<AccordionProps> = (props
   const { fields, isPageEditing } = props;
 
   const { heading, description, link, children } = fields?.data?.datasource ?? {};
-  const accordionItems = children?.results ?? [];
+  const accordionItems = (children?.results ?? []).filter(Boolean);
   const acordionItemValues = [
     ...accordionItems.map((_, index) => `accordion-block-item-${index + 1}`),
   ];

@@ -10,7 +10,7 @@ export const Accordion5050TitleAbove: React.FC<AccordionProps> = (props) => {
   const { fields, isPageEditing } = props;
 
   const { heading, description, link, children } = fields?.data?.datasource ?? {};
-  const accordionItems = children?.results ?? [];
+  const accordionItems = (children?.results ?? []).filter(Boolean);
 
   // Split accordion items into two columns
   const leftColumnItems = accordionItems.slice(0, Math.ceil(accordionItems.length / 2));
