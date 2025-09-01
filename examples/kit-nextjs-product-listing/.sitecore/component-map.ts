@@ -4,7 +4,7 @@ import { Form } from '@sitecore-content-sdk/nextjs';
 // end of built-in components
 
 // Components imported from the app itself
-import * as AccordionBlock from 'components/site-three/AccordionBlock';
+import * as AccordionBlock from 'components/accordion-block/AccordionBlock';
 import * as AlertBanner from 'components/alert-banner/AlertBanner.dev';
 import * as ArticleHeader from 'components/article-header/ArticleHeader';
 import * as BackgroundThumbnail from 'components/background-thumbnail/BackgroundThumbnail.dev';
