@@ -44,7 +44,7 @@ export const ImageCarouselThumbnails = (props: ImageCarouselProps) => {
   useEffect(() => {
     if (liveRegionRef.current && api && slides && slides.length > 0) {
       const currentSlide = slides[currentIndex];
-      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides.length}: ${
+      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides?.length || 0}: ${
         currentSlide.backgroundText?.jsonValue?.value
       }.`;
     }
@@ -116,7 +116,7 @@ export const ImageCarouselThumbnails = (props: ImageCarouselProps) => {
               data-component-part="carousel"
             >
               <div id={`${slideshowId}-title`} className="sr-only">
-                Vehicle Models Slideshow, {currentIndex + 1} of {slides.length}
+                Vehicle Models Slideshow, {currentIndex + 1} of {slides?.length || 0}
               </div>
 
               <CarouselContent

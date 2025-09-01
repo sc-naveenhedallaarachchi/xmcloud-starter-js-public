@@ -44,13 +44,14 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
   const liveRegionRef = useRef<HTMLDivElement>(null);
 
   // Calculate previous and next indices with wrap-around
-  const prevIndex = currentIndex === 0 ? slides.length - 1 : currentIndex - 1;
-  const nextIndex = currentIndex === slides.length - 1 ? 0 : currentIndex + 1;
+  const slidesLength = slides?.length || 0;
+  const prevIndex = currentIndex === 0 ? slidesLength - 1 : currentIndex - 1;
+  const nextIndex = currentIndex === slidesLength - 1 ? 0 : currentIndex + 1;
 
   // Update the live region when the current slide changes
   useEffect(() => {
     if (liveRegionRef.current && api && slides && slides.length > 0) {
-      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides.length}`;
+      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides?.length || 0}`;
     }
   }, [currentIndex, slides, api]);
 
@@ -133,7 +134,7 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
             data-component-part="carousel"
           >
             <div id={`${slideshowId}-title`} className="sr-only">
-              {currentIndex + 1} of {slides.length}
+              {currentIndex + 1} of {slides?.length || 0}
             </div>
 
             <CarouselContent

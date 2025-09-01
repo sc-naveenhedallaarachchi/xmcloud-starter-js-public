@@ -45,7 +45,7 @@ export const ImageCarouselFullBleed = (props: ImageCarouselProps) => {
   // Update the live region when the current slide changes
   useEffect(() => {
     if (liveRegionRef.current && api && slides && slides.length > 0) {
-      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides.length}`;
+      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides?.length || 0}`;
     }
   }, [currentIndex, slides, api]);
 
@@ -132,7 +132,7 @@ export const ImageCarouselFullBleed = (props: ImageCarouselProps) => {
             data-component-part="carousel"
           >
             <div id={`${slideshowId}-title`} className="sr-only">
-              Vehicle Models Slideshow, {currentIndex + 1} of {slides.length}
+              Vehicle Models Slideshow, {currentIndex + 1} of {slides?.length || 0}
             </div>
 
             {/* Remove any default spacing from CarouselContent */}

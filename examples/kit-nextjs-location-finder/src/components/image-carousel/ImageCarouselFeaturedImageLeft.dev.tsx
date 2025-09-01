@@ -34,19 +34,19 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
   // Initialize slide order
   useEffect(() => {
     if (slides && slides.length > 0) {
-      setSlideOrder(Array.from({ length: slides.length }, (_, i) => i));
+      setSlideOrder(Array.from({ length: slides?.length || 0 }, (_, i) => i));
     }
   }, [slides]);
 
   // Update the live region when the current slide changes
   useEffect(() => {
     if (liveRegionRef.current && slides && slides.length > 0) {
-      liveRegionRef.current.textContent = `Showing slide ${activeIndex + 1} of ${slides.length}`;
+      liveRegionRef.current.textContent = `Showing slide ${activeIndex + 1} of ${slides?.length || 0}`;
     }
   }, [activeIndex, slides]);
 
   const handleNext = () => {
-    if (isAnimating || slides.length <= 1) return;
+    if (isAnimating || (slides?.length || 0) <= 1) return;
 
     setIsAnimating(true);
 
@@ -54,7 +54,7 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
     setNextSlideIndex(1);
 
     // Update active index
-    setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    setActiveIndex((prevIndex) => (prevIndex + 1) % (slides?.length || 1));
 
     // Wait for the animation to complete before updating the slide order
     setTimeout(
@@ -296,7 +296,7 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
                           aria-roledescription="slide"
                           aria-label={`${isActive || isNext ? 'Current slide' : 'Slide'} ${
                             slideIndex + 1
-                          } of ${slides.length}`}
+                          } of ${slides?.length || 0}`}
                         >
                           <div
                             className={cn(
@@ -323,7 +323,7 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
               <Button
                 onClick={handleNext}
                 variant="outline"
-                disabled={isAnimating || slides.length <= 1}
+                disabled={isAnimating || (slides?.length || 0) <= 1}
               >
                 Next Image
               </Button>

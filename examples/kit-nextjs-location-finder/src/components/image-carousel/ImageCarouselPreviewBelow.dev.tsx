@@ -45,7 +45,7 @@ export const ImageCarouselPreviewBelow = (props: ImageCarouselProps) => {
   // Update the live region when the current slide changes
   useEffect(() => {
     if (liveRegionRef.current && mainApi && slides && slides.length > 0) {
-      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides.length}`;
+      liveRegionRef.current.textContent = `Showing slide ${currentIndex + 1} of ${slides?.length || 0}`;
     }
   }, [currentIndex, slides, mainApi]);
 
@@ -145,7 +145,7 @@ export const ImageCarouselPreviewBelow = (props: ImageCarouselProps) => {
               data-component-part="main-carousel"
             >
               <div id={`${slideshowId}-title`} className="sr-only">
-                {currentIndex + 1} of {slides.length}
+                {currentIndex + 1} of {slides?.length || 0}
               </div>
 
               <CarouselContent
