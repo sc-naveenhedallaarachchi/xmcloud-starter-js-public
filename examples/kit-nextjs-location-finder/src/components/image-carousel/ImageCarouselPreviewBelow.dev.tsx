@@ -30,8 +30,8 @@ export const ImageCarouselPreviewBelow = (props: ImageCarouselProps) => {
   const thumbnailImageClasses = 'h-auto w-full transition-all border-2 border-transparent';
   const thumbnailActiveClasses = '';
 
-  const { title, imageItems } = fields.data.datasource;
-  const { results: slides } = imageItems;
+  const { title, imageItems } = fields?.data?.datasource ?? {};
+  const { results: slides = [] } = imageItems ?? {};
 
   // State for tracking current slide
   const [currentIndex, setCurrentIndex] = useState(0);

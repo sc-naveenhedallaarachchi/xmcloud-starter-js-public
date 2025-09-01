@@ -36,7 +36,7 @@ export const ImageCarouselDefault = (props: ImageCarouselProps) => {
   const controlsWrapperClasses = 'mt-8 flex items-center gap-4';
 
   const { title, imageItems } = fields?.data?.datasource ?? {};
-  const { results: slides } = imageItems ?? { slides: {} };
+  const { results: slides = [] } = imageItems ?? {};
 
   // State for tracking current slide
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -95,7 +95,7 @@ export const ImageCarouselDefault = (props: ImageCarouselProps) => {
           reducedMotion={isReducedMotion}
         >
           <div className={titleWrapperClasses}>
-            <Text tag="h2" field={title.jsonValue} className={titleClasses} />
+            <Text tag="h2" field={title?.jsonValue} className={titleClasses} />
           </div>
         </AnimatedSection>
 
@@ -116,14 +116,14 @@ export const ImageCarouselDefault = (props: ImageCarouselProps) => {
             data-component-part="carousel"
           >
             <div id={`${slideshowId}-title`} className="sr-only">
-              Vehicle Models Slideshow, {currentIndex + 1} of {slides.length}
+              Vehicle Models Slideshow, {currentIndex + 1} of {slides?.length || 0}
             </div>
 
             <CarouselContent
               className={carouselContentClasses}
               data-component-part="carousel content"
             >
-              {slides.map((slide, index) => (
+              {slides?.map((slide, index) => (
                 <CarouselItem
                   key={index}
                   className={carouselItemClasses}

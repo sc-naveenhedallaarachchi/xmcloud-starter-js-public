@@ -17,8 +17,8 @@ import { useContainerQuery } from '@/hooks/use-container-query';
 export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
   const { fields, isPageEditing } = props;
 
-  const { title, imageItems } = fields.data.datasource;
-  const { results: slides } = imageItems;
+  const { title, imageItems } = fields?.data?.datasource ?? {};
+  const { results: slides = [] } = imageItems ?? {};
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const [slideOrder, setSlideOrder] = useState<number[]>([]);

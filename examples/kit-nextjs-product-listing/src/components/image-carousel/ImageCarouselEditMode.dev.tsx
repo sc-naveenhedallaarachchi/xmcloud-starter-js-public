@@ -10,8 +10,8 @@ export const ImageCarouselEditMode = (
   props: ImageCarouselProps & { componentName: string; showBackgroundText?: boolean }
 ) => {
   const { fields, isPageEditing, componentName, showBackgroundText = true } = props;
-  const { title, imageItems } = fields.data.datasource;
-  const { results: slides } = imageItems;
+  const { title, imageItems } = fields?.data?.datasource ?? {};
+  const { results: slides = [] } = imageItems ?? {};
   const containerClasses =
     '@container bg-primary group text-primary-foreground relative flex w-full flex-col items-center justify-center py-[99px]';
 
