@@ -37,20 +37,22 @@ type PromoItemProps = SimplePromoFields & {
 };
 
 const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
+  const { image, heading, description, link } = promo ?? {};
+  
   return (
     <div className={`grid gap-8 ${isHorizontal ? 'lg:grid-cols-[1fr_2fr]' : ''}`}>
       <ContentSdkImage
-        field={promo.image?.jsonValue}
+        field={image?.jsonValue}
         className="w-full h-full aspect-square object-cover shadow-2xl"
       />
       <div>
         <h4 className="text-xl lg:text-2xl mb-2 uppercase">
-          <ContentSdkText field={promo.heading?.jsonValue} />
+          <ContentSdkText field={heading?.jsonValue} />
         </h4>
         <p className="lg:text-lg mb-2">
-          <ContentSdkText field={promo.description?.jsonValue} />
+          <ContentSdkText field={description?.jsonValue} />
         </p>
-        <ContentSdkLink field={promo.link?.jsonValue} className="btn btn-ghost" />
+        <ContentSdkLink field={link?.jsonValue} className="btn btn-ghost" />
       </div>
     </div>
   );
@@ -62,7 +64,7 @@ const parentBasedGridItemClasses =
   '[.multipromo-centered_&]:items-center [.bg-gradient_&]:text-white items-start';
 
 export const Default = (props: MultiPromoProps) => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+  const datasource = useMemo(() => props.fields?.data?.datasource, [props.fields?.data?.datasource]);
 
   if (!datasource) {
     return <NoDataFallback componentName="MultiPromo" />;
@@ -80,9 +82,9 @@ export const Default = (props: MultiPromoProps) => {
           </p>
         </div>
         <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-12`}>
-          {datasource.children.results.map((promo) => {
+          {datasource.children?.results?.map((promo) => {
             return <PromoItem key={promo.id} {...promo} />;
-          })}
+          }) ?? []}
         </div>
       </div>
     </section>
@@ -90,7 +92,7 @@ export const Default = (props: MultiPromoProps) => {
 };
 
 export const Stacked = (props: MultiPromoProps) => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+  const datasource = useMemo(() => props.fields?.data?.datasource, [props.fields?.data?.datasource]);
 
   if (!datasource) {
     return <NoDataFallback componentName="MultiPromo" />;
@@ -111,7 +113,7 @@ export const Stacked = (props: MultiPromoProps) => {
           </div>
         </div>
         <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-30`}>
-          {datasource.children.results.map((promo) => {
+          {datasource.children?.results?.map((promo) => {
             return (
               <div
                 key={promo.id}
@@ -120,7 +122,7 @@ export const Stacked = (props: MultiPromoProps) => {
                 <PromoItem {...promo} />
               </div>
             );
-          })}
+          }) ?? []}
         </div>
       </div>
     </section>
@@ -128,7 +130,7 @@ export const Stacked = (props: MultiPromoProps) => {
 };
 
 export const SingleColumn = (props: MultiPromoProps) => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+  const datasource = useMemo(() => props.fields?.data?.datasource, [props.fields?.data?.datasource]);
 
   if (!datasource) {
     return <NoDataFallback componentName="MultiPromo" />;
@@ -146,9 +148,9 @@ export const SingleColumn = (props: MultiPromoProps) => {
           </p>
         </div>
         <div className="grid gap-14">
-          {datasource.children.results.map((promo) => {
+          {datasource.children?.results?.map((promo) => {
             return <PromoItem key={promo.id} {...promo} isHorizontal />;
-          })}
+          }) ?? []}
         </div>
       </div>
     </section>
