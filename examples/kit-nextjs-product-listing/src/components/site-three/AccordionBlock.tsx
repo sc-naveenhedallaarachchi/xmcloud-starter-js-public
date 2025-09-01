@@ -18,7 +18,7 @@ interface Fields {
     datasource: {
       heading?: IGQLTextField;
       description?: IGQLTextField;
-      link?: IGQLLinkField;
+      link: IGQLLinkField;
       children: {
         results: AccordionItemFields[];
       };
@@ -74,7 +74,7 @@ export const Default = (props: AccordionProps) => {
                 <ContentSdkText field={datasource.description?.jsonValue} />
               </h6>
               <ContentSdkLink
-                field={datasource.link?.jsonValue}
+                field={datasource.link.jsonValue}
                 prefetch={false}
                 className="btn btn-secondary btn-sharp"
               />
@@ -107,7 +107,7 @@ export const TwoColumn = (props: AccordionProps) => {
               <ContentSdkText field={datasource.description?.jsonValue} />
             </h6>
             <ContentSdkLink
-              field={datasource.link?.jsonValue}
+              field={datasource.link.jsonValue}
               prefetch={false}
               className="btn btn-secondary btn-sharp"
             />
@@ -139,7 +139,7 @@ export const Vertical = (props: AccordionProps) => {
               <ContentSdkText field={datasource.description?.jsonValue} />
             </h6>
             <ContentSdkLink
-              field={datasource.link?.jsonValue}
+              field={datasource.link.jsonValue}
               prefetch={false}
               className="btn btn-secondary btn-sharp"
             />
@@ -172,7 +172,7 @@ export const BoxedAccordion = (props: AccordionProps) => {
               <ContentSdkText field={datasource.description?.jsonValue} />
             </h6>
             <ContentSdkLink
-              field={datasource.link?.jsonValue}
+              field={datasource.link.jsonValue}
               prefetch={false}
               className="btn btn-secondary btn-sharp"
             />
@@ -204,7 +204,7 @@ export const BoxedContent = (props: AccordionProps) => {
                 <ContentSdkText field={datasource.description?.jsonValue} />
               </h6>
               <ContentSdkLink
-                field={datasource.link?.jsonValue}
+                field={datasource.link.jsonValue}
                 prefetch={false}
                 className="btn btn-secondary btn-sharp"
               />
