@@ -55,6 +55,12 @@ const AccordionBlockItem = (props: AccordionItemFields) => {
 export const Default = (props: AccordionProps) => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
   console.log('datasource', datasource);
+
+  // Return early if datasource is not available
+  if (!datasource) {
+    return <section className={`relative py-20 overflow-hidden ${props.params.styles}`} data-class-change></section>;
+  }
+
   return (
     <section className={`relative py-20 overflow-hidden ${props.params.styles}`} data-class-change>
       <span className="absolute top-1/3 -left-1/3 w-screen h-64 bg-primary opacity-50 blur-[400px] rotate-15 z-10"></span>
@@ -65,19 +71,21 @@ export const Default = (props: AccordionProps) => {
           </h2>
           <div>
             <Accordion type="multiple" className="w-full mb-12">
-              {datasource.children.results.map((item) => (
+              {datasource.children?.results?.map((item) => (
                 <AccordionBlockItem key={item.id} {...item} />
-              ))}
+              )) || []}
             </Accordion>
             <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
               <h6 className="text-sm">
                 <ContentSdkText field={datasource.description?.jsonValue} />
               </h6>
-              <ContentSdkLink
-                field={datasource.link.jsonValue}
-                prefetch={false}
-                className="btn btn-secondary btn-sharp"
-              />
+              {datasource.link?.jsonValue && (
+                <ContentSdkLink
+                  field={datasource.link.jsonValue}
+                  prefetch={false}
+                  className="btn btn-secondary btn-sharp"
+                />
+              )}
             </div>
           </div>
         </div>
@@ -89,6 +97,11 @@ export const Default = (props: AccordionProps) => {
 export const TwoColumn = (props: AccordionProps) => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Return early if datasource is not available
+  if (!datasource) {
+    return <section className={`relative py-20 overflow-hidden ${props.params.styles}`} data-class-change></section>;
+  }
+
   return (
     <section className={`relative py-20 overflow-hidden ${props.params.styles}`} data-class-change>
       <span className="absolute top-1/3 -left-1/3 w-screen h-64 bg-primary opacity-50 blur-[400px] rotate-15 z-10"></span>
@@ -97,20 +110,22 @@ export const TwoColumn = (props: AccordionProps) => {
           <ContentSdkText field={datasource.heading?.jsonValue} />
         </h2>
         <Accordion type="multiple" className="w-full grid lg:grid-cols-2 gap-x-12 my-12">
-          {datasource.children.results.map((item) => (
+          {datasource.children?.results?.map((item) => (
             <AccordionBlockItem key={item.id} {...item} />
-          ))}
+          )) || []}
         </Accordion>
         <div className="grid lg:grid-cols-2 gap-x-12">
           <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
             <h6 className="text-sm">
               <ContentSdkText field={datasource.description?.jsonValue} />
             </h6>
-            <ContentSdkLink
-              field={datasource.link.jsonValue}
-              prefetch={false}
-              className="btn btn-secondary btn-sharp"
-            />
+            {datasource.link?.jsonValue && (
+              <ContentSdkLink
+                field={datasource.link.jsonValue}
+                prefetch={false}
+                className="btn btn-secondary btn-sharp"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -121,6 +136,11 @@ export const TwoColumn = (props: AccordionProps) => {
 export const Vertical = (props: AccordionProps) => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Return early if datasource is not available
+  if (!datasource) {
+    return <section className={`relative py-20 overflow-hidden ${props.params.styles}`} data-class-change></section>;
+  }
+
   return (
     <section className={`relative py-20 overflow-hidden ${props.params.styles}`} data-class-change>
       <span className="absolute -top-20 w-screen h-64 bg-primary opacity-50 blur-[400px] z-10"></span>
@@ -130,19 +150,21 @@ export const Vertical = (props: AccordionProps) => {
             <ContentSdkText field={datasource.heading?.jsonValue} />
           </h2>
           <Accordion type="multiple" className="w-full">
-            {datasource.children.results.map((item) => (
+            {datasource.children?.results?.map((item) => (
               <AccordionBlockItem key={item.id} {...item} />
-            ))}
+            )) || []}
           </Accordion>
           <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
             <h6 className="text-sm">
               <ContentSdkText field={datasource.description?.jsonValue} />
             </h6>
-            <ContentSdkLink
-              field={datasource.link.jsonValue}
-              prefetch={false}
-              className="btn btn-secondary btn-sharp"
-            />
+            {datasource.link?.jsonValue && (
+              <ContentSdkLink
+                field={datasource.link.jsonValue}
+                prefetch={false}
+                className="btn btn-secondary btn-sharp"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -152,6 +174,11 @@ export const Vertical = (props: AccordionProps) => {
 
 export const BoxedAccordion = (props: AccordionProps) => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+
+  // Return early if datasource is not available
+  if (!datasource) {
+    return <section className={`bg-primary py-20 ${props.params.styles}`} data-class-change></section>;
+  }
 
   return (
     <section className={`bg-primary py-20 ${props.params.styles}`} data-class-change>
@@ -163,19 +190,21 @@ export const BoxedAccordion = (props: AccordionProps) => {
         </div>
         <div className="flex flex-col gap-12 max-w-3xl mx-auto bg-white p-4 lg:p-12 mt-12 shadow-2xl">
           <Accordion type="multiple" className="w-full">
-            {datasource.children.results.map((item) => (
+            {datasource.children?.results?.map((item) => (
               <AccordionBlockItem key={item.id} {...item} />
-            ))}
+            )) || []}
           </Accordion>
           <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
             <h6 className="text-sm">
               <ContentSdkText field={datasource.description?.jsonValue} />
             </h6>
-            <ContentSdkLink
-              field={datasource.link.jsonValue}
-              prefetch={false}
-              className="btn btn-secondary btn-sharp"
-            />
+            {datasource.link?.jsonValue && (
+              <ContentSdkLink
+                field={datasource.link.jsonValue}
+                prefetch={false}
+                className="btn btn-secondary btn-sharp"
+              />
+            )}
           </div>
         </div>
       </div>
@@ -186,6 +215,11 @@ export const BoxedAccordion = (props: AccordionProps) => {
 export const BoxedContent = (props: AccordionProps) => {
   const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
 
+  // Return early if datasource is not available
+  if (!datasource) {
+    return <section className={`bg-gradient py-20 ${props.params.styles}`} data-class-change></section>;
+  }
+
   return (
     <section className={`bg-gradient py-20 ${props.params.styles}`} data-class-change>
       <div className="container mx-auto px-4">
@@ -195,19 +229,21 @@ export const BoxedContent = (props: AccordionProps) => {
               <ContentSdkText field={datasource.heading?.jsonValue} />
             </h2>
             <Accordion type="multiple" className="w-full">
-              {datasource.children.results.map((item) => (
+              {datasource.children?.results?.map((item) => (
                 <AccordionBlockItem key={item.id} {...item} />
-              ))}
+              )) || []}
             </Accordion>
             <div className="flex flex-col lg:flex-row lg:justify-between items-start lg:items-center gap-6 self-center lg:col-start-2 p-5 bg-primary">
               <h6 className="text-sm">
                 <ContentSdkText field={datasource.description?.jsonValue} />
               </h6>
-              <ContentSdkLink
-                field={datasource.link.jsonValue}
-                prefetch={false}
-                className="btn btn-secondary btn-sharp"
-              />
+              {datasource.link?.jsonValue && (
+                <ContentSdkLink
+                  field={datasource.link.jsonValue}
+                  prefetch={false}
+                  className="btn btn-secondary btn-sharp"
+                />
+              )}
             </div>
           </div>
         </div>
