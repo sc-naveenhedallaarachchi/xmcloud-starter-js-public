@@ -5,7 +5,6 @@ import {
   Link as ContentSdkLink,
 } from '@sitecore-content-sdk/nextjs';
 import { IGQLImageField, IGQLLinkField, IGQLTextField } from 'types/igql';
-import { NoDataFallback } from '@/utils/NoDataFallback';
 
 interface Fields {
   data: {
@@ -69,10 +68,6 @@ export const Default = (props: MultiPromoProps) => {
     [props.fields?.data?.datasource]
   );
 
-  if (!datasource) {
-    return <NoDataFallback componentName="MultiPromo" />;
-  }
-
   return (
     <section className={`relative ${props.params.styles}`} data-class-change>
       <div className="container mx-auto px-4 py-16">
@@ -99,10 +94,6 @@ export const Stacked = (props: MultiPromoProps) => {
     () => props.fields?.data?.datasource,
     [props.fields?.data?.datasource]
   );
-
-  if (!datasource) {
-    return <NoDataFallback componentName="MultiPromo" />;
-  }
 
   return (
     <section className={`relative ${props.params.styles} overflow-hidden`} data-class-change>
@@ -140,10 +131,6 @@ export const SingleColumn = (props: MultiPromoProps) => {
     () => props.fields?.data?.datasource,
     [props.fields?.data?.datasource]
   );
-
-  if (!datasource) {
-    return <NoDataFallback componentName="MultiPromo" />;
-  }
 
   return (
     <section className={`relative ${props.params.styles}`} data-class-change>
