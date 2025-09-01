@@ -28,8 +28,8 @@ export const ImageCarouselThumbnails = (props: ImageCarouselProps) => {
   const prevButtonClasses = `${navButtonClasses} left-4`;
   const nextButtonClasses = `${navButtonClasses} right-4`;
 
-  const { title, imageItems } = fields?.data?.datasource ?? {};
-  const { results: slides = [] } = imageItems ?? {};
+  const { title, imageItems } = fields?.data?.datasource || {};
+  const { results: slides = [] } = imageItems || {};
 
   // State for tracking current slide
   const [currentIndex, setCurrentIndex] = useState(0);

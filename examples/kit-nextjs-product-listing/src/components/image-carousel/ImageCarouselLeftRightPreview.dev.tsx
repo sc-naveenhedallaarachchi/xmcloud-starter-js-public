@@ -31,8 +31,8 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
   const controlsWrapperClasses = 'mt-8 flex items-center gap-4';
   const previewImageClasses = 'relative h-auto w-full cursor-pointer';
 
-  const { title, imageItems } = fields?.data?.datasource ?? {};
-  const { results: slides = [] } = imageItems ?? {};
+  const { title, imageItems } = fields?.data?.datasource || {};
+  const { results: slides = [] } = imageItems || {};
 
   // State for tracking current slide
   const [currentIndex, setCurrentIndex] = useState(0);
