@@ -185,7 +185,7 @@ export const ImageCarouselDefault = (props: ImageCarouselProps) => {
             </Button>
 
             {slides[currentIndex]?.link?.jsonValue && (
-              <ButtonBase variant="secondary" buttonLink={slides[currentIndex].link.jsonValue} />
+              <ButtonBase variant="secondary" buttonLink={slides[currentIndex].link?.jsonValue} />
             )}
 
             <Button

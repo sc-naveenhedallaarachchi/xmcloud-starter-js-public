@@ -102,7 +102,7 @@ export const ImageCarouselPreviewBelow = (props: ImageCarouselProps) => {
           reducedMotion={isReducedMotion}
         >
           <div className="mb-4 w-full space-y-4 px-4">
-            <Text tag="h2" field={title.jsonValue} className={titleClasses} />
+            <Text tag="h2" field={title?.jsonValue} className={titleClasses} />
           </div>
         </AnimatedSection>
         <AnimatedSection
@@ -115,7 +115,7 @@ export const ImageCarouselPreviewBelow = (props: ImageCarouselProps) => {
             {slides[currentIndex]?.link?.jsonValue && (
               <EditableButton
                 variant="default"
-                buttonLink={slides[currentIndex].link.jsonValue}
+                buttonLink={slides[currentIndex].link?.jsonValue}
                 isPageEditing={isPageEditing}
               />
             )}

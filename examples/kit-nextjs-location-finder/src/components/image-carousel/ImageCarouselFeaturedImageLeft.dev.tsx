@@ -127,7 +127,7 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
             >
               <Text
                 tag="h2"
-                field={title.jsonValue}
+                field={title?.jsonValue}
                 className="font-heading @md:text-7xl max-w-[760px] text-pretty text-5xl font-light leading-none tracking-normal antialiased group-[.position-left]:text-left group-[.position-center]:text-center group-[.position-right]:text-right"
               />
             </AnimatedSection>
@@ -147,7 +147,7 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
                 {slideOrder.length > 0 &&
                   slides[slideOrder[nextSlideIndex === 1 ? 1 : 0]]?.link?.jsonValue && (
                     <EditableButton
-                      buttonLink={slides[slideOrder[nextSlideIndex === 1 ? 1 : 0]].link.jsonValue}
+                      buttonLink={slides[slideOrder[nextSlideIndex === 1 ? 1 : 0]].link?.jsonValue}
                       className="mb-6"
                     />
                   )}
@@ -307,7 +307,7 @@ export const ImageCarouselFeaturedImageLeft = (props: ImageCarouselProps) => {
                             )}
                           >
                             <ImageWrapper
-                              image={slides[slideIndex].image.jsonValue}
+                              image={slides[slideIndex].image?.jsonValue}
                               className="object-cover"
                             />
                           </div>

@@ -101,7 +101,7 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
           reducedMotion={isReducedMotion}
         >
           <div className="mb-16 w-full space-y-4 px-4">
-            <Text tag="h2" field={title.jsonValue} className={titleClasses} />
+            <Text tag="h2" field={title?.jsonValue} className={titleClasses} />
           </div>
         </AnimatedSection>
 
@@ -195,7 +195,7 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
             </Button>
 
             {slides[currentIndex]?.link?.jsonValue && (
-              <EditableButton variant="default" buttonLink={slides[currentIndex].link.jsonValue} />
+              <EditableButton variant="default" buttonLink={slides[currentIndex].link?.jsonValue} />
             )}
 
             <Button

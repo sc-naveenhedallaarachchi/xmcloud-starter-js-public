@@ -91,7 +91,7 @@ export const ImageCarouselFullBleed = (props: ImageCarouselProps) => {
               reducedMotion={isReducedMotion}
               className="max-w-screen-md"
             >
-              <Text tag="h2" field={title.jsonValue} className={titleClasses} />
+              <Text tag="h2" field={title?.jsonValue} className={titleClasses} />
             </AnimatedSection>
 
             <AnimatedSection
@@ -104,7 +104,7 @@ export const ImageCarouselFullBleed = (props: ImageCarouselProps) => {
                 {slides[currentIndex]?.link?.jsonValue && (
                   <EditableButton
                     variant="secondary"
-                    buttonLink={slides[currentIndex].link.jsonValue}
+                    buttonLink={slides[currentIndex].link?.jsonValue}
                     className="mb-6"
                   />
                 )}

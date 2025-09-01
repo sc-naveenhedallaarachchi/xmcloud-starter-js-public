@@ -25,7 +25,7 @@ export const ImageCarouselEditMode = (
         <div className="mb-8 w-full space-y-4 text-center">
           <Text
             tag="h2"
-            field={title.jsonValue}
+            field={title?.jsonValue}
             className="font-heading @md:text-5xl mx-auto max-w-[760px] text-pretty text-3xl font-light leading-none tracking-normal antialiased group-[.position-center]:text-center group-[.position-right]:text-right"
           />
         </div>
@@ -66,7 +66,7 @@ export const ImageCarouselEditMode = (
                       {slide?.link?.jsonValue && (
                         <EditableButton
                           variant="secondary"
-                          buttonLink={slide.link.jsonValue}
+                          buttonLink={slide.link?.jsonValue}
                           isPageEditing={isPageEditing}
                         />
                       )}
