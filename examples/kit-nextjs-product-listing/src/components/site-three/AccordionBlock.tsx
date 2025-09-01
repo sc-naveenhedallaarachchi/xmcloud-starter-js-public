@@ -68,7 +68,7 @@ const AccordionBlockItem = (props: AccordionItemFields) => {
 
 export const Default = (props: AccordionProps) => {
   const { fields, params = {}, isPageEditing = false } = props;
-  
+
   const datasource = useMemo(() => {
     return fields?.data?.datasource || null;
   }, [fields?.data?.datasource]);
@@ -131,7 +131,7 @@ export const Default = (props: AccordionProps) => {
 
 export const TwoColumn = (props: AccordionProps) => {
   const { fields, params = {}, isPageEditing = false } = props;
-  
+
   const datasource = useMemo(() => {
     return fields?.data?.datasource || null;
   }, [fields?.data?.datasource]);
@@ -192,7 +192,7 @@ export const TwoColumn = (props: AccordionProps) => {
 
 export const Vertical = (props: AccordionProps) => {
   const { fields, params = {}, isPageEditing = false } = props;
-  
+
   const datasource = useMemo(() => {
     return fields?.data?.datasource || null;
   }, [fields?.data?.datasource]);
@@ -253,7 +253,7 @@ export const Vertical = (props: AccordionProps) => {
 
 export const BoxedAccordion = (props: AccordionProps) => {
   const { fields, params = {}, isPageEditing = false } = props;
-  
+
   const datasource = useMemo(() => {
     return fields?.data?.datasource || null;
   }, [fields?.data?.datasource]);
@@ -315,7 +315,7 @@ export const BoxedAccordion = (props: AccordionProps) => {
 
 export const BoxedContent = (props: AccordionProps) => {
   const { fields, params = {}, isPageEditing = false } = props;
-  
+
   const datasource = useMemo(() => {
     return fields?.data?.datasource || null;
   }, [fields?.data?.datasource]);
