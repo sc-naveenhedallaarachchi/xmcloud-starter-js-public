@@ -9,8 +9,8 @@ import { IGQLImageField, IGQLLinkField, IGQLTextField } from 'types/igql';
 interface Fields {
   data: {
     datasource: {
-      title: IGQLTextField;
-      description: IGQLTextField;
+      title?: IGQLTextField;
+      description?: IGQLTextField;
       children: {
         results: SimplePromoFields[];
       };
@@ -73,10 +73,10 @@ export const Default = (props: MultiPromoProps) => {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
-            <ContentSdkText field={datasource.title?.jsonValue} />
+            <ContentSdkText field={datasource?.title?.jsonValue} />
           </h2>
           <p className="text-lg">
-            <ContentSdkText field={datasource.description?.jsonValue} />
+            <ContentSdkText field={datasource?.description?.jsonValue} />
           </p>
         </div>
         <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-12`}>
@@ -102,10 +102,10 @@ export const Stacked = (props: MultiPromoProps) => {
         <div className={`${parentBasedGridClasses}`}>
           <div className="lg:[.multipromo-3-2_&]:col-start-1 lg:[.multipromo-2-3_&]:col-start-2 lg:col-start-2 [.multipromo-2-3_&]:text-right">
             <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
-              <ContentSdkText field={datasource.title?.jsonValue} />
+              <ContentSdkText field={datasource?.title?.jsonValue} />
             </h2>
             <p className="text-lg">
-              <ContentSdkText field={datasource.description?.jsonValue} />
+              <ContentSdkText field={datasource?.description?.jsonValue} />
             </p>
           </div>
         </div>
@@ -137,10 +137,10 @@ export const SingleColumn = (props: MultiPromoProps) => {
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mb-16">
           <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
-            <ContentSdkText field={datasource.title?.jsonValue} />
+            <ContentSdkText field={datasource?.title?.jsonValue} />
           </h2>
           <p className="text-lg">
-            <ContentSdkText field={datasource.description?.jsonValue} />
+            <ContentSdkText field={datasource?.description?.jsonValue} />
           </p>
         </div>
         <div className="grid gap-14">

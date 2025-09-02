@@ -12,8 +12,8 @@ const mapToItemProps = (fields: MultiPromoItemProps) => {
 };
 
 export const Default: React.FC<MultiPromoItemProps> = (props) => {
-  const itemProps = mapToItemProps(props ?? {});
-  const { title, image, link } = itemProps ?? {};
+  const itemProps = mapToItemProps(props || {});
+  const { title, image, link } = itemProps || {};
 
   return (
     <>
