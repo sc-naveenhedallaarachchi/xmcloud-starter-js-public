@@ -80,7 +80,7 @@ export const Default = (props: MultiPromoProps) => {
           </p>
         </div>
         <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-12`}>
-          {datasource.children?.results?.map((promo) => {
+          {datasource?.children?.results?.map((promo) => {
             return <PromoItem key={promo.id} {...promo} />;
           }) ?? []}
         </div>
@@ -110,7 +110,7 @@ export const Stacked = (props: MultiPromoProps) => {
           </div>
         </div>
         <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-30`}>
-          {datasource.children?.results?.map((promo) => {
+          {datasource?.children?.results?.map((promo) => {
             return (
               <div
                 key={promo.id}
@@ -144,7 +144,7 @@ export const SingleColumn = (props: MultiPromoProps) => {
           </p>
         </div>
         <div className="grid gap-14">
-          {datasource.children?.results?.map((promo) => {
+          {datasource?.children?.results?.map((promo) => {
             return <PromoItem key={promo.id} {...promo} isHorizontal />;
           }) ?? []}
         </div>
