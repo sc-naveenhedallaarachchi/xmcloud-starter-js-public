@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-import { Text, Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
+import { Text, Field, ImageField, LinkField, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
 import { NoDataFallback } from '@/utils/NoDataFallback';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -38,11 +38,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields }) => {
   const [activeIndex, setActiveIndex] = useState<number>(1);
   const [isExpanding, setIsExpanding] = useState(false);
 
-  const { title, items } = fields?.data?.datasource ?? {};
-
-  if (!fields?.data?.datasource) {
-    return <NoDataFallback componentName="VerticalImageAccordion" />;
-  }
+  const { title, items } = fields?.data?.datasource || {};
 
   const handleClick = (index: number) => {
     setIsExpanding(true);
@@ -73,7 +69,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields }) => {
       )}
 
       <div className="flex flex-col @md:flex-row gap-14" role="tablist" aria-orientation="vertical">
-        {items?.results.map((item, index) => (
+        {items?.results?.map((item, index) => (
           <motion.div
             key={index}
             className={cn(

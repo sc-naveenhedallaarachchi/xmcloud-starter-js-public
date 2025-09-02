@@ -13,10 +13,6 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
   const { page } = useSitecore();
   const isEditMode = isPageEditing || page.mode.isEditing;
 
-  if (!fields?.data?.datasource) {
-    return <NoDataFallback componentName="VerticalImageAccordion" />;
-  }
-
   const handleClick = (index: number) => {
     // Only animate if clicking a different item
     if (activeIndex !== index) {
@@ -37,7 +33,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
     }
   };
 
-  const { title, items } = fields.data.datasource;
+  const { title, items } = fields?.data?.datasource || {};
 
   // When in editor mode, render all items stacked
   if (isEditMode) {
@@ -56,7 +52,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
         )}
 
         <div className="flex flex-col gap-14">
-          {items?.results.map((item, index) => (
+          {items?.results?.map((item, index) => (
             <div key={index} className="flex flex-col overflow-hidden rounded-lg">
               <div
                 className="@md:h-[513px] relative h-[300px]"
@@ -161,7 +157,7 @@ export const Default: React.FC<VerticalImageAccordionProps> = ({ fields, isPageE
         role="tablist"
         aria-orientation="vertical"
       >
-        {items?.results.map((item, index) => {
+        {items?.results?.map((item, index) => {
           const isActive = activeIndex === index;
 
           return (
