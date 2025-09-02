@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Text, Field, ImageField, LinkField, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { Default as ImageWrapper } from '@/components/image/ImageWrapper.dev';
-import { NoDataFallback } from '@/utils/NoDataFallback';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ButtonBase as Button } from '@/components/button-component/ButtonComponent';
 import { ComponentProps } from '@/lib/component-props';
