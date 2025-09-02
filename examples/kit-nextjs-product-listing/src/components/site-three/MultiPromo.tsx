@@ -5,13 +5,12 @@ import {
   Link as ContentSdkLink,
 } from '@sitecore-content-sdk/nextjs';
 import { IGQLImageField, IGQLLinkField, IGQLTextField } from 'types/igql';
-import { NoDataFallback } from '@/utils/NoDataFallback';
 
 interface Fields {
   data: {
     datasource: {
-      title: IGQLTextField;
-      description: IGQLTextField;
+      title?: IGQLTextField;
+      description?: IGQLTextField;
       children: {
         results: SimplePromoFields[];
       };
@@ -37,20 +36,22 @@ type PromoItemProps = SimplePromoFields & {
 };
 
 const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
+  const { image, heading, description, link } = promo ?? {};
+
   return (
     <div className={`grid gap-8 ${isHorizontal ? 'lg:grid-cols-[1fr_2fr]' : ''}`}>
       <ContentSdkImage
-        field={promo.image?.jsonValue}
+        field={image?.jsonValue}
         className="w-full h-full aspect-square object-cover shadow-2xl"
       />
       <div>
         <h4 className="text-xl lg:text-2xl mb-2 uppercase">
-          <ContentSdkText field={promo.heading?.jsonValue} />
+          <ContentSdkText field={heading?.jsonValue} />
         </h4>
         <p className="lg:text-lg mb-2">
-          <ContentSdkText field={promo.description?.jsonValue} />
+          <ContentSdkText field={description?.jsonValue} />
         </p>
-        <ContentSdkLink field={promo.link?.jsonValue} className="btn btn-ghost" />
+        <ContentSdkLink field={link?.jsonValue} className="btn btn-ghost" />
       </div>
     </div>
   );
@@ -62,27 +63,26 @@ const parentBasedGridItemClasses =
   '[.multipromo-centered_&]:items-center [.bg-gradient_&]:text-white items-start';
 
 export const Default = (props: MultiPromoProps) => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
-
-  if (!datasource) {
-    return <NoDataFallback componentName="MultiPromo" />;
-  }
+  const datasource = useMemo(
+    () => props.fields?.data?.datasource,
+    [props.fields?.data?.datasource]
+  );
 
   return (
     <section className={`relative ${props.params.styles}`} data-class-change>
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
-            <ContentSdkText field={datasource.title?.jsonValue} />
+            <ContentSdkText field={datasource?.title?.jsonValue} />
           </h2>
           <p className="text-lg">
-            <ContentSdkText field={datasource.description?.jsonValue} />
+            <ContentSdkText field={datasource?.description?.jsonValue} />
           </p>
         </div>
         <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-12`}>
-          {datasource.children.results.map((promo) => {
+          {datasource?.children?.results?.map((promo) => {
             return <PromoItem key={promo.id} {...promo} />;
-          })}
+          }) ?? []}
         </div>
       </div>
     </section>
@@ -90,11 +90,10 @@ export const Default = (props: MultiPromoProps) => {
 };
 
 export const Stacked = (props: MultiPromoProps) => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
-
-  if (!datasource) {
-    return <NoDataFallback componentName="MultiPromo" />;
-  }
+  const datasource = useMemo(
+    () => props.fields?.data?.datasource,
+    [props.fields?.data?.datasource]
+  );
 
   return (
     <section className={`relative ${props.params.styles} overflow-hidden`} data-class-change>
@@ -103,15 +102,15 @@ export const Stacked = (props: MultiPromoProps) => {
         <div className={`${parentBasedGridClasses}`}>
           <div className="lg:[.multipromo-3-2_&]:col-start-1 lg:[.multipromo-2-3_&]:col-start-2 lg:col-start-2 [.multipromo-2-3_&]:text-right">
             <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
-              <ContentSdkText field={datasource.title?.jsonValue} />
+              <ContentSdkText field={datasource?.title?.jsonValue} />
             </h2>
             <p className="text-lg">
-              <ContentSdkText field={datasource.description?.jsonValue} />
+              <ContentSdkText field={datasource?.description?.jsonValue} />
             </p>
           </div>
         </div>
         <div className={`${parentBasedGridClasses} ${parentBasedGridItemClasses} mt-30`}>
-          {datasource.children.results.map((promo) => {
+          {datasource?.children?.results?.map((promo) => {
             return (
               <div
                 key={promo.id}
@@ -120,7 +119,7 @@ export const Stacked = (props: MultiPromoProps) => {
                 <PromoItem {...promo} />
               </div>
             );
-          })}
+          }) ?? []}
         </div>
       </div>
     </section>
@@ -128,27 +127,26 @@ export const Stacked = (props: MultiPromoProps) => {
 };
 
 export const SingleColumn = (props: MultiPromoProps) => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
-
-  if (!datasource) {
-    return <NoDataFallback componentName="MultiPromo" />;
-  }
+  const datasource = useMemo(
+    () => props.fields?.data?.datasource,
+    [props.fields?.data?.datasource]
+  );
 
   return (
     <section className={`relative ${props.params.styles}`} data-class-change>
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mb-16">
           <h2 className="mb-6 text-2xl lg:text-5xl uppercase">
-            <ContentSdkText field={datasource.title?.jsonValue} />
+            <ContentSdkText field={datasource?.title?.jsonValue} />
           </h2>
           <p className="text-lg">
-            <ContentSdkText field={datasource.description?.jsonValue} />
+            <ContentSdkText field={datasource?.description?.jsonValue} />
           </p>
         </div>
         <div className="grid gap-14">
-          {datasource.children.results.map((promo) => {
+          {datasource?.children?.results?.map((promo) => {
             return <PromoItem key={promo.id} {...promo} isHorizontal />;
-          })}
+          }) ?? []}
         </div>
       </div>
     </section>
