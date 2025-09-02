@@ -16,8 +16,8 @@ export const Default: React.FC<HeroProps> = (props) => {
   const { isEditing } = page.mode;
   const { t } = useI18n();
   const dictionary = {
-    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel),
-    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder),
+    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
+    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
   props.fields.dictionary = dictionary;
 
@@ -30,8 +30,8 @@ export const ImageBottom: React.FC<HeroProps> = (props) => {
   const { isEditing } = page.mode;
   const { t } = useI18n();
   const dictionary = {
-    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel),
-    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder),
+    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
+    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
   props.fields.dictionary = dictionary;
 
@@ -43,8 +43,8 @@ export const ImageBottomInset: React.FC<HeroProps> = (props) => {
   const { isEditing } = page.mode;
   const { t } = useI18n();
   const dictionary = {
-    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel),
-    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder),
+    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
+    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
   props.fields.dictionary = dictionary;
 
@@ -56,8 +56,8 @@ export const ImageBackground: React.FC<HeroProps> = (props) => {
   const { isEditing } = page.mode;
   const { t } = useI18n();
   const dictionary = {
-    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel),
-    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder),
+    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
+    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
   props.fields.dictionary = dictionary;
 
@@ -69,8 +69,8 @@ export const ImageRight: React.FC<HeroProps> = (props) => {
   const { isEditing } = page.mode;
   const { t } = useI18n();
   const dictionary = {
-    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel),
-    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder),
+    SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
+    ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
   props.fields.dictionary = dictionary;
   return <HeroImageRight {...props} isPageEditing={isEditing} />;

@@ -27,8 +27,7 @@ export const heroVariants = cva('hero @container py-24 relative w-full overflow-
 });
 
 export const Default: React.FC<HeroProps> = ({ fields, params }) => {
-  // Destructure fields and params
-
+  // Destructure fields and params with null checking
   const {
     titleRequired,
     descriptionOptional,
@@ -41,7 +40,7 @@ export const Default: React.FC<HeroProps> = ({ fields, params }) => {
     heroImageOptional3,
     heroVideoOptional4,
     heroImageOptional4,
-  } = fields;
+  } = fields || {};
 
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const { page } = useSitecore();

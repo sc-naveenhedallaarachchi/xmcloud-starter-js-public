@@ -11,7 +11,7 @@ import type { HeroFields, HeroProps } from './hero.props';
 
 export const HeroImageBackground: React.FC<HeroProps> = (props) => {
   const { fields: initialFields, isPageEditing } = props;
-  const [fields, setFields] = useState(initialFields);
+  const [fields, setFields] = useState(initialFields || {});
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -84,9 +84,8 @@ export const HeroImageBackground: React.FC<HeroProps> = (props) => {
     }
   }, [initialFields.dictionary, isPageEditing]);
 
-  if (fields) {
-    const { title, description, bannerText, bannerCTA, image } = fields;
-    const needsBanner: boolean = isPageEditing
+  const { title, description, bannerText, bannerCTA, image } = fields || {};
+  const needsBanner: boolean = isPageEditing
       ? true
       : bannerText?.value !== '' || bannerCTA?.value?.href !== ''
         ? true
