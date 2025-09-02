@@ -51,7 +51,8 @@ export const HeroImageBackground: React.FC<HeroProps> = (props) => {
         if (response.ok) {
           const data = await response.json();
           // Update fields with personalized content
-          const { title, description, bannerText, bannerCTA, heroImage } = data?.heroDatasource || {};
+          const { title, description, bannerText, bannerCTA, heroImage } =
+            data?.heroDatasource || {};
           const image = heroImage.value ? heroImage : { value: heroImage };
           const personalizedFields: HeroFields = {
             title: {

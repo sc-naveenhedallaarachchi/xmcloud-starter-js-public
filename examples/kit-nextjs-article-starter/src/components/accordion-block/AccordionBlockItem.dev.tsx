@@ -16,9 +16,7 @@ export const AccordionBlockItem = ({
   <>
     <AccordionItem key={index} value={`${valuePrefix}-${index + 1}`} className="border-b">
       <AccordionTrigger className="line-height-6 hover:text-primary-hover font-heading flex flex-1 items-center justify-between py-4 text-left text-base font-medium transition-all hover:no-underline [&>svg]:ml-4 [&[data-state=open]>svg]:rotate-180">
-        {child?.heading?.jsonValue && (
-          <Text field={child.heading.jsonValue} />
-        )}
+        {child?.heading?.jsonValue && <Text field={child.heading.jsonValue} />}
       </AccordionTrigger>
       <AccordionContent className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm transition-all">
         <div className="font-heading grid gap-4 text-sm">
