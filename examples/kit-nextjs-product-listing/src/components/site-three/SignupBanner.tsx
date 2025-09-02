@@ -36,7 +36,9 @@ export const Default = (props: SignupBannerProps) => {
   return (
     <section className={`relative px-4 ${props.params.styles}`} data-class-change>
       <div className="absolute inset-0 z-10">
-        {fields?.Image && <ContentSdkImage field={fields.Image} className="w-full h-full object-cover" />}
+        {fields?.Image && (
+          <ContentSdkImage field={fields.Image} className="w-full h-full object-cover" />
+        )}
       </div>
 
       <div className="relative container mx-auto overflow-hidden backdrop-blur-[20px] bg-[linear-gradient(136deg,rgba(78,76,76,0.15)_2.61%,rgba(78,76,76,0.30)_73.95%)] z-20">
@@ -77,7 +79,9 @@ export const ContentLeft = (props: SignupBannerProps) => {
   return (
     <section className={`relative px-4 ${props.params.styles}`} data-class-change>
       <div className="absolute inset-0 z-10">
-        {fields?.Image && <ContentSdkImage field={fields.Image} className="w-full h-full object-cover" />}
+        {fields?.Image && (
+          <ContentSdkImage field={fields.Image} className="w-full h-full object-cover" />
+        )}
       </div>
       <div className="relative container mx-auto z-20">
         <div className="lg:max-w-[60%] h-full overflow-hidden backdrop-blur-[20px] bg-[linear-gradient(136deg,rgba(78,76,76,0.15)_2.61%,rgba(78,76,76,0.30)_73.95%)]">
