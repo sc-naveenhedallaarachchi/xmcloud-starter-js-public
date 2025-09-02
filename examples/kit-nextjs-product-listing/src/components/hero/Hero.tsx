@@ -19,7 +19,11 @@ export const Default: React.FC<HeroProps> = (props) => {
     SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
     ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
-  props.fields.dictionary = dictionary;
+
+  // Safely set dictionary only if props.fields exists
+  if (props.fields) {
+    props.fields.dictionary = dictionary;
+  }
 
   return <HeroDefault {...props} isPageEditing={isPageEditing} />;
 };
@@ -33,7 +37,11 @@ export const ImageBottom: React.FC<HeroProps> = (props) => {
     SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
     ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
-  props.fields.dictionary = dictionary;
+
+  // Safely set dictionary only if props.fields exists
+  if (props.fields) {
+    props.fields.dictionary = dictionary;
+  }
 
   return <HeroImageBottom {...props} isPageEditing={isPageEditing} />;
 };
@@ -46,7 +54,11 @@ export const ImageBottomInset: React.FC<HeroProps> = (props) => {
     SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
     ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
-  props.fields.dictionary = dictionary;
+
+  // Safely set dictionary only if props.fields exists
+  if (props.fields) {
+    props.fields.dictionary = dictionary;
+  }
 
   return <HeroImageBottomInset {...props} isPageEditing={isPageEditing} />;
 };
@@ -59,7 +71,11 @@ export const ImageBackground: React.FC<HeroProps> = (props) => {
     SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
     ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
-  props.fields.dictionary = dictionary;
+
+  // Safely set dictionary only if props.fields exists
+  if (props.fields) {
+    props.fields.dictionary = dictionary;
+  }
 
   return <HeroImageBackground {...props} isPageEditing={isPageEditing} />;
 };
@@ -72,6 +88,10 @@ export const ImageRight: React.FC<HeroProps> = (props) => {
     SubmitCTALabel: t(dictionaryKeys.HERO_SubmitCTALabel) || '',
     ZipPlaceholder: t(dictionaryKeys.HERO_ZipPlaceholder) || '',
   };
-  props.fields.dictionary = dictionary;
+
+  // Safely set dictionary only if props.fields exists
+  if (props.fields) {
+    props.fields.dictionary = dictionary;
+  }
   return <HeroImageRight {...props} isPageEditing={isPageEditing} />;
 };

@@ -65,7 +65,7 @@ export const HeroImageBackground: React.FC<HeroProps> = (props) => {
             },
             bannerCTA,
             image: image,
-            dictionary: initialFields.dictionary,
+            dictionary: initialFields?.dictionary,
           };
           setFields(personalizedFields);
         }
@@ -82,7 +82,7 @@ export const HeroImageBackground: React.FC<HeroProps> = (props) => {
     if (shouldPersonalize && !isPageEditing) {
       fetchPersonalizedContent();
     }
-  }, [initialFields.dictionary, isPageEditing]);
+  }, [initialFields?.dictionary, isPageEditing]);
 
   if (fields) {
     const { title, description, bannerText, bannerCTA, image } = fields || {};
