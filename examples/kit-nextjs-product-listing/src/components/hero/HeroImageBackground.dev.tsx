@@ -84,8 +84,9 @@ export const HeroImageBackground: React.FC<HeroProps> = (props) => {
     }
   }, [initialFields.dictionary, isPageEditing]);
 
-  const { title, description, bannerText, bannerCTA, image } = fields || {};
-  const needsBanner: boolean = isPageEditing
+  if (fields) {
+    const { title, description, bannerText, bannerCTA, image } = fields || {};
+    const needsBanner: boolean = isPageEditing
       ? true
       : bannerText?.value !== '' || bannerCTA?.value?.href !== ''
         ? true

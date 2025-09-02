@@ -98,12 +98,12 @@ export const HeroImageBottomInset: React.FC<HeroProps> = (props) => {
                 className="mt-6 w-full"
               >
                 <ZipcodeSearchForm
-                                  placeholder={dictionary?.ZipPlaceholder || ''}
-                buttonText={dictionary?.SubmitCTALabel || ''}
+                  placeholder={dictionary?.ZipPlaceholder || ''}
+                  buttonText={dictionary?.SubmitCTALabel || ''}
                   onSubmit={(values) => {
                     sessionStorage.setItem(USER_ZIPCODE, values.zipcode);
-                                      if (searchLink?.value?.href) {
-                    window.location.href = `${searchLink.value.href}`;
+                    if (searchLink?.value?.href) {
+                      window.location.href = `${searchLink.value.href}`;
                     }
                   }}
                 />
