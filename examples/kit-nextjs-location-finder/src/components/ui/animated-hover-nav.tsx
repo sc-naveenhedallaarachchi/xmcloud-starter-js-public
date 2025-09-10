@@ -141,22 +141,19 @@ export const AnimatedHoverNav = ({
   // Add mouse enter event listeners to list items
   useEffect(() => {
     const items = itemRefs.current;
-
-    const handleItemMouseEnter = (index: number) => () => {
-      handleMouseEnter(index);
-    };
+    const listeners: Array<{ element: HTMLElement; handler: () => void }> = [];
 
     items.forEach((item, index) => {
       if (item) {
-        item.addEventListener('mouseenter', handleItemMouseEnter(index));
+        const handler = () => handleMouseEnter(index);
+        item.addEventListener('mouseenter', handler);
+        listeners.push({ element: item, handler });
       }
     });
 
     return () => {
-      items.forEach((item, index) => {
-        if (item) {
-          item.removeEventListener('mouseenter', handleItemMouseEnter(index));
-        }
+      listeners.forEach(({ element, handler }) => {
+        element.removeEventListener('mouseenter', handler);
       });
     };
   }, [handleMouseEnter, children, isDesktop]);
