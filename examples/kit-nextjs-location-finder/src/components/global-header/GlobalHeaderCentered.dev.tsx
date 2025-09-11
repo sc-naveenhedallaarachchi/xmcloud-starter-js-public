@@ -68,11 +68,11 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
       >
         <div className="@xl:px-8 relative mx-auto flex h-16 w-full max-w-screen-2xl items-center justify-between px-4">
           {/* Desktop Navigation */}
-          <div className="@lg:flex z-10 hidden" ref={navRef}>
+          <div className="@lg:flex @lg:flex-[2] z-10 hidden" ref={navRef}>
             <NavigationMenu className="w-full">
               <div className="relative w-full">
                 <AnimatedHoverNav
-                  mobileBreakpoint="md"
+                  mobileBreakpoint="xs"
                   parentRef={navRef}
                   indicatorClassName="bg-primary rounded-sm absolute inset-0 z-[-1] block"
                 >
@@ -115,7 +115,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
           </div>
           {/* Desktop CTA */}
           {headerContact?.jsonValue?.value && (
-            <div className="@lg:flex @lg:items-center @lg:justify-end z-10 hidden">
+            <div className="@lg:flex @lg:items-center @lg:justify-end @lg:flex-1 z-10 hidden">
               <Button asChild className="font-heading text-base font-medium">
                 <ContentSdkLink field={headerContact.jsonValue} prefetch={false} />
               </Button>

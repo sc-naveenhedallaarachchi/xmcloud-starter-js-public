@@ -90,11 +90,11 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
             </div>
           </div>
           {/* Desktop Navigation */}
-          <div className="@lg:flex @lg:flex-1 hidden" ref={navRef}>
+          <div className="@lg:flex @lg:flex-[2] hidden" ref={navRef}>
             <NavigationMenu className="w-full">
               <div className="relative w-full">
                 <AnimatedHoverNav
-                  mobileBreakpoint="md"
+                  mobileBreakpoint="xs"
                   parentRef={navRef}
                   indicatorClassName="bg-primary rounded-default absolute inset-0 -z-10 block"
                 >
@@ -118,7 +118,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
           </div>
           {/* Desktop CTA */}
           {headerContact?.jsonValue?.value && (
-            <div className="@lg:flex @lg:items-center @lg:justify-end hidden">
+            <div className="@lg:flex @lg:items-center @lg:justify-end @lg:flex-1 hidden">
               <Button asChild className="font-heading text-base font-medium">
                 <ContentSdkLink field={headerContact.jsonValue} prefetch={false} />
               </Button>
