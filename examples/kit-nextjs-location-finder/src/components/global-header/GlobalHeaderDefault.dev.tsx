@@ -94,7 +94,7 @@ export const GlobalHeaderDefault: React.FC<GlobalHeaderProps> = (props) => {
             <NavigationMenu className="w-full">
               <div className="relative w-full">
                 <AnimatedHoverNav
-                  mobileBreakpoint="md"
+                  mobileBreakpoint="xs"
                   parentRef={navRef}
                   indicatorClassName="bg-primary rounded-default absolute inset-0 -z-10 block"
                 >

@@ -72,7 +72,7 @@ export const GlobalHeaderCentered: React.FC<GlobalHeaderProps> = (props) => {
             <NavigationMenu className="w-full">
               <div className="relative w-full">
                 <AnimatedHoverNav
-                  mobileBreakpoint="md"
+                  mobileBreakpoint="xs"
                   parentRef={navRef}
                   indicatorClassName="bg-primary rounded-sm absolute inset-0 z-[-1] block"
                 >
