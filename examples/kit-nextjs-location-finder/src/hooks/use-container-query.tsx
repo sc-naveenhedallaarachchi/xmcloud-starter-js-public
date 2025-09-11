@@ -25,16 +25,17 @@ export function useContainerQuery(
 
   useEffect(() => {
     const container = containerRef?.current;
+    console.log('container clientwidth', container?.clientWidth);
     if (!container) return;
 
     const breakpointSize = containerBreakpoints[breakpoint];
-
+    console.log('breakpointSize', breakpointSize);
     // Create a function to check if the container matches the breakpoint
     const checkContainer = (width: number) => {
       if (direction === 'min') {
-        setMatches(width <= breakpointSize);
+        setMatches(width >= breakpointSize);
       } else {
-        setMatches(width > breakpointSize);
+        setMatches(width < breakpointSize);
       }
     };
     // Initialize with the current size

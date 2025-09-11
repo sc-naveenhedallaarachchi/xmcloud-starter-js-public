@@ -141,19 +141,22 @@ export const AnimatedHoverNav = ({
   // Add mouse enter event listeners to list items
   useEffect(() => {
     const items = itemRefs.current;
-    const listeners: Array<{ element: HTMLElement; handler: () => void }> = [];
+
+    const handleItemMouseEnter = (index: number) => () => {
+      handleMouseEnter(index);
+    };
 
     items.forEach((item, index) => {
       if (item) {
-        const handler = () => handleMouseEnter(index);
-        item.addEventListener('mouseenter', handler);
-        listeners.push({ element: item, handler });
+        item.addEventListener('mouseenter', handleItemMouseEnter(index));
       }
     });
 
     return () => {
-      listeners.forEach(({ element, handler }) => {
-        element.removeEventListener('mouseenter', handler);
+      items.forEach((item, index) => {
+        if (item) {
+          item.removeEventListener('mouseenter', handleItemMouseEnter(index));
+        }
       });
     };
   }, [handleMouseEnter, children, isDesktop]);
@@ -167,19 +170,22 @@ export const AnimatedHoverNav = ({
     >
       {/* Hover background indicator */}
       <motion.span
-        className={`z-1 absolute block ${indicatorClassName}`}
+        className={`z-0 absolute block ${indicatorClassName}`}
         initial={{ opacity: 0 }}
         animate={
           isHorizontal
             ? {
                 left: hoverStyle.left + 4,
+                top: 0,
                 width: hoverStyle.width - 8,
+                height: '100%',
                 opacity: hoverStyle.opacity,
               }
             : {
                 left: hoverStyle.left + 4,
                 top: hoverStyle.top + 4,
                 width: hoverStyle.width - 8,
+                height: hoverStyle.height - 8,
                 opacity: hoverStyle.opacity,
               }
         }
