@@ -15,7 +15,7 @@ type FormValues = {
 };
 
 export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
-  const { titleRequired, descriptionOptional } = fields;
+  const { titleRequired, descriptionOptional } = fields || {};
   const { t } = useI18n();
   const dictionary = {
     CTALABEL: t(dictionaryKeys.SUBSCRIPTIONBANNER_BUTTON_LABEL),

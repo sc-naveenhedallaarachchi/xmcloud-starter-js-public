@@ -33,6 +33,10 @@ export const Default = (props: SignupBannerProps) => {
   const { fields } = props;
   const { t } = useI18n();
 
+  if (!fields) {
+    return null;
+  }
+
   return (
     <section className={`relative px-4 ${props.params.styles}`} data-class-change>
       <div className="absolute inset-0 z-10">
@@ -73,6 +77,10 @@ export const Default = (props: SignupBannerProps) => {
 export const ContentLeft = (props: SignupBannerProps) => {
   const { fields } = props;
   const { t } = useI18n();
+
+  if (!fields) {
+    return null;
+  }
 
   return (
     <section className={`relative px-4 ${props.params.styles}`} data-class-change>
@@ -116,6 +124,10 @@ export const BackgroundPrimary = (props: SignupBannerProps) => {
   const { fields } = props;
   const { t } = useI18n();
 
+  if (!fields) {
+    return null;
+  }
+
   return (
     <section
       className={`relative bg-primary overflow-hidden py-8 px-4 ${props.params.styles}`}
@@ -156,6 +168,10 @@ export const BackgroundPrimary = (props: SignupBannerProps) => {
 export const BackgroundDark = (props: SignupBannerProps) => {
   const { fields } = props;
   const { t } = useI18n();
+
+  if (!fields) {
+    return null;
+  }
 
   return (
     <section className={`relative bg-black py-8 px-4 ${props.params.styles}`} data-class-change>
