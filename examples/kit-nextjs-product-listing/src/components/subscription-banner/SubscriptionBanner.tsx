@@ -19,7 +19,7 @@ export const Default: React.FC<SubscriptionBannerProps> = ({ fields }) => {
     emailPlaceholder,
     emailErrorMessage,
     thankYouMessage,
-  } = fields;
+  } = fields || {};
   const [isSubmitted, setIsSubmitted] = useState(false);
   const form = useForm<FormValues>({
     defaultValues: {
