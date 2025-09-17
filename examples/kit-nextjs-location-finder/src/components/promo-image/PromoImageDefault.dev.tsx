@@ -41,14 +41,8 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
           )}
 
           <div className="@xs:pl-8 @sm:pl-12 @md:pl-16 @lg:pl-[118px] @xs:pr-6 @sm:pr-12 @md:py-16 relative z-10 mx-auto flex h-full w-full max-w-screen-xl flex-col justify-center px-4 py-24">
-            <div
-              className={`${
-                isPageEditing
-                  ? '@xs:max-w-[95%] @sm:max-w-[90%] @md:max-w-[85%] @lg:max-w-[80%]'
-                  : '@xs:max-w-[90%] @sm:max-w-[80%] @md:max-w-[60%] @lg:max-w-[50%]'
-              }`}
-            >
-              {(heading?.value || isPageEditing) && (
+            <div className="@xs:max-w-[90%] @sm:max-w-[80%] @md:max-w-[60%] @lg:max-w-[50%]">
+              {heading && (
                 <AnimatedSection
                   direction="right"
                   isPageEditing={isPageEditing}
@@ -56,15 +50,13 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
                 >
                   <Text
                     tag="h2"
-                    className={`font-heading @xs:text-3xl @sm:text-4xl @lg:text-5xl text-primary-foreground text-pretty text-2xl ${
-                      isPageEditing ? 'min-w-[200px]' : ''
-                    }`}
+                    className="font-heading @xs:text-3xl @sm:text-4xl @lg:text-5xl text-primary-foreground text-pretty text-2xl"
                     field={heading}
                   />
                 </AnimatedSection>
               )}
 
-              {(description?.value || isPageEditing) && (
+              {description && (
                 <AnimatedSection
                   direction="right"
                   isPageEditing={isPageEditing}
@@ -72,9 +64,7 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
                   delay={600}
                 >
                   <RichText
-                    className={`text-body text-primary-foreground @xs:text-lg @md:text-xl mt-6 font-normal tracking-tight antialiased ${
-                      isPageEditing ? 'min-w-[200px]' : 'max-w-[51.5ch]'
-                    }`}
+                    className="text-body text-primary-foreground @xs:text-lg @md:text-xl mt-6 max-w-[51.5ch] font-normal tracking-tight antialiased"
                     field={description}
                   />
                 </AnimatedSection>
