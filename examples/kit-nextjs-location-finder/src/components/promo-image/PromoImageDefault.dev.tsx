@@ -50,7 +50,9 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
                 >
                   <Text
                     tag="h2"
-                    className="font-heading @xs:text-3xl @sm:text-4xl @lg:text-5xl text-primary-foreground text-pretty text-2xl"
+                    className={`font-heading @xs:text-3xl @sm:text-4xl @lg:text-5xl text-primary-foreground text-pretty text-2xl ${
+                      isPageEditing ? 'w-full' : ''
+                    }`}
                     field={heading}
                   />
                 </AnimatedSection>
@@ -64,7 +66,9 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
                   delay={600}
                 >
                   <RichText
-                    className="text-body text-primary-foreground @xs:text-lg @md:text-xl mt-6 max-w-[51.5ch] font-normal tracking-tight antialiased"
+                    className={`text-body text-primary-foreground @xs:text-lg @md:text-xl mt-6 font-normal tracking-tight antialiased ${
+                      isPageEditing ? 'w-full' : ''
+                    }`}
                     field={description}
                   />
                 </AnimatedSection>
