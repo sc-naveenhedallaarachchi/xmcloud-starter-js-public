@@ -41,11 +41,13 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
           )}
 
           <div className="@xs:pl-8 @sm:pl-12 @md:pl-16 @lg:pl-[118px] @xs:pr-6 @sm:pr-12 @md:py-16 relative z-10 mx-auto flex h-full w-full max-w-screen-xl flex-col justify-center px-4 py-24">
-            <div className={`${
-              isPageEditing 
-                ? '@xs:max-w-[95%] @sm:max-w-[90%] @md:max-w-[85%] @lg:max-w-[80%]' 
-                : '@xs:max-w-[90%] @sm:max-w-[80%] @md:max-w-[60%] @lg:max-w-[50%]'
-            }`}>
+            <div
+              className={`${
+                isPageEditing
+                  ? '@xs:max-w-[95%] @sm:max-w-[90%] @md:max-w-[85%] @lg:max-w-[80%]'
+                  : '@xs:max-w-[90%] @sm:max-w-[80%] @md:max-w-[60%] @lg:max-w-[50%]'
+              }`}
+            >
               {(heading?.value || isPageEditing) && (
                 <AnimatedSection
                   direction="right"
