@@ -9,7 +9,7 @@ import { useMatchMedia } from '@/hooks/use-match-media';
 export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
   const { fields, isPageEditing } = props;
   const prefersReducedMotion = useMatchMedia('(prefers-reduced-motion: reduce)');
-
+  console.log('Page editing', isPageEditing);
   if (fields) {
     const { image, heading, description, link } = fields;
     const hasLink = isPageEditing || link?.value?.href;
@@ -51,7 +51,7 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
                   <Text
                     tag="h2"
                     className={`font-heading @xs:text-3xl @sm:text-4xl @lg:text-5xl text-primary-foreground text-pretty text-2xl ${
-                      isPageEditing ? 'w-full' : ''
+                      heading?.value ?? 'w-full'
                     }`}
                     field={heading}
                   />
@@ -67,7 +67,7 @@ export const PromoImageDefault: React.FC<PromoImageProps> = (props) => {
                 >
                   <RichText
                     className={`text-body text-primary-foreground @xs:text-lg @md:text-xl mt-6 font-normal tracking-tight antialiased ${
-                      isPageEditing ? 'w-full' : ''
+                      description?.value ?? 'w-full'
                     }`}
                     field={description}
                   />
