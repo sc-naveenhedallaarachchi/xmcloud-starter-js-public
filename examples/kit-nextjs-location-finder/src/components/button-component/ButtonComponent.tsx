@@ -160,8 +160,14 @@ const EditableButton = (props: {
 
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { fields, params } = props;
+  console.log('Button props', props);
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
+  const {
+    size = 'default',
+    iconPosition = 'trailing',
+    iconClassName,
+    isPageEditing,
+  } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
@@ -171,11 +177,27 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
     iconName ||
     (iconPosition === IconPosition.LEADING ? IconName.ARROW_LEFT : IconName.ARROW_RIGHT);
+
   if (fields) {
+    console.log('Rendering button with fields', buttonIcon);
+
+    // Check if we have meaningful data to display
+    const hasData =
+      buttonLink?.value?.text || (buttonLink?.value?.href && buttonLink?.value?.href !== '');
+
     return (
       <Button asChild variant={variant} size={size}>
         {isPageEditing ? (
-          <Link field={buttonLink} editable={true} />
+          // Editing mode: always show the Link component for editing, with placeholder text if no data
+          <Link field={buttonLink} editable={true}>
+            {iconPosition === IconPosition.LEADING && (
+              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+            )}
+            {hasData ? buttonLink?.value?.text : 'Button Text'}
+            {iconPosition !== IconPosition.LEADING && (
+              <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
+            )}
+          </Link>
         ) : (
           <Link editable={isPageEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
@@ -191,7 +213,14 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
     );
   }
 
-  return <NoDataFallback componentName="Button" />;
+  // If no fields at all, show fallback only in non-editing mode
+  return isPageEditing ? (
+    <Button variant={variant} size={size}>
+      <span>Button Text</span>
+    </Button>
+  ) : (
+    <NoDataFallback componentName="Button" />
+  );
 };
 
 const Primary = (props: ButtonComponentProps): JSX.Element | null => {
