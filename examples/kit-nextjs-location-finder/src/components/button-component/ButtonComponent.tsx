@@ -85,7 +85,7 @@ const ButtonBase = (
     isPageEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
       ? defaultButtonLink
       : buttonLink;
-
+  console.log('bas  Button render', effectiveButtonLink);
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -157,7 +157,7 @@ const EditableButton = (props: {
     isPageEditing && (!buttonLink?.value?.text || !isValidEditableLink(buttonLink, icon))
       ? defaultButtonLink
       : buttonLink;
-
+  console.log('ed  Button render', effectiveButtonLink);
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -219,6 +219,8 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
     isPageEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
       ? defaultButtonLink
       : buttonLink;
+
+  console.log('def Button render', effectiveButtonLink);
 
   if (fields) {
     return (
