@@ -69,11 +69,29 @@ const ButtonBase = (
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+  console.log('base BUTTON', buttonLink);
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
-        <Link field={buttonLink} editable={true} />
+        <Link
+          field={
+            buttonLink?.value?.text
+              ? buttonLink
+              : {
+                  value: {
+                    href: 'http://#',
+                    linktype: 'internal',
+                    url: '#',
+                    target: '',
+                    text: '[No Text in Field]',
+                    title: '',
+                    class: '',
+                  },
+                }
+          }
+          editable={true}
+        />
       ) : (
         <Link field={buttonLink} editable={isPageEditing}>
           {iconPosition === IconPosition.LEADING && icon ? (
@@ -126,6 +144,7 @@ const EditableButton = (props: {
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   if (!isPageEditing && !isValidEditableLink(buttonLink, icon)) return null;
 
+  console.log('editable BUTTON', buttonLink);
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -133,7 +152,24 @@ const EditableButton = (props: {
           {iconPosition === IconPosition.LEADING ? (
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
           ) : null}
-          <Link field={buttonLink} editable={isPageEditing} />
+          <Link
+            field={
+              buttonLink?.value?.text
+                ? buttonLink
+                : {
+                    value: {
+                      href: 'http://#',
+                      linktype: 'internal',
+                      url: '#',
+                      target: '',
+                      text: '[No Text in Field]',
+                      title: '',
+                      class: '',
+                    },
+                  }
+            }
+            editable={isPageEditing}
+          />
           {iconPosition !== IconPosition.LEADING ? (
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
           ) : null}
@@ -166,6 +202,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+  console.log('default BUTTON', buttonLink);
 
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
