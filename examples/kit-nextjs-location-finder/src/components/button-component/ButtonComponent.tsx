@@ -66,16 +66,43 @@ const ButtonBase = (
     className = '',
     isPageEditing,
   } = props || {};
+
+  console.log('ButtonBase - isPageEditing:', isPageEditing, 'buttonLink:', buttonLink);
+
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
+
+  // In non-editing mode, don't render if link is not valid
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+
+  // Check if we have meaningful data to display
+  const hasData =
+    buttonLink?.value?.text || (buttonLink?.value?.href && buttonLink?.value?.href !== '');
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
-        <Link field={buttonLink} editable={true} />
+        // Editing mode: always show the Link component with placeholder if no data
+        <Link field={buttonLink} editable={true}>
+          {iconPosition === IconPosition.LEADING && (
+            <Icon
+              iconName={iconName ? iconName : IconName.ARROW_LEFT}
+              className={iconClassName}
+              isAriaHidden={ariaHidden}
+            />
+          )}
+          {hasData ? buttonLink?.value?.text : 'Button Text'}
+          {iconPosition !== IconPosition.LEADING && (
+            <Icon
+              iconName={iconName ? iconName : IconName.ARROW_RIGHT}
+              className={iconClassName}
+              isAriaHidden={ariaHidden}
+            />
+          )}
+        </Link>
       ) : (
-        <Link field={buttonLink} editable={isPageEditing}>
+        // Non-editing mode: render normally
+        <Link field={buttonLink} editable={false}>
           {iconPosition === IconPosition.LEADING && icon ? (
             <Icon
               iconName={iconName ? iconName : IconName.ARROW_LEFT}
@@ -86,7 +113,7 @@ const ButtonBase = (
           {buttonLink?.value?.text}
           {iconPosition !== IconPosition.LEADING && icon ? (
             <Icon
-              iconName={iconName ? iconName : IconName.ARROW_LEFT}
+              iconName={iconName ? iconName : IconName.ARROW_RIGHT}
               className={iconClassName}
               isAriaHidden={ariaHidden}
             />
@@ -123,26 +150,39 @@ const EditableButton = (props: {
     isPageEditing = false,
     asIconLink = false,
   } = props || {};
+
+  console.log('EditableButton - isPageEditing:', isPageEditing, 'buttonLink:', buttonLink);
+
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
+
+  // In non-editing mode, don't render if link is not valid
   if (!isPageEditing && !isValidEditableLink(buttonLink, icon)) return null;
+
+  // Check if we have meaningful data to display
+  const hasData =
+    buttonLink?.value?.text || (buttonLink?.value?.href && buttonLink?.value?.href !== '');
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
-        <span className="flex">
-          {iconPosition === IconPosition.LEADING ? (
+        // Editing mode: always show editable content with placeholder
+        <span className="flex items-center">
+          {iconPosition === IconPosition.LEADING && (
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
-          ) : null}
-          <Link field={buttonLink} editable={isPageEditing} />
-          {iconPosition !== IconPosition.LEADING ? (
+          )}
+          <Link field={buttonLink} editable={true}>
+            {hasData && !asIconLink ? buttonLink?.value?.text : asIconLink ? '' : 'Button Text'}
+          </Link>
+          {iconPosition !== IconPosition.LEADING && (
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
-          ) : null}
+          )}
         </span>
       ) : (
+        // Non-editing mode: render normally
         <Link
           className={className}
           field={buttonLink}
-          editable={isPageEditing}
+          editable={false}
           aria-label={asIconLink ? buttonLink?.value?.text : undefined}
         >
           {iconPosition === IconPosition.LEADING && icon?.value?.src ? (
@@ -160,7 +200,7 @@ const EditableButton = (props: {
 
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { fields, params } = props;
-  console.log('Button props', props);
+  console.log('Default Button Component - Full props:', JSON.stringify(props, null, 2));
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
   const {
     size = 'default',
@@ -171,6 +211,17 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
+
+  console.log(
+    'Default Button - isPageEditing:',
+    isPageEditing,
+    'fields exist:',
+    !!fields,
+    'buttonLink:',
+    buttonLink
+  );
+
+  // In non-editing mode, don't render if link is not valid
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
@@ -185,9 +236,17 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
     const hasData =
       buttonLink?.value?.text || (buttonLink?.value?.href && buttonLink?.value?.href !== '');
 
+    // Additional check for editing mode - sometimes isPageEditing isn't set correctly
+    const isLikelyEditingMode =
+      isPageEditing ||
+      (typeof window !== 'undefined' && window.location?.pathname?.includes('/sitecore/shell')) ||
+      (!hasData && fields); // If we have fields but no data, we're likely in editing mode
+
+    console.log('Default Button - isLikelyEditingMode:', isLikelyEditingMode, 'hasData:', hasData);
+
     return (
       <Button asChild variant={variant} size={size}>
-        {isPageEditing ? (
+        {isLikelyEditingMode ? (
           // Editing mode: always show the Link component for editing, with placeholder text if no data
           <Link field={buttonLink} editable={true}>
             {iconPosition === IconPosition.LEADING && (
@@ -199,7 +258,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
             )}
           </Link>
         ) : (
-          <Link editable={isPageEditing} field={buttonLink}>
+          <Link editable={false} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
@@ -213,8 +272,15 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
     );
   }
 
-  // If no fields at all, show fallback only in non-editing mode
-  return isPageEditing ? (
+  // If no fields at all, show fallback or placeholder button
+  // Check if we're likely in editing mode based on context
+  const isLikelyEditingMode =
+    isPageEditing ||
+    (typeof window !== 'undefined' && window.location?.pathname?.includes('/sitecore/shell'));
+
+  console.log('Default Button - No fields case, isLikelyEditingMode:', isLikelyEditingMode);
+
+  return isLikelyEditingMode ? (
     <Button variant={variant} size={size}>
       <span>Button Text</span>
     </Button>
