@@ -75,7 +75,7 @@ export const Default = (props: TitleProps): JSX.Element => {
     <ComponentContent styles={props.params.styles} id={props.params.RenderingIdentifier}>
       <>
         {mode.isEditing ? (
-          <Text field={text} />
+          <Text field={text} editable={true}/>
         ) : (
           <Link field={link}>
             <Text field={text} />
