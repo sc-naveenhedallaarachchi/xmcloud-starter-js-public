@@ -46,7 +46,9 @@ const ComponentContent = (props: ComponentContentProps) => {
   return (
     <div className={`component title ${props.styles}`} id={id ? id : undefined}>
       <div className="component-content">
-        <div className="field-title">{props.children}</div>
+        <div className="field-title" contentEditable={true}>
+          {props.children}
+        </div>
       </div>
     </div>
   );
@@ -75,7 +77,7 @@ export const Default = (props: TitleProps): JSX.Element => {
     <ComponentContent styles={props.params.styles} id={props.params.RenderingIdentifier}>
       <>
         {mode.isEditing ? (
-          <Text field={text} editable={true} />
+          <Text field={text} />
         ) : (
           <Link field={link}>
             <Text field={text} />
