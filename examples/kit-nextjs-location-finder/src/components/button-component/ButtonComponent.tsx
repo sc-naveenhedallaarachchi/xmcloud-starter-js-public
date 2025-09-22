@@ -2,7 +2,7 @@
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
-import { Link, LinkField, ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import { Link, LinkField, ComponentRendering, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -190,10 +190,12 @@ const EditableButton = (props: {
   );
 };
 
-const Default = (props: ButtonComponentProps): JSX.Element | null => {
-  const { fields, params } = props;
+const ButtonDefault = (
+  props: ButtonComponentProps & { isPageEditing?: boolean }
+): JSX.Element | null => {
+  const { fields, params, isPageEditing } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
+  const { size, iconPosition = 'trailing', iconClassName } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
@@ -220,7 +222,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
       ? defaultButtonLink
       : buttonLink;
 
-  console.log('def Button render', effectiveButtonLink);
+  console.log('def Button render', effectiveButtonLink, 'isPageEditing:', isPageEditing);
 
   if (fields) {
     return (
@@ -245,36 +247,59 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   return <NoDataFallback componentName="Button" />;
 };
 
-const Primary = (props: ButtonComponentProps): JSX.Element | null => {
-  return <Default {...props} variant={ButtonVariants.PRIMARY} />;
+const Default: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <ButtonDefault {...props} isPageEditing={isEditing} />;
 };
 
-const Destructive = (props: ButtonComponentProps): JSX.Element | null => {
-  return <Default {...props} variant={ButtonVariants.DESTRUCTIVE} />;
+const Primary: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <ButtonDefault {...props} variant={ButtonVariants.PRIMARY} isPageEditing={isEditing} />;
 };
 
-const Ghost = (props: ButtonComponentProps): JSX.Element | null => {
-  return <Default {...props} variant={ButtonVariants.GHOST} />;
+const Destructive: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return (
+    <ButtonDefault {...props} variant={ButtonVariants.DESTRUCTIVE} isPageEditing={isEditing} />
+  );
 };
 
-const LinkButton = (props: ButtonComponentProps): JSX.Element | null => {
-  return <Default {...props} variant={ButtonVariants.LINK} />;
+const Ghost: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <ButtonDefault {...props} variant={ButtonVariants.GHOST} isPageEditing={isEditing} />;
 };
 
-const Outline = (props: ButtonComponentProps): JSX.Element | null => {
-  return <Default {...props} variant={ButtonVariants.OUTLINE} />;
+const LinkButton: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <ButtonDefault {...props} variant={ButtonVariants.LINK} isPageEditing={isEditing} />;
 };
 
-const Secondary = (props: ButtonComponentProps): JSX.Element | null => {
-  return <Default {...props} variant={ButtonVariants.SECONDARY} />;
+const Outline: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <ButtonDefault {...props} variant={ButtonVariants.OUTLINE} isPageEditing={isEditing} />;
 };
 
-const Tertiary = (props: ButtonComponentProps): JSX.Element | null => {
-  return <Default {...props} variant={ButtonVariants.TERTIARY} />;
+const Secondary: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <ButtonDefault {...props} variant={ButtonVariants.SECONDARY} isPageEditing={isEditing} />;
+};
+
+const Tertiary: React.FC<ButtonComponentProps> = (props) => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+  return <ButtonDefault {...props} variant={ButtonVariants.TERTIARY} isPageEditing={isEditing} />;
 };
 
 export {
   Default,
+  ButtonDefault,
   ButtonBase,
   EditableButton,
   Primary,
