@@ -2,7 +2,7 @@
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
-import { Link, LinkField, ComponentRendering } from '@sitecore-content-sdk/nextjs';
+import { Link, LinkField, ComponentRendering, useSitecore } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -32,6 +32,17 @@ export type ButtonFields = {
 };
 
 export type ButtonRendering = { rendering: ComponentRendering };
+
+// Default button link for editing mode when no content exists
+const defaultButtonLink = {
+  value: {
+    text: '[No text in field]',
+    href: '#',
+    linktype: 'internal',
+    url: '#',
+  },
+};
+
 const linkIsValid = (link: LinkField) => {
   return (
     !!link?.value?.text &&
@@ -70,10 +81,16 @@ const ButtonBase = (
   const iconName = icon?.value as EnumValues<typeof IconName>;
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
 
+  // Use default values in editing mode when button link is empty or invalid
+  const renderButtonLink =
+    isPageEditing && !buttonLink?.value?.text && !linkIsValid(buttonLink)
+      ? defaultButtonLink
+      : buttonLink;
+
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
-        <Link field={buttonLink} editable={true} />
+        <Link field={renderButtonLink} editable={true} />
       ) : (
         <Link field={buttonLink} editable={isPageEditing}>
           {iconPosition === IconPosition.LEADING && icon ? (
@@ -126,6 +143,12 @@ const EditableButton = (props: {
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   if (!isPageEditing && !isValidEditableLink(buttonLink, icon)) return null;
 
+  // Use default values in editing mode when button link is empty or invalid
+  const renderButtonLink =
+    isPageEditing && !buttonLink?.value?.text && !isValidEditableLink(buttonLink, icon)
+      ? defaultButtonLink
+      : buttonLink;
+
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -133,7 +156,7 @@ const EditableButton = (props: {
           {iconPosition === IconPosition.LEADING ? (
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
           ) : null}
-          <Link field={buttonLink} editable={isPageEditing} />
+          <Link field={renderButtonLink} editable={isPageEditing} />
           {iconPosition !== IconPosition.LEADING ? (
             <ImageWrapper className={iconClassName} image={icon} aria-hidden={ariaHidden} />
           ) : null}
@@ -159,25 +182,35 @@ const EditableButton = (props: {
 };
 
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+
   const { fields, params } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
+  const { size, iconPosition = 'trailing', iconClassName } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
-  if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+  if (!isEditing && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
     iconName ||
     (iconPosition === IconPosition.LEADING ? IconName.ARROW_LEFT : IconName.ARROW_RIGHT);
+
+  // Use default values in editing mode when button link is empty or invalid
+  const renderButtonLink =
+    isEditing && !buttonLink?.value?.text && !linkIsValid(buttonLink)
+      ? defaultButtonLink
+      : buttonLink;
+
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
-        {isPageEditing ? (
-          <Link field={buttonLink} editable={true} />
+        {isEditing ? (
+          <Link field={renderButtonLink} editable={true} />
         ) : (
-          <Link editable={isPageEditing} field={buttonLink}>
+          <Link editable={isEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
