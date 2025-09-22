@@ -85,7 +85,6 @@ const ButtonBase = (
     isPageEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
       ? defaultButtonLink
       : buttonLink;
-  console.log('bas  Button render', effectiveButtonLink);
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -157,7 +156,6 @@ const EditableButton = (props: {
     isPageEditing && (!buttonLink?.value?.text || !isValidEditableLink(buttonLink, icon))
       ? defaultButtonLink
       : buttonLink;
-  console.log('ed  Button render', effectiveButtonLink);
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -190,16 +188,18 @@ const EditableButton = (props: {
   );
 };
 
-const ButtonDefault = (
-  props: ButtonComponentProps & { isPageEditing?: boolean }
-): JSX.Element | null => {
-  const { fields, params, isPageEditing } = props;
+const Default = (props: ButtonComponentProps): JSX.Element | null => {
+  const { page } = useSitecore();
+  const { isEditing } = page.mode;
+
+  const { fields, params } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
   const { size, iconPosition = 'trailing', iconClassName } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
-  if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+
+  if (!isEditing && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
@@ -218,19 +218,17 @@ const ButtonDefault = (
 
   // Use default values in editing mode when button link is empty or invalid
   const effectiveButtonLink =
-    isPageEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
+    isEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
       ? defaultButtonLink
       : buttonLink;
-
-  console.log('def Button render', effectiveButtonLink, 'isPageEditing:', isPageEditing);
 
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
-        {isPageEditing ? (
+        {isEditing ? (
           <Link field={effectiveButtonLink} editable={true} />
         ) : (
-          <Link editable={isPageEditing} field={buttonLink}>
+          <Link editable={isEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
@@ -247,59 +245,36 @@ const ButtonDefault = (
   return <NoDataFallback componentName="Button" />;
 };
 
-const Default: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ButtonDefault {...props} isPageEditing={isEditing} />;
+const Primary = (props: ButtonComponentProps): JSX.Element | null => {
+  return <Default {...props} variant={ButtonVariants.PRIMARY} />;
 };
 
-const Primary: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ButtonDefault {...props} variant={ButtonVariants.PRIMARY} isPageEditing={isEditing} />;
+const Destructive = (props: ButtonComponentProps): JSX.Element | null => {
+  return <Default {...props} variant={ButtonVariants.DESTRUCTIVE} />;
 };
 
-const Destructive: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return (
-    <ButtonDefault {...props} variant={ButtonVariants.DESTRUCTIVE} isPageEditing={isEditing} />
-  );
+const Ghost = (props: ButtonComponentProps): JSX.Element | null => {
+  return <Default {...props} variant={ButtonVariants.GHOST} />;
 };
 
-const Ghost: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ButtonDefault {...props} variant={ButtonVariants.GHOST} isPageEditing={isEditing} />;
+const LinkButton = (props: ButtonComponentProps): JSX.Element | null => {
+  return <Default {...props} variant={ButtonVariants.LINK} />;
 };
 
-const LinkButton: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ButtonDefault {...props} variant={ButtonVariants.LINK} isPageEditing={isEditing} />;
+const Outline = (props: ButtonComponentProps): JSX.Element | null => {
+  return <Default {...props} variant={ButtonVariants.OUTLINE} />;
 };
 
-const Outline: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ButtonDefault {...props} variant={ButtonVariants.OUTLINE} isPageEditing={isEditing} />;
+const Secondary = (props: ButtonComponentProps): JSX.Element | null => {
+  return <Default {...props} variant={ButtonVariants.SECONDARY} />;
 };
 
-const Secondary: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ButtonDefault {...props} variant={ButtonVariants.SECONDARY} isPageEditing={isEditing} />;
-};
-
-const Tertiary: React.FC<ButtonComponentProps> = (props) => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  return <ButtonDefault {...props} variant={ButtonVariants.TERTIARY} isPageEditing={isEditing} />;
+const Tertiary = (props: ButtonComponentProps): JSX.Element | null => {
+  return <Default {...props} variant={ButtonVariants.TERTIARY} />;
 };
 
 export {
   Default,
-  ButtonDefault,
   ButtonBase,
   EditableButton,
   Primary,
