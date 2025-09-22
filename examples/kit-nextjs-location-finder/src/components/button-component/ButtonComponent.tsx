@@ -32,6 +32,17 @@ export type ButtonFields = {
 };
 
 export type ButtonRendering = { rendering: ComponentRendering };
+
+// Default button link for editing mode when no content exists
+const defaultButtonLink = {
+  value: {
+    text: 'Button Text',
+    href: '#',
+    linktype: 'internal',
+    url: '#',
+  },
+};
+
 const linkIsValid = (link: LinkField) => {
   return (
     !!link?.value?.text &&
@@ -70,21 +81,12 @@ const ButtonBase = (
   const iconName = icon?.value as EnumValues<typeof IconName>;
   if (!isPageEditing && !linkIsValid(buttonLink)) return null;
 
-  // Create default button link for editing mode when no content exists
-  const defaultButtonLink = {
-    value: {
-      text: 'Button Text',
-      href: '#',
-      linktype: 'internal',
-      url: '#',
-    },
-  };
-
   // Use default values in editing mode when button link is empty or invalid
   const effectiveButtonLink =
     isPageEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
       ? defaultButtonLink
       : buttonLink;
+
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -141,21 +143,12 @@ const EditableButton = (props: {
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   if (!isPageEditing && !isValidEditableLink(buttonLink, icon)) return null;
 
-  // Create default button link for editing mode when no content exists
-  const defaultButtonLink = {
-    value: {
-      text: 'Button Text',
-      href: '#',
-      linktype: 'internal',
-      url: '#',
-    },
-  };
-
   // Use default values in editing mode when button link is empty or invalid
   const effectiveButtonLink =
     isPageEditing && (!buttonLink?.value?.text || !isValidEditableLink(buttonLink, icon))
       ? defaultButtonLink
       : buttonLink;
+
   return (
     <Button asChild variant={variant} size={size} className={className}>
       {isPageEditing ? (
@@ -189,46 +182,35 @@ const EditableButton = (props: {
 };
 
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
+  // const { page } = useSitecore();
+  // const { isEditing } = page.mode;
 
   const { fields, params } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName } = params || {};
+  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
-
-  if (!isEditing && !linkIsValid(buttonLink)) return null;
+  if (!isPageEditing && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
     iconName ||
     (iconPosition === IconPosition.LEADING ? IconName.ARROW_LEFT : IconName.ARROW_RIGHT);
 
-  // Create default button link for editing mode when no content exists
-  const defaultButtonLink = {
-    value: {
-      text: 'Button Text',
-      href: '#',
-      linktype: 'internal',
-      url: '#',
-    },
-  };
-
   // Use default values in editing mode when button link is empty or invalid
   const effectiveButtonLink =
-    isEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
+    isPageEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
       ? defaultButtonLink
       : buttonLink;
 
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
-        {isEditing ? (
+        {isPageEditing ? (
           <Link field={effectiveButtonLink} editable={true} />
         ) : (
-          <Link editable={isEditing} field={buttonLink}>
+          <Link editable={isPageEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
