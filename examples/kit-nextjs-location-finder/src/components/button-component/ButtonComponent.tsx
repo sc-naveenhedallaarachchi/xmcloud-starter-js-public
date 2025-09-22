@@ -36,7 +36,7 @@ export type ButtonRendering = { rendering: ComponentRendering };
 // Default button link for editing mode when no content exists
 const defaultButtonLink = {
   value: {
-    text: 'Button Text',
+    text: '[No text in field]',
     href: '#',
     linktype: 'internal',
     url: '#',
@@ -83,9 +83,7 @@ const ButtonBase = (
 
   // Use default values in editing mode when button link is empty or invalid
   const renderButtonLink =
-    isPageEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
-      ? defaultButtonLink
-      : buttonLink;
+    !buttonLink?.value?.text && !linkIsValid(buttonLink) ? defaultButtonLink : buttonLink;
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
@@ -145,7 +143,7 @@ const EditableButton = (props: {
 
   // Use default values in editing mode when button link is empty or invalid
   const renderButtonLink =
-    isPageEditing && (!buttonLink?.value?.text || !isValidEditableLink(buttonLink, icon))
+    !buttonLink?.value?.text && !isValidEditableLink(buttonLink, icon)
       ? defaultButtonLink
       : buttonLink;
 
@@ -200,9 +198,7 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
 
   // Use default values in editing mode when button link is empty or invalid
   const renderButtonLink =
-    isEditing && (!buttonLink?.value?.text || !linkIsValid(buttonLink))
-      ? defaultButtonLink
-      : buttonLink;
+    !buttonLink?.value?.text && !linkIsValid(buttonLink) ? defaultButtonLink : buttonLink;
 
   if (fields) {
     return (
