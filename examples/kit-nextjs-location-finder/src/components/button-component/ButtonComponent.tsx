@@ -83,7 +83,9 @@ const ButtonBase = (
 
   // Use default values in editing mode when button link is empty or invalid
   const renderButtonLink =
-    !buttonLink?.value?.text && !linkIsValid(buttonLink) ? defaultButtonLink : buttonLink;
+    isPageEditing && !buttonLink?.value?.text && !linkIsValid(buttonLink)
+      ? defaultButtonLink
+      : buttonLink;
 
   return (
     <Button asChild variant={variant} size={size} className={className}>
@@ -143,7 +145,7 @@ const EditableButton = (props: {
 
   // Use default values in editing mode when button link is empty or invalid
   const renderButtonLink =
-    !buttonLink?.value?.text && !isValidEditableLink(buttonLink, icon)
+    isPageEditing && !buttonLink?.value?.text && !isValidEditableLink(buttonLink, icon)
       ? defaultButtonLink
       : buttonLink;
 
@@ -196,15 +198,11 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
     iconName ||
     (iconPosition === IconPosition.LEADING ? IconName.ARROW_LEFT : IconName.ARROW_RIGHT);
 
-  // Use default values in editing mode when button link is empty or invalid
-  const renderButtonLink =
-    !buttonLink?.value?.text && !linkIsValid(buttonLink) ? defaultButtonLink : buttonLink;
-
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
         {isEditing ? (
-          <Link field={renderButtonLink} editable={true} />
+          <Link field={buttonLink} editable={true} />
         ) : (
           <Link editable={isEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
