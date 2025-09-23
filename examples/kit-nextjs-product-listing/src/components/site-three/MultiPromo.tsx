@@ -10,8 +10,8 @@ import { NoDataFallback } from '@/utils/NoDataFallback';
 interface Fields {
   data: {
     datasource: {
-      title: IGQLTextField;
-      description: IGQLTextField;
+      title?: IGQLTextField;
+      description?: IGQLTextField;
       children: {
         results: SimplePromoFields[];
       };
@@ -37,20 +37,22 @@ type PromoItemProps = SimplePromoFields & {
 };
 
 const PromoItem = ({ isHorizontal, ...promo }: PromoItemProps) => {
+  const { image, heading, description, link } = promo ?? {};
+
   return (
     <div className={`grid gap-8 ${isHorizontal ? 'lg:grid-cols-[1fr_2fr]' : ''}`}>
       <ContentSdkImage
-        field={promo.image?.jsonValue}
+        field={image?.jsonValue}
         className="w-full h-full aspect-square object-cover shadow-2xl"
       />
       <div>
         <h4 className="text-xl lg:text-2xl mb-2 uppercase">
-          <ContentSdkText field={promo.heading?.jsonValue} />
+          <ContentSdkText field={heading?.jsonValue} />
         </h4>
         <p className="lg:text-lg mb-2">
-          <ContentSdkText field={promo.description?.jsonValue} />
+          <ContentSdkText field={description?.jsonValue} />
         </p>
-        <ContentSdkLink field={promo.link?.jsonValue} className="btn btn-ghost" />
+        <ContentSdkLink field={link?.jsonValue} className="btn btn-ghost" />
       </div>
     </div>
   );
@@ -132,7 +134,10 @@ export const Stacked = (props: MultiPromoProps) => {
 };
 
 export const SingleColumn = (props: MultiPromoProps) => {
-  const datasource = useMemo(() => props.fields.data.datasource, [props.fields.data.datasource]);
+  const datasource = useMemo(
+    () => props.fields?.data?.datasource,
+    [props.fields?.data?.datasource]
+  );
 
   if (props.fields) {
     return (
