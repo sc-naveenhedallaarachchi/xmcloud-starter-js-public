@@ -3,7 +3,7 @@ import { ComponentProps } from '@/lib/component-props';
 
 export interface TopicListingParams {
   backgroundTheme: string;
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any;  
 }
 
 export interface TopicListingFields {

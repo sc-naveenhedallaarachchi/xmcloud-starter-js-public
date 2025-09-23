@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import { Field, LinkField, ImageField } from '@sitecore-content-sdk/nextjs';
 import { EnumValues } from '@/enumerations/generic.enum';
 import { ComponentProps } from '@/lib/component-props';

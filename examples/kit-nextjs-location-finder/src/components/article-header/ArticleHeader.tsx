@@ -16,7 +16,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { ComponentProps } from '@/lib/component-props';
 
 interface ArticleHeaderParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 interface ArticleHeaderFields {

@@ -8,7 +8,7 @@ import { ButtonBase as Button } from '@/components/button-component/ButtonCompon
 import { ComponentProps } from '@/lib/component-props';
 
 interface VerticalImageAccordionParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 interface AccordionItem {

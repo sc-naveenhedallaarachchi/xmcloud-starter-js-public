@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { ComponentProps } from '@/lib/component-props';
 
 interface SubscriptionBannerParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 interface SubscriptionBannerFields {

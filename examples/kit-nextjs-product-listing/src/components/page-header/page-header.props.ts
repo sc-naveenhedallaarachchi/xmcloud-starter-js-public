@@ -2,7 +2,7 @@ import { ImageField, Field, LinkField } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 
 interface PageHeaderParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 interface PageHeaderFields {

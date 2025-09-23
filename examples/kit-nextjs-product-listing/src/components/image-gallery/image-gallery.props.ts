@@ -3,7 +3,7 @@ import { Field, ImageField } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 
 interface ImageGalleryParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 interface ImageGalleryFields {

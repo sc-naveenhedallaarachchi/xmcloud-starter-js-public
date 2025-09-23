@@ -146,7 +146,7 @@ export const Default = (props: ProductSectionProps): JSX.Element => {
                 key={product?.id || index}
                 className="pl-2 pr-2 md:basis-1/2 lg:basis-1/4"
               >
-                {!!product ? (
+                {product ? (
                   <div className="flex flex-col items-start justify-end h-full shadow-md pointer">
                     <ContentSdkImage
                       field={product.productImage?.jsonValue}

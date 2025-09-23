@@ -11,7 +11,7 @@ import { ComponentProps } from '@/lib/component-props';
 type CtaBannerParams = {
   params?: {
     colorScheme?: EnumValues<typeof ColorScheme>;
-    [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    [key: string]: any;  
   };
 };
 

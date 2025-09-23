@@ -6,7 +6,7 @@ import { ComponentProps } from '@/lib/component-props';
 interface PageHeaderParams {
   colorScheme?: EnumValues<typeof ColorSchemeLimited> | 'default';
   darkPlayIcon?: '0' | '1';
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 interface PageHeaderLogos {

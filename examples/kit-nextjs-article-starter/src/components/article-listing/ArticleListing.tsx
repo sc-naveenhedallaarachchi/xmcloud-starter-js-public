@@ -15,7 +15,7 @@ import { ReferenceField } from '@/types/ReferenceField.props';
 import { AuthorReferenceField } from '@/types/AuthorTaxonomy.props';
 
 interface ArticleListingParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 type ArticleItemReferenceField = ReferenceField & {

@@ -5,7 +5,7 @@ import { ColorSchemeLimited } from '@/enumerations/ColorSchemeLimited.enum';
 
 interface LogoTabsParams {
   colorScheme?: EnumValues<typeof ColorSchemeLimited>;
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 export interface LogoTabContent {

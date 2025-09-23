@@ -206,7 +206,7 @@ const TeamSectionTemplateVertical = (props: TeamSectionTemplateVerticalProps) =>
             props.columns !== 1 ? `md:grid-cols-2 lg:grid-cols-${props.columns}` : ''
           } ${props.columns === 2 ? 'gap-16' : 'gap-x-8 gap-y-16'} my-20`}
         >
-          {!!props.children
+          {props.children
             ? props.children
             : datasource.children.results.map((tm) => (
                 <TeamMemberCard key={tm.id} tm={tm} {...props.teamMemberProps} />

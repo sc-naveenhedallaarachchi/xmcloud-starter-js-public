@@ -16,7 +16,7 @@ type ContainerFullBleedParams = {
     backgroundImagePath?: string;
     excludeTopMargin?: string;
     inset?: string;
-    [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    [key: string]: any;  
   };
 };
 

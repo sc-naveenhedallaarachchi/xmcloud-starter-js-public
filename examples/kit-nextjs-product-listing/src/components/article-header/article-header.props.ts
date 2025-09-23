@@ -3,7 +3,7 @@ import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 
 interface ArticleHeaderParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 export type ReferenceField = {

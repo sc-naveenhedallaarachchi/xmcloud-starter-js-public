@@ -29,7 +29,7 @@ import { formatDateInUTC } from '@/utils/date-utils';
 import { Default as Icon } from '@/components/icon/Icon';
 
 interface ArticleHeaderParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 type ReferenceField = {

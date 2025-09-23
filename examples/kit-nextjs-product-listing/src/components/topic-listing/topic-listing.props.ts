@@ -4,7 +4,7 @@ import { IconName } from '@/enumerations/Icon.enum';
 
 export interface TopicListingParams {
   backgroundTheme: string;
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any;  
 }
 
 export interface TopicListingFields {

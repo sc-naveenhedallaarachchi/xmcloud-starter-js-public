@@ -19,7 +19,7 @@ export interface Dealership extends DealershipFields {
 }
 
 export interface LocationSearchParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 export interface LocationSearchFields {

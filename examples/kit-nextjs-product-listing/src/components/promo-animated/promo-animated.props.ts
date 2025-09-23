@@ -4,7 +4,7 @@ import { ColorSchemeLimited } from '@/enumerations/ColorSchemeLimited.enum';
 import { ComponentProps } from '@/lib/component-props';
 export interface PromoAnimatedParams {
   colorScheme?: EnumValues<typeof ColorSchemeLimited>;
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any;  
 }
 interface PromoAnimatedFields {
   image: ImageField;

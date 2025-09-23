@@ -2,7 +2,7 @@ import { Field, LinkField, ImageField } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 
 interface HeroParams {
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 export interface HeroFields {

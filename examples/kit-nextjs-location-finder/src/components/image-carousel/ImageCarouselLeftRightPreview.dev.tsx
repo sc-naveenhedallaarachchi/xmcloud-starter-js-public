@@ -36,7 +36,7 @@ export const ImageCarouselLeftRightPreview = (props: ImageCarouselProps) => {
 
   // State for tracking current slide
   const [currentIndex, setCurrentIndex] = useState(0);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   const [api, setApi] = useState<any>(null);
 
   const slideshowId = useId();

@@ -138,7 +138,7 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
                         },
                       }}
                       className="h-full w-full"
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                       
                       onReady={(event: any) => {
                         event.target.playVideo();
                       }}

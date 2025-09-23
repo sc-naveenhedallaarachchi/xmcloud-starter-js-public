@@ -3,7 +3,7 @@ import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 
 export interface MultiPromoParams {
   numColumns?: string;
-  [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  [key: string]: any;  
 }
 
 export interface MultiPromoFields {

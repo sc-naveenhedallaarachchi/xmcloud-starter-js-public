@@ -31,8 +31,7 @@ const FEAASScripts = (): JSX.Element => {
   // Register next Image to be used in Component Builder.
   // Nextjs image implementation will be used when img is rendered in component from Component Builder
   FEAAS.setElementImplementation('img', (attributes: Record<string, string>) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { children, src, alt, ...imgAttributes } = attributes;
+    const { src, alt, ...imgAttributes } = attributes;
     return (
       <Image
         height={1920}

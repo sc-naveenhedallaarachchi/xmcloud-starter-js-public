@@ -43,7 +43,7 @@ const ctaButtonVariants = cva('text-sm font-heading font-medium', {
 type CtaBannerParams = {
   params?: {
     colorScheme?: EnumValues<typeof ColorScheme>;
-    [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+    [key: string]: any;  
   };
 };
 

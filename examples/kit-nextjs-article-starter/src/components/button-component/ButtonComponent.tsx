@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
@@ -108,7 +108,7 @@ const EditableButton = (props: {
   size?: EnumValues<typeof ButtonSize>;
   //if asIconLink is set the text will not show up in the link but as an aria label
   asIconLink?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   [key: string]: any;
 }): JSX.Element | null => {
   const {

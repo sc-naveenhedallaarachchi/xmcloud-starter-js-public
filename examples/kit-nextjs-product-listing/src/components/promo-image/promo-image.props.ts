@@ -5,7 +5,7 @@ import { ComponentProps } from '@/lib/component-props';
 
 export interface PromoImageParams {
   colorScheme?: EnumValues<typeof ColorSchemeLimited>;
-  [key: string]: any; // eslint-disable-line
+  [key: string]: any;  
 }
 
 interface PromoImageFields {

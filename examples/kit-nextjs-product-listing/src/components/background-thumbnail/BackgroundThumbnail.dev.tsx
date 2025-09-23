@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 import React from 'react';
 import { useSitecore } from '@sitecore-content-sdk/nextjs';
 import { Badge } from '@/components/ui/badge';
