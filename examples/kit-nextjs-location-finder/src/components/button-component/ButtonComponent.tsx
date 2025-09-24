@@ -2,7 +2,7 @@
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
-import { Link, LinkField, ComponentRendering, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { Link, LinkField, ComponentRendering } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -29,6 +29,7 @@ export type ButtonFields = {
     iconClassName?: string;
     isPageEditing?: boolean;
   };
+  page?: { mode?: { isEditing?: boolean } };
 };
 
 export type ButtonRendering = { rendering: ComponentRendering };
@@ -159,15 +160,13 @@ const EditableButton = (props: {
 };
 
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-
-  const { fields, params } = props;
+  const { fields, params, page } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName } = params || {};
+  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
+  const isEditing = isPageEditing || page?.mode?.isEditing;
   if (!isEditing && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
