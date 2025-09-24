@@ -67,21 +67,20 @@ export const Default = (props: TitleProps): JSX.Element => {
     value: {
       href: datasource?.url?.path,
       title:
-        (titleField?.value ? String(titleField.value) : 'Title field') ||
+        (titleField?.value ? String(titleField.value) : undefined) ||
         datasource?.field?.jsonValue?.value,
     },
   };
-  if (!mode.isNormal) {
-    link.value.querystring = `sc_site=${datasource?.url?.siteName}`;
-    if (!titleField?.value) {
-      titleField.value = 'Title field';
-      link.value.href = '#';
-    }
-  }
+  // if (!mode.isNormal) {
+  //   link.value.querystring = `sc_site=${datasource?.url?.siteName}`;
+  //   if (!titleField?.value) {
+  //     titleField.value = 'Title field';
+  //     link.value.href = '#';
+  //   }
+  // }
 
   return (
     <ComponentContent styles={props.params.styles} id={props.params.RenderingIdentifier}>
-      <>
         {mode.isEditing ? (
           <Text field={titleField} />
         ) : (
@@ -89,7 +88,6 @@ export const Default = (props: TitleProps): JSX.Element => {
             <Text field={titleField} />
           </Link>
         )}
-      </>
     </ComponentContent>
   );
 };
