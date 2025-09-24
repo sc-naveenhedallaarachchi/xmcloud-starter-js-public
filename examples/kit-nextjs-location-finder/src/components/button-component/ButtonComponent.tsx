@@ -167,9 +167,11 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
-  console.log('pageeditinggggggggggggggg', params);
-  console.log('editttt', isEditing);
-  if (!isPageEditing && !linkIsValid(buttonLink)) return null;
+  console.log('PROPSSSSSSSSSSSSSSS', props);
+  // Use isPageEditing from params if available, otherwise fall back to isEditing from Sitecore
+  const pageEditingState = isPageEditing !== undefined ? isPageEditing : isEditing;
+
+  if (!pageEditingState && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
@@ -178,10 +180,10 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
-        {isPageEditing ? (
+        {pageEditingState ? (
           <Link field={buttonLink} editable={true} />
         ) : (
-          <Link editable={isPageEditing} field={buttonLink}>
+          <Link editable={pageEditingState} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
