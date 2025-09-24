@@ -52,7 +52,8 @@ export const Default = ({ params, fields }: TitleProps): JSX.Element => {
     value: {
       href: datasource?.url?.path,
       title:
-        (titleField?.value ? String(titleField.value) : undefined) || datasource?.field?.jsonValue?.value,
+        (titleField?.value ? String(titleField.value) : undefined) ||
+        datasource?.field?.jsonValue?.value,
     },
   };
 
