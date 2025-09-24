@@ -62,7 +62,7 @@ export const Default = (props: TitleProps): JSX.Element => {
   console.log('Title text', datasource);
   console.log('title fields', page.layout.sitecore.route?.fields);
   // Use the route's Title field for proper editing support with chrometype="field"
-  const titleField: TextField = page.layout.sitecore.route?.fields?.Title as TextField;
+  const titleField: TextField = page.layout.sitecore.route?.fields?.pageTitle as TextField;
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
@@ -73,8 +73,8 @@ export const Default = (props: TitleProps): JSX.Element => {
   };
   if (!mode.isNormal) {
     link.value.querystring = `sc_site=${datasource?.url?.siteName}`;
-    if (!text?.value) {
-      text.value = 'Title field';
+    if (!titleField?.value) {
+      titleField.value = 'Title field';
       link.value.href = '#';
     }
   }

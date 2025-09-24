@@ -58,6 +58,8 @@ export const Default = (props: TitleProps): JSX.Element => {
   const { mode } = page;
   // Use the route's Title field for proper editing support with chrometype="field"
   const titleField: TextField = page.layout.sitecore.route?.fields?.Title as TextField;
+  console.log('Title text', datasource);
+  console.log('title fields', page.layout.sitecore.route?.fields);
   const link: LinkField = {
     value: {
       href: datasource?.url?.path,
