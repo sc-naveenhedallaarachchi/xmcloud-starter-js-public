@@ -44,7 +44,8 @@ export const Default = ({ params, fields }: TitleProps): JSX.Element => {
   const { page } = useSitecore();
   const { styles, RenderingIdentifier: id } = params;
   const datasource = fields?.data?.datasource || fields?.data?.contextItem;
-
+  console.log('Title text', datasource);
+  console.log('title fields', page.layout.sitecore.route?.fields);
   // Use the route's Title field for proper editing support with chrometype="field"
   const titleField: TextField = page.layout.sitecore.route?.fields?.Title as TextField;
 
