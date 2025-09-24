@@ -2,7 +2,7 @@
 import React, { type JSX } from 'react';
 import { Default as Icon } from '@/components/icon/Icon';
 import { IconName } from '@/enumerations/Icon.enum';
-import { Link, LinkField, ComponentRendering, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { Link, LinkField, ComponentRendering } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from '@/lib/component-props';
 import { Button } from '@/components/ui/button';
 import { EnumValues } from '@/enumerations/generic.enum';
@@ -29,6 +29,7 @@ export type ButtonFields = {
     iconClassName?: string;
     isPageEditing?: boolean;
   };
+  page?: { mode?: { isEditing?: boolean } };
 };
 
 export type ButtonRendering = { rendering: ComponentRendering };
@@ -159,19 +160,15 @@ const EditableButton = (props: {
 };
 
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
-  const { page } = useSitecore();
-  const { isEditing } = page.mode;
-  const { fields, params } = props;
+  const { fields, params, page } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
   const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
-  console.log('PROPSSSSSSSSSSSSSSS', props);
-  // Use isPageEditing from params if available, otherwise fall back to isEditing from Sitecore
-  const pageEditingState = isPageEditing !== undefined ? isPageEditing : isEditing;
-
-  if (!pageEditingState && !linkIsValid(buttonLink)) return null;
+  console.log('ButtonComponent rendering with props:', page, 'props', isPageEditing);
+  const isEditing = isPageEditing || page?.mode?.isEditing;
+  if (!isEditing && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
@@ -180,10 +177,10 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
-        {pageEditingState ? (
+        {isEditing ? (
           <Link field={buttonLink} editable={true} />
         ) : (
-          <Link editable={pageEditingState} field={buttonLink}>
+          <Link editable={isEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
