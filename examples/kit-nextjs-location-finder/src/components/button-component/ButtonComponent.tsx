@@ -161,14 +161,15 @@ const EditableButton = (props: {
 const Default = (props: ButtonComponentProps): JSX.Element | null => {
   const { page } = useSitecore();
   const { isEditing } = page.mode;
-
   const { fields, params } = props;
   const { buttonLink, icon, isAriaHidden = true } = fields || {};
-  const { size, iconPosition = 'trailing', iconClassName } = params || {};
+  const { size, iconPosition = 'trailing', iconClassName, isPageEditing } = params || {};
   const { variant } = props || ButtonVariants.DEFAULT;
   const ariaHidden = typeof isAriaHidden === 'boolean' ? isAriaHidden : true;
   const iconName = icon?.value as EnumValues<typeof IconName>;
-  if (!isEditing && !linkIsValid(buttonLink)) return null;
+  console.log('pageeditinggggggggggggggg', params);
+  console.log('editttt', isEditing);
+  if (!isPageEditing && !linkIsValid(buttonLink)) return null;
 
   const buttonIcon: EnumValues<typeof IconName> =
     (buttonLink?.value?.linktype as EnumValues<typeof IconName>) ||
@@ -177,10 +178,10 @@ const Default = (props: ButtonComponentProps): JSX.Element | null => {
   if (fields) {
     return (
       <Button asChild variant={variant} size={size}>
-        {isEditing ? (
+        {isPageEditing ? (
           <Link field={buttonLink} editable={true} />
         ) : (
-          <Link editable={isEditing} field={buttonLink}>
+          <Link editable={isPageEditing} field={buttonLink}>
             {iconPosition === IconPosition.LEADING && (
               <Icon iconName={buttonIcon} className={iconClassName} isAriaHidden={ariaHidden} />
             )}
