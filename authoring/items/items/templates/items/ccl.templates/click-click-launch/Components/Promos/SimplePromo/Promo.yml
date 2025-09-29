@@ -61,6 +61,10 @@ Languages:
       Hint: __Updated
       Value: 20240306T140630Z
 - Language: en
+  Fields:
+  - ID: "b5e02ad9-d56f-4c41-a065-a133db87bdeb"
+    Hint: __Display name
+    Value: Promo_OTHER
   Versions:
   - Version: 1
     Fields:
