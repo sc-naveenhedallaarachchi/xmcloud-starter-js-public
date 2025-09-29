@@ -145,7 +145,7 @@ function Invoke-ModuleScriptBody {
         Get-Item -Path "$($item.ItemPath)/Data/Home Page Image Carousel/Slide 1" -Language $Site.Language | Update-LinkField -FieldName "link" -TargetItem $aeroPage
         Get-Item -Path "$($item.ItemPath)/Data/Home Page Image Carousel/Slide 2" -Language $Site.Language | Update-LinkField -FieldName "link" -TargetItem $nexaPage
         Get-Item -Path "$($item.ItemPath)/Data/Home Page Image Carousel/Slide 3" -Language $Site.Language | Update-LinkField -FieldName "link" -TargetItem $terraPage
-        Get-Item -Path "$($item.ItemPath)/Data/Home Page Promo" -Language $Site.Language | Update-LinkField -FieldName "link" -TargetItem $testDriveItem
+        # Get-Item -Path "$($item.ItemPath)/Data/Home Page Promo" -Language $Site.Language | Update-LinkField -FieldName "link" -TargetItem $testDriveItem # REMOVED: No longer using Promo component
         $homePageAccordionItem = Get-Item -Path "$($item.ItemPath)/Data/Home Page Accordion" -Language $Site.Language
         Update-LinkField -Item $homePageAccordionItem -FieldName "link" -TargetItem $testDriveItem -Text "Contact Us"
         Get-Item -Path "$($item.ItemPath)/Test Drive/Data/Accordion - Test Drive - Demo Official" -Language $Site.Language | Update-LinkField -FieldName "link" -TargetItem $testDriveItem
@@ -187,7 +187,7 @@ function Invoke-ModuleScriptBody {
         $renderingHero = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Banners/Hero'
         $renderingTextBanner = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Banners/TextBanner'
         $renderingImageCarousel = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Media/ImageCarousel'
-        $renderingPromo = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Promos/Promo'
+        # $renderingPromo = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Promos/Promo' # REMOVED: No longer using Promo component
         $renderingProductListing = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Product/ProductListing'
         $renderingAccordion = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Accordions/Accordion'
     
@@ -196,7 +196,7 @@ function Invoke-ModuleScriptBody {
         $renderingHeroDefinition = $renderingHero | New-Rendering
         $renderingTextBannerDefinition = $renderingTextBanner | New-Rendering
         $renderingImageCarouselDefinition = $renderingImageCarousel | New-Rendering
-        $renderingPromoDefinition = $renderingPromo | New-Rendering
+        # $renderingPromoDefinition = $renderingPromo | New-Rendering # REMOVED: No longer using Promo component
         $renderingProductListingDefinition = $renderingProductListing | New-Rendering
         $renderingAccordionDefinition = $renderingAccordion | New-Rendering
         
@@ -204,13 +204,13 @@ function Invoke-ModuleScriptBody {
         $heroVariants = $service.GetAvailableRenderingVariants($Site, $renderingHero.Name, $renderingHero.ID, $item.TemplateID)
         $textBannerVariants = $service.GetAvailableRenderingVariants($Site, $renderingTextBanner.Name, $renderingTextBanner.ID, $item.TemplateID)
         $imageCarouselVariants = $service.GetAvailableRenderingVariants($Site, $renderingImageCarousel.Name, $renderingImageCarousel.ID, $item.TemplateID)
-        $promoVariants = $service.GetAvailableRenderingVariants($Site, $renderingPromo.Name, $renderingPromo.ID, $item.TemplateID)
+        # $promoVariants = $service.GetAvailableRenderingVariants($Site, $renderingPromo.Name, $renderingPromo.ID, $item.TemplateID) # REMOVED: No longer using Promo component
         $accordionVariants = $service.GetAvailableRenderingVariants($Site, $renderingAccordion.Name, $renderingAccordion.ID, $item.TemplateID)
 
         $heroVariant = $heroVariants | Where-Object { $_.DisplayName -eq "Image Background" }
         $textBannerVariant = $textBannerVariants | Where-Object { $_.Name -eq "Default" }
         $imageCarouselVariant = $imageCarouselVariants | Where-Object { $_.Name -eq "Default" }
-        $promoVariant = $promoVariants | Where-Object { $_.Name -eq "Default" }
+        # $promoVariant = $promoVariants | Where-Object { $_.Name -eq "Default" } # REMOVED: No longer using Promo component
         $accordionVariant = $accordionVariants | Where-Object { $_.Name -eq "Default" }
         
         # add Home layout
@@ -218,7 +218,7 @@ function Invoke-ModuleScriptBody {
         Add-Rendering -Item $item -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingHeroDefinition -Parameter @{ "FieldNames" = $heroVariant.ID; "DynamicPlaceholderId" = "2" } -DataSource "local:/Data/Home Page Hero" -FinalLayout
         Add-Rendering -Item $item -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingTextBannerDefinition -Parameter @{ "FieldNames" = $textBannerVariant.ID; "DynamicPlaceholderId" = "3" } -DataSource "local:/Data/Home Page Text Banner" -FinalLayout
         Add-Rendering -Item $item -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingImageCarouselDefinition -Parameter @{ "FieldNames" = $imageCarouselVariant.ID; "DynamicPlaceholderId" = "5" } -DataSource "local:/Data/Home Page Image Carousel" -FinalLayout
-        Add-Rendering -Item $item -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingPromoDefinition -Parameter @{ "FieldNames" = $promoVariant.ID; "DynamicPlaceholderId" = "4" } -DataSource "local:/Data/Home Page Promo" -FinalLayout
+        # Add-Rendering -Item $item -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingPromoDefinition -Parameter @{ "FieldNames" = $promoVariant.ID; "DynamicPlaceholderId" = "4" } -DataSource "local:/Data/Home Page Promo" -FinalLayout # REMOVED: No longer using Promo component
         Add-Rendering -Item $item -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingProductListingDefinition -DataSource "local:/Data/Home Page Product Listing" -FinalLayout
         Add-Rendering -Item $item -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingAccordionDefinition -Parameter @{ "FieldNames" = $accordionVariant.ID; "DynamicPlaceholderId" = "6" } -DataSource "local:/Data/Home Page Accordion" -FinalLayout
 
@@ -237,16 +237,16 @@ function Invoke-ModuleScriptBody {
         $item."ogTitle" = $title
         $item."ogDescription" = $title
 
-        # Add Promo variants
-        $promoVariant = Get-Item -Path "$sitePath/Presentation/Headless Variants/Promo" -Language $Site.Language
-        $imageLeftVariant = New-Item -Parent $promoVariant -Name "ImageLeft" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
-        $imageLeftVariant.'__Display name' = "Image Left"
-        $imageMiddleVariant = New-Item -Parent $promoVariant -Name "ImageMiddle" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
-        $imageMiddleVariant.'__Display name' = "Image Middle"
-        $imageRightVariant = New-Item -Parent $promoVariant -Name "ImageRight" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
-        $imageRightVariant.'__Display name' = "Image Right"
-        $titlePartialOverlayVariant = New-Item -Parent $promoVariant -Name "TitlePartialOverlay" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
-        $titlePartialOverlayVariant.'__Display name' = "Title Partial Overlay"
+        # REMOVED: Promo variants creation - No longer using Promo component for Alaris
+        # $promoVariant = Get-Item -Path "$sitePath/Presentation/Headless Variants/Promo" -Language $Site.Language
+        # $imageLeftVariant = New-Item -Parent $promoVariant -Name "ImageLeft" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
+        # $imageLeftVariant.'__Display name' = "Image Left"
+        # $imageMiddleVariant = New-Item -Parent $promoVariant -Name "ImageMiddle" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
+        # $imageMiddleVariant.'__Display name' = "Image Middle"
+        # $imageRightVariant = New-Item -Parent $promoVariant -Name "ImageRight" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
+        # $imageRightVariant.'__Display name' = "Image Right"
+        # $titlePartialOverlayVariant = New-Item -Parent $promoVariant -Name "TitlePartialOverlay" -ItemType "{4D50CDAE-C2D9-4DE8-B080-8F992BFB1B55}"
+        # $titlePartialOverlayVariant.'__Display name' = "Title Partial Overlay"
 
         Write-Verbose "Create dictionary items"
         $dictionaryRoot = Get-Item -Path "$sitePath/Dictionary" -Language $Site.Language
