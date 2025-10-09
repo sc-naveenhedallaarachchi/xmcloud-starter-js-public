@@ -1,5 +1,5 @@
 ---
-ID: "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+ID: "a1b2c3d4-5678-9012-3456-789012345678"
 Parent: "199c0c47-25bc-4d2b-8829-5304c5395d06"
 Template: "fd2059fd-6043-4dfe-8c04-e2437ce87634"
 Path: "/sitecore/templates/Branches/Project/click-click-launch/Alaris/Add Partial Designs/Global/Content"
@@ -30,13 +30,13 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{A1B2C3D4-E5F6-7890-ABCD-EF1234567891}"
+              uid="{A1B2C3D4-5678-9012-3456-789012345679}"
               s:id="{E80C2A78-FCC2-4D32-8EC5-4133F608BEC5}"
               s:par="GridParameters=%7BF61E01E9-711A-4C99-AE30-4E28463E1DF7%7D&amp;FieldNames&amp;Styles&amp;RenderingIdentifier&amp;CSSStyles&amp;DynamicPlaceholderId=1"
               s:ph="headless-main" />
             <r
-              uid="{A1B2C3D4-E5F6-7890-ABCD-EF1234567892}"
-              p:after="r[@uid='{A1B2C3D4-E5F6-7890-ABCD-EF1234567891}']"
+              uid="{A1B2C3D4-5678-9012-3456-789012345680}"
+              p:after="r[@uid='{A1B2C3D4-5678-9012-3456-789012345679}']"
               s:ds="local:/Data/Default Page Content"
               s:id="{50B36874-8C4E-4958-9DD6-8B95C6AFD09A}"
               s:par="GridParameters=%7BF61E01E9-711A-4C99-AE30-4E28463E1DF7%7D&amp;FieldNames&amp;Styles&amp;RenderingIdentifier&amp;CSSStyles&amp;DynamicPlaceholderId=2"

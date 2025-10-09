@@ -1,5 +1,5 @@
 ---
-ID: "b2c3d4e5-f6g7-8901-bcde-f23456789012"
+ID: "b2c3d4e5-6789-0123-4567-890123456789"
 Parent: "8001017f-9ee9-48f2-b2d3-94ef6ec1fa09"
 Template: "fd2059fd-6043-4dfe-8c04-e2437ce87634"
 Path: "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Add Partial Designs/Global/Content"
@@ -30,13 +30,13 @@ Languages:
           <d
             id="{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}">
             <r
-              uid="{B2C3D4E5-F6G7-8901-BCDE-F23456789013}"
+              uid="{B2C3D4E5-6789-0123-4567-890123456790}"
               s:id="{E80C2A78-FCC2-4D32-8EC5-4133F608BEC5}"
               s:par="GridParameters=%7BF61E01E9-711A-4C99-AE30-4E28463E1DF7%7D&amp;FieldNames&amp;Styles&amp;RenderingIdentifier&amp;CSSStyles&amp;DynamicPlaceholderId=1"
               s:ph="headless-main" />
             <r
-              uid="{B2C3D4E5-F6G7-8901-BCDE-F23456789014}"
-              p:after="r[@uid='{B2C3D4E5-F6G7-8901-BCDE-F23456789013}']"
+              uid="{B2C3D4E5-6789-0123-4567-890123456791}"
+              p:after="r[@uid='{B2C3D4E5-6789-0123-4567-890123456790}']"
               s:ds="local:/Data/Default Page Content"
               s:id="{50B36874-8C4E-4958-9DD6-8B95C6AFD09A}"
               s:par="GridParameters=%7BF61E01E9-711A-4C99-AE30-4E28463E1DF7%7D&amp;FieldNames&amp;Styles&amp;RenderingIdentifier&amp;CSSStyles&amp;DynamicPlaceholderId=2"
