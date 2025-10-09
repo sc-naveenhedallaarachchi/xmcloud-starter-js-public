@@ -1,0 +1,51 @@
+---
+ID: "c1d2e3f4-g5h6-7890-ijkl-mn1234567890"
+Parent: "199c0c47-25bc-4d2b-8829-5304c5395d06"
+Template: "705c014a-ced4-409a-89b7-09350cc98116"
+Path: "/sitecore/templates/Branches/Project/click-click-launch/Alaris/Add Default Page Content/Default Page Content"
+SharedFields:
+- ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
+  Hint: __Shared revision
+  Value: "2a352146-c2eb-4589-8251-1cc6bd467801"
+Languages:
+- Language: en
+  Versions:
+  - Version: 1
+    Fields:
+    - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
+      Hint: __Created
+      Value: 20250101T120000Z
+    - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
+      Hint: __Owner
+      Value: |
+        sitecore\Admin
+    - ID: "5dd74568-4d4b-44c1-b513-0af5f4da34f"
+      Hint: __Created by
+      Value: |
+        sitecore\Admin
+    - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
+      Hint: __Revision
+      Value: "a8825d84-6d00-422d-b9bb-64dc00bb8fe3"
+    - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
+      Hint: __Updated by
+      Value: |
+        sitecore\richard.seal@sitecore.com
+    - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
+      Hint: __Updated
+      Value: 20250101T120000Z
+    - ID: "f173626a-12e7-4c9a-97ca-9866fd814c86"
+      Hint: titleOptional
+      Value: Welcome to Your New Page
+    - ID: "4d116c64-41a2-4c2b-857a-c268c13b8a72"
+      Hint: descriptionOptional
+      Value: |
+        <p>This is your new page with default content. You can edit this content to customize your page.</p>
+        <p>Add your own text, images, and other content to make this page unique.</p>
+        <h2>Getting Started</h2>
+        <p>Here are some tips for customizing your page:</p>
+        <ul>
+        <li>Edit the title and content above</li>
+        <li>Add new components from the Experience Editor</li>
+        <li>Customize the layout and styling</li>
+        <li>Add images and media to enhance your content</li>
+        </ul>

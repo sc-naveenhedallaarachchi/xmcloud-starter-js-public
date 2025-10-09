@@ -78,9 +78,10 @@ function Invoke-ModuleScriptBody {
         Write-Verbose "Add Page Design and link partial designs"
         $headerPartial = Get-Item -Path "$sitePath/Presentation/Partial Designs/Global/Header" -Language $Site.Language
         $footerPartial = Get-Item -Path "$sitePath/Presentation/Partial Designs/Global/Footer" -Language $Site.Language
+        $contentPartial = Get-Item -Path "$sitePath/Presentation/Partial Designs/Global/Content" -Language $Site.Language
 
         $defaultPageDesign = New-Item -Path "$($sitePath)/Presentation/Page Designs" -Name "Default" -ItemType "{1105B8F8-1E00-426B-BF1F-C840742D827B}"
-        $defaultPageDesign.PartialDesigns = "$($headerPartial.ID)|$($footerPartial.ID)"
+        $defaultPageDesign.PartialDesigns = "$($headerPartial.ID)|$($contentPartial.ID)|$($footerPartial.ID)"
 
         $pageDesigns = Get-Item -path "$sitePath/Presentation/Page Designs" -Language $Site.Language
         $map = [Sitecore.Text.UrlString]::new()
@@ -113,6 +114,26 @@ function Invoke-ModuleScriptBody {
         if ($globalFooterRenderingInstance) {
             Set-Rendering -Item $footerPartial -Instance $globalFooterRenderingInstance -Parameter @{ "FieldNames" = $globalFooterVariant.ID } -FinalLayout
         }
+        
+        Write-Verbose "Setup Content Partial Design"
+        $renderingContainerFullBleed = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Page Structure/Container Full Bleed'
+        $renderingRichText = Get-Item -Path '/sitecore/layout/Renderings/Project/click-click-launch/Page Content/Rich Text'
+        
+        $renderingContainerFullBleedDefinition = $renderingContainerFullBleed | New-Rendering
+        $renderingRichTextDefinition = $renderingRichText | New-Rendering
+        
+        # Add Container to content partial design
+        Add-Rendering -Item $contentPartial -PlaceHolder "headless-main" -Instance $renderingContainerFullBleedDefinition -Parameter @{ "DynamicPlaceholderId" = "1" } -FinalLayout
+        
+        # Add RichText to content partial design
+        Add-Rendering -Item $contentPartial -PlaceHolder "/headless-main/container-fullbleed-1" -Instance $renderingRichTextDefinition -Parameter @{ "DynamicPlaceholderId" = "2" } -DataSource "local:/Data/Default Page Content" -FinalLayout
+        
+        Write-Verbose "Create default page content data"
+        $defaultPageContentData = New-Item -Path "$($contentPartial.ItemPath)/Data" -Name "Default Page Content" -ItemType "{705C014A-CED4-409A-89B7-09350CC98116}" -Language $Site.Language
+        $defaultPageContentData.Editing.BeginEdit()
+        $defaultPageContentData["titleOptional"] = "Welcome to Your New Page"
+        $defaultPageContentData["descriptionOptional"] = "<p>This is your new page with default content. You can edit this content to customize your page.</p><p>Add your own text, images, and other content to make this page unique.</p><h2>Getting Started</h2><p>Here are some tips for customizing your page:</p><ul><li>Edit the title and content above</li><li>Add new components from the Experience Editor</li><li>Customize the layout and styling</li><li>Add images and media to enhance your content</li></ul>"
+        $defaultPageContentData.Editing.EndEdit()
         
         Write-Verbose "Update header links"
         $headerDatasource = Get-Item -Path "$($headerPartial.ItemPath)/Data/Global Header" -Language $Site.Language
