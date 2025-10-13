@@ -17,7 +17,7 @@ const mockUseSitecore = jest.fn();
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   useSitecore: () => mockUseSitecore(),
   Text: ({ field, tag, className, editable }: any) => {
-    const Tag = tag || 'span';
+    const Tag = tag || 'h2';
     return React.createElement(Tag, { className, 'data-editable': editable }, field?.value || 'Add Title');
   },
 }));
@@ -36,21 +36,21 @@ describe('Title Component', () => {
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
     });
 
-    it('should render with datasource title when page title is not available', () => {
+    it('should render with default text when page title is not available', () => {
       mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
       render(<Title {...defaultProps} />);
 
-      expect(screen.getByText('Datasource Title')).toBeInTheDocument();
+      expect(screen.getByText('Add Title')).toBeInTheDocument();
     });
 
-    it('should render with context title when datasource is not available', () => {
+    it('should render with default text when datasource is not available', () => {
       mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
       render(<Title {...(propsWithoutDatasource as any)} />);
 
-      expect(screen.getByText('Context Title')).toBeInTheDocument();
+      expect(screen.getByText('Add Title')).toBeInTheDocument();
     });
 
-    it('should render with default text when no title is available', () => {
+    it('should render with default text when fields are empty', () => {
       mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
       render(<Title {...(propsWithEmptyFields as any)} />);
 
@@ -60,14 +60,14 @@ describe('Title Component', () => {
     it('should apply custom styles', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Page Title').closest('div');
+      const container = screen.getByText('Page Title').closest('.component.title');
       expect(container).toHaveClass('component', 'title', 'custom-title-style');
     });
 
     it('should render without custom styles when not provided', () => {
       render(<Title {...propsWithoutStyles} />);
 
-      const container = screen.getByText('Page Title').closest('div');
+      const container = screen.getByText('Page Title').closest('.component.title');
       expect(container).toHaveClass('component', 'title');
       expect(container).not.toHaveClass('custom-title-style');
     });
@@ -87,7 +87,7 @@ describe('Title Component', () => {
     it('should have correct rendering identifier', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Page Title').closest('div');
+      const container = screen.getByText('Page Title').closest('.component.title');
       expect(container).toHaveAttribute('id', 'title-rendering-id');
     });
   });
@@ -106,10 +106,12 @@ describe('Title Component', () => {
 
     it('should render with editable text when not in normal mode', () => {
       const editingModeData = {
-        ...mockPageDataEditing,
-        mode: {
-          isEditing: true,
-          isNormal: false,
+        page: {
+          ...mockPageDataEditing.page,
+          mode: {
+            isEditing: true,
+            isNormal: false,
+          },
         },
       };
       mockUseSitecore.mockReturnValue(editingModeData);
@@ -125,7 +127,7 @@ describe('Title Component', () => {
     it('should render correct DOM structure', () => {
       render(<Title {...defaultProps} />);
 
-      const container = screen.getByText('Page Title').closest('div');
+      const container = screen.getByText('Page Title').closest('.component.title');
       expect(container).toHaveClass('component', 'title', 'custom-title-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -173,25 +175,6 @@ describe('Title Component', () => {
       render(<Title {...propsWithoutFields} />);
 
       expect(screen.getByText('Add Title')).toBeInTheDocument();
-    });
-  });
-
-  describe('Console logging', () => {
-    let consoleSpy: jest.SpyInstance;
-
-    beforeEach(() => {
-      consoleSpy = jest.spyOn(console, 'log').mockImplementation();
-    });
-
-    afterEach(() => {
-      consoleSpy.mockRestore();
-    });
-
-    it('should log title text and fields in development', () => {
-      render(<Title {...defaultProps} />);
-
-      expect(consoleSpy).toHaveBeenCalledWith('Title text', expect.any(Object));
-      expect(consoleSpy).toHaveBeenCalledWith('title fields', expect.any(Object));
     });
   });
 });

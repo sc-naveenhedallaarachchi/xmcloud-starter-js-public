@@ -2,18 +2,20 @@ import { TextField } from '@sitecore-content-sdk/nextjs';
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
-  mode: {
-    isEditing: false,
-    isNormal: true,
-  },
-  layout: {
-    sitecore: {
-      route: {
-        fields: {
-          Title: {
-            value: 'Page Title',
-            editable: 'Page Title',
-          } as TextField,
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+    },
+    layout: {
+      sitecore: {
+        route: {
+          fields: {
+            pageTitle: {
+              value: 'Page Title',
+              editable: 'Page Title',
+            } as TextField,
+          },
         },
       },
     },
@@ -21,18 +23,20 @@ export const mockPageData = {
 };
 
 export const mockPageDataEditing = {
-  mode: {
-    isEditing: true,
-    isNormal: false,
-  },
-  layout: {
-    sitecore: {
-      route: {
-        fields: {
-          Title: {
-            value: 'Page Title',
-            editable: 'Page Title',
-          } as TextField,
+  page: {
+    mode: {
+      isEditing: true,
+      isNormal: false,
+    },
+    layout: {
+      sitecore: {
+        route: {
+          fields: {
+            pageTitle: {
+              value: 'Page Title',
+              editable: 'Page Title',
+            } as TextField,
+          },
         },
       },
     },
@@ -40,14 +44,16 @@ export const mockPageDataEditing = {
 };
 
 export const mockPageDataWithoutTitle = {
-  mode: {
-    isEditing: false,
-    isNormal: true,
-  },
-  layout: {
-    sitecore: {
-      route: {
-        fields: {},
+  page: {
+    mode: {
+      isEditing: false,
+      isNormal: true,
+    },
+    layout: {
+      sitecore: {
+        route: {
+          fields: {},
+        },
       },
     },
   },

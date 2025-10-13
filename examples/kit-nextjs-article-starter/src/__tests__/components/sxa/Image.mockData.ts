@@ -2,14 +2,18 @@ import { ImageField, LinkField, Field } from '@sitecore-content-sdk/nextjs';
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
-  mode: {
-    isEditing: false,
+  page: {
+    mode: {
+      isEditing: false,
+    },
   },
 };
 
 export const mockPageDataEditing = {
-  mode: {
-    isEditing: true,
+  page: {
+    mode: {
+      isEditing: true,
+    },
   },
 };
 

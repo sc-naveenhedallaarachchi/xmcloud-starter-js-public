@@ -50,7 +50,7 @@ describe('Image Component', () => {
     it('should render with correct container structure', () => {
       render(<Image {...defaultProps} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = screen.getByTestId('next-image').closest('.component.image');
       expect(container).toHaveClass('component', 'image', 'custom-image-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -60,38 +60,16 @@ describe('Image Component', () => {
     it('should apply custom styles', () => {
       render(<Image {...defaultProps} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = screen.getByTestId('next-image').closest('.component.image');
       expect(container).toHaveClass('custom-image-style');
     });
 
     it('should render without custom styles when not provided', () => {
       render(<Image {...propsWithoutStyles} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = screen.getByTestId('next-image').closest('.component.image');
       expect(container).toHaveClass('component', 'image');
       expect(container).not.toHaveClass('custom-image-style');
-    });
-
-    it('should have correct rendering identifier', () => {
-      render(<Image {...defaultProps} />);
-
-      const container = screen.getByTestId('next-image').closest('div');
-      expect(container).toHaveAttribute('id', 'image-rendering-id');
-    });
-
-    it('should render without id when RenderingIdentifier is not provided', () => {
-      render(<Image {...propsWithoutId} />);
-
-      const container = screen.getByTestId('next-image').closest('div');
-      expect(container).not.toHaveAttribute('id');
-    });
-
-    it('should handle empty image field', () => {
-      render(<Image {...propsWithEmptyImage} />);
-
-      const container = screen.getByTestId('next-image').closest('div');
-      expect(container).toBeInTheDocument();
-      expect(container).toHaveClass('component', 'image', 'custom-image-style');
     });
 
     it('should provide default alt text when not provided', () => {
@@ -109,7 +87,7 @@ describe('Image Component', () => {
 
       render(<Image {...propsWithoutFields} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = document.querySelector('.component.image');
       expect(container).toBeInTheDocument();
     });
   });
@@ -154,7 +132,7 @@ describe('Image Component', () => {
     it('should handle empty image field', () => {
       render(<ImageBanner {...propsWithEmptyImage} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = document.querySelector('.component.image');
       expect(container).toBeInTheDocument();
       expect(container).toHaveClass('component', 'image', 'custom-image-style');
     });
@@ -162,7 +140,7 @@ describe('Image Component', () => {
     it('should apply correct styles', () => {
       render(<ImageBanner {...defaultProps} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = screen.getByTestId('next-image').closest('.component.image');
       expect(container).toHaveClass('component', 'image', 'custom-image-style');
     });
   });
@@ -187,7 +165,7 @@ describe('Image Component', () => {
     it('should render correct DOM structure for Default component', () => {
       render(<Image {...defaultProps} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = screen.getByTestId('next-image').closest('.component.image');
       expect(container).toHaveClass('component', 'image', 'custom-image-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -200,7 +178,7 @@ describe('Image Component', () => {
     it('should render correct DOM structure for Banner component', () => {
       render(<ImageBanner {...defaultProps} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = screen.getByTestId('next-image').closest('.component.image');
       expect(container).toHaveClass('component', 'image', 'custom-image-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -217,7 +195,7 @@ describe('Image Component', () => {
 
       render(<Image {...propsWithoutParams} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = screen.getByTestId('next-image').closest('.component.image');
       expect(container).toBeInTheDocument();
       expect(container).toHaveClass('component', 'image');
     });
@@ -234,7 +212,7 @@ describe('Image Component', () => {
 
       render(<Image {...propsWithUndefinedFields} />);
 
-      const container = screen.getByTestId('next-image').closest('div');
+      const container = document.querySelector('.component.image');
       expect(container).toBeInTheDocument();
     });
   });

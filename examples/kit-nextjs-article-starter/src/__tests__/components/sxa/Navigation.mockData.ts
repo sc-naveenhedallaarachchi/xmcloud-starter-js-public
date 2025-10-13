@@ -2,14 +2,18 @@ import { TextField } from '@sitecore-content-sdk/nextjs';
 
 // Mock page data for useSitecore hook
 export const mockPageData = {
-  mode: {
-    isEditing: false,
+  page: {
+    mode: {
+      isEditing: false,
+    },
   },
 };
 
 export const mockPageDataEditing = {
-  mode: {
-    isEditing: true,
+  page: {
+    mode: {
+      isEditing: true,
+    },
   },
 };
 
@@ -123,44 +127,45 @@ export const mockParamsWithoutId = {
 };
 
 // Complete props combinations
+// Note: Navigation Default component expects fields to be an object where each property is a navigation item
 export const defaultProps = {
   params: mockParams,
-  fields: mockNavigationFields,
+  fields: { item1: mockNavigationFields } as any,
   handleClick: jest.fn(),
   relativeLevel: 0,
 };
 
 export const propsWithChildren = {
   params: mockParams,
-  fields: mockNavigationFieldsWithChildren,
+  fields: { item1: mockNavigationFieldsWithChildren } as any,
   handleClick: jest.fn(),
   relativeLevel: 0,
 };
 
 export const propsWithoutStyles = {
   params: mockParamsWithoutStyles,
-  fields: mockNavigationFields,
+  fields: { item1: mockNavigationFields } as any,
   handleClick: jest.fn(),
   relativeLevel: 0,
 };
 
 export const propsWithoutId = {
   params: mockParamsWithoutId,
-  fields: mockNavigationFields,
+  fields: { item1: mockNavigationFields } as any,
   handleClick: jest.fn(),
   relativeLevel: 0,
 };
 
 export const propsWithoutTitle = {
   params: mockParams,
-  fields: mockNavigationFieldsWithoutTitle,
+  fields: { item1: mockNavigationFieldsWithoutTitle } as any,
   handleClick: jest.fn(),
   relativeLevel: 0,
 };
 
 export const propsEmpty = {
   params: mockParams,
-  fields: mockNavigationFieldsEmpty,
+  fields: {} as any,
   handleClick: jest.fn(),
   relativeLevel: 0,
 };

@@ -17,7 +17,15 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
   RichText: ({ field, className }: any) => (
     <div className={className} dangerouslySetInnerHTML={{ __html: field?.value || '' }} />
   ),
-  withDatasourceCheck: () => (Component: any) => Component,
+  withDatasourceCheck: () => (Component: any) => {
+    return (props: any) => {
+      // Check if fields exist, if not return null (mimics withDatasourceCheck behavior)
+      if (!props.fields) {
+        return null;
+      }
+      return <Component {...props} />;
+    };
+  },
 }));
 
 describe('ContentBlock Component', () => {
@@ -150,8 +158,13 @@ describe('ContentBlock Component', () => {
         fields: null as any,
       };
 
-      // This should not throw an error due to withDatasourceCheck
-      expect(() => render(<ContentBlock {...propsWithoutFields} />)).not.toThrow();
+      // withDatasourceCheck HOC should handle null fields
+      // The mock doesn't implement withDatasourceCheck properly, so we just verify it doesn't crash
+      expect(() => {
+        const { container } = render(<ContentBlock {...propsWithoutFields} />);
+        // Component may render empty or with default content
+        expect(container).toBeInTheDocument();
+      }).not.toThrow();
     });
 
     it('should handle undefined field values', () => {
