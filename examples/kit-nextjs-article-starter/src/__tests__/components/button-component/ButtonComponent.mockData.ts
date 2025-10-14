@@ -111,35 +111,30 @@ export const mockParamsDefault = {
   size: ButtonSize.DEFAULT,
   iconPosition: IconPosition.TRAILING,
   iconClassName: 'h-5 w-5',
-  isPageEditing: false,
 };
 
 export const mockParamsLeadingIcon = {
   size: ButtonSize.DEFAULT,
   iconPosition: IconPosition.LEADING,
   iconClassName: 'h-5 w-5',
-  isPageEditing: false,
 };
 
 export const mockParamsEditing = {
   size: ButtonSize.DEFAULT,
   iconPosition: IconPosition.TRAILING,
   iconClassName: 'h-5 w-5',
-  isPageEditing: true,
 };
 
 export const mockParamsLarge = {
   size: ButtonSize.LG,
   iconPosition: IconPosition.TRAILING,
   iconClassName: 'h-6 w-6',
-  isPageEditing: false,
 };
 
 export const mockParamsSmall = {
   size: ButtonSize.SM,
   iconPosition: IconPosition.TRAILING,
   iconClassName: 'h-4 w-4',
-  isPageEditing: false,
 };
 
 // Complete props combinations - Default component
@@ -147,96 +142,112 @@ export const defaultProps = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsWithLeadingIcon = {
   fields: mockFieldsWithLeadingIcon,
   params: mockParamsLeadingIcon,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsWithoutIcon = {
   fields: mockFieldsWithoutIcon,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsInEditing = {
   fields: mockFieldsDefault,
   params: mockParamsEditing,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: true,
 };
 
 export const propsWithInvalidLink = {
   fields: mockFieldsWithInvalidLink,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsPrimary = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsSecondary = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsDestructive = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsGhost = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsOutline = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsLink = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsTertiary = {
   fields: mockFieldsDefault,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsLargeSize = {
   fields: mockFieldsDefault,
   params: mockParamsLarge,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsSmallSize = {
   fields: mockFieldsDefault,
   params: mockParamsSmall,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsExternalLink = {
   fields: mockFieldsExternalLink,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsWithoutFields = {
   fields: null as any,
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 export const propsWithHttpOnlyLink = {
@@ -245,6 +256,7 @@ export const propsWithHttpOnlyLink = {
   },
   params: mockParamsDefault,
   rendering: { componentName: 'ButtonComponent' } as any,
+  isPageEditing: false,
 };
 
 // Props for EditableButton

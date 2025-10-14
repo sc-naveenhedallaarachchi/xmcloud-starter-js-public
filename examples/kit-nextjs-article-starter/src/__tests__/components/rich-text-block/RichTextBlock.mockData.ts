@@ -15,12 +15,12 @@ export const mockParams = {
 // Mock params without styles
 export const mockParamsWithoutStyles = {
   RenderingIdentifier: 'test-rendering-id',
-  styles: undefined,
+  styles: undefined as any,
 };
 
 // Mock params without ID
 export const mockParamsWithoutId = {
-  RenderingIdentifier: undefined,
+  RenderingIdentifier: undefined as any,
   styles: 'custom-styles',
 };
 
@@ -47,7 +47,7 @@ export const mockFieldsWithEmptyText = {
 // Mock fields with undefined text
 export const mockFieldsWithUndefinedText = {
   text: {
-    value: undefined,
+    value: undefined as any,
   },
 };
 
@@ -73,13 +73,13 @@ export const defaultProps: RichTextBlockProps = {
 };
 
 export const propsWithoutFields: RichTextBlockProps = {
-  fields: undefined,
+  fields: undefined as any,
   rendering: mockRendering,
   params: mockParams,
 };
 
 export const propsWithNullFields: RichTextBlockProps = {
-  fields: null,
+  fields: null as any,
   rendering: mockRendering,
   params: mockParams,
 };

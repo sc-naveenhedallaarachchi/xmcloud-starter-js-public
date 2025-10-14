@@ -66,7 +66,9 @@ export const mockAncestorWithoutNavigationTitle = {
       value: 'Page Without Nav Title',
     } as Field<string>,
   } as GqlFieldString,
-  navigationTitle: undefined,
+  navigationTitle: {
+    jsonValue: null as any,
+  } as GqlFieldString,
   url: {
     href: '/page',
     text: 'Page',
@@ -86,7 +88,11 @@ export const mockAncestorWithoutUrl = {
       value: 'No URL',
     } as Field<string>,
   } as GqlFieldString,
-  url: undefined,
+  url: {
+    href: '',
+    text: '',
+    linktype: '',
+  },
 };
 
 // Mock fields
@@ -111,7 +117,7 @@ export const mockFieldsWithLongName = {
 export const mockFieldsWithoutAncestors = {
   data: {
     datasource: {
-      ancestors: undefined,
+      ancestors: [] as any,
       name: 'Current Page',
     },
   },

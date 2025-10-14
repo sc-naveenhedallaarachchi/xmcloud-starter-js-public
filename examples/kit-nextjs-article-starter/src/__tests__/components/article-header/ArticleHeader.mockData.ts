@@ -8,28 +8,23 @@ export const mockImageField: ImageField = {
     width: 1200,
     height: 800,
   },
-  editable: 'Article Hero Image',
 };
 
 // Mock text fields
 export const mockTitleField: Field<string> = {
   value: 'The Future of Web Development',
-  editable: 'The Future of Web Development',
 };
 
 export const mockEyebrowField: Field<string> = {
   value: 'Technology',
-  editable: 'Technology',
 };
 
 export const mockReadTimeField: Field<string> = {
   value: '5 min read',
-  editable: '5 min read',
 };
 
 export const mockDisplayDateField: Field<string> = {
   value: '2024-01-15',
-  editable: '2024-01-15',
 };
 
 // Mock author
@@ -45,32 +40,28 @@ export const mockAuthor = {
         width: 200,
         height: 200,
       },
-    } as ImageField,
+    },
     personFirstName: {
       value: 'John',
-      editable: 'John',
-    } as Field<string>,
+    },
     personLastName: {
       value: 'Doe',
-      editable: 'Doe',
-    } as Field<string>,
+    },
     personJobTitle: {
       value: 'Senior Developer',
-      editable: 'Senior Developer',
-    } as Field<string>,
+    },
     personBio: {
       value: 'Experienced web developer',
-      editable: 'Experienced web developer',
-    } as Field<string>,
+    },
     personLinkedIn: {
       value: {
         href: 'https://linkedin.com/in/johndoe',
         text: 'LinkedIn',
         linktype: 'external',
       },
-    } as LinkField,
+    },
   },
-};
+} as any;
 
 export const mockAuthorWithoutImage = {
   ...mockAuthor,
@@ -78,7 +69,7 @@ export const mockAuthorWithoutImage = {
     ...mockAuthor.fields,
     personProfileImage: undefined,
   },
-};
+} as any;
 
 export const mockAuthorWithoutJobTitle = {
   ...mockAuthor,
@@ -86,7 +77,7 @@ export const mockAuthorWithoutJobTitle = {
     ...mockAuthor.fields,
     personJobTitle: undefined,
   },
-};
+} as any;
 
 // Mock fields
 export const mockFields = {
@@ -209,45 +200,58 @@ export const mockParams = {
   styles: 'custom-header-style',
 };
 
+// Mock rendering
+export const mockRendering = {
+  componentName: 'ArticleHeader',
+} as any;
+
 // Complete props combinations
 export const defaultProps = {
   params: mockParams,
   fields: mockFields,
+  rendering: mockRendering,
 };
 
 export const propsWithoutEyebrow = {
   params: mockParams,
   fields: mockFieldsWithoutEyebrow,
+  rendering: mockRendering,
 };
 
 export const propsWithoutAuthor = {
   params: mockParams,
   fields: mockFieldsWithoutAuthor,
+  rendering: mockRendering,
 };
 
 export const propsWithoutReadTime = {
   params: mockParams,
   fields: mockFieldsWithoutReadTime,
+  rendering: mockRendering,
 };
 
 export const propsWithoutDate = {
   params: mockParams,
   fields: mockFieldsWithoutDate,
+  rendering: mockRendering,
 };
 
 export const propsWithoutImage = {
   params: mockParams,
   fields: mockFieldsWithoutImage,
+  rendering: mockRendering,
 };
 
 export const propsMinimal = {
   params: mockParams,
   fields: mockFieldsMinimal,
+  rendering: mockRendering,
 };
 
 export const propsWithoutFields = {
   params: mockParams,
   fields: null as any,
+  rendering: mockRendering,
 };
 
 export const propsWithAuthorNoImage = {
@@ -263,6 +267,7 @@ export const propsWithAuthorNoImage = {
       },
     },
   },
+  rendering: mockRendering,
 };
 
 export const propsWithAuthorNoJobTitle = {
@@ -278,6 +283,7 @@ export const propsWithAuthorNoJobTitle = {
       },
     },
   },
+  rendering: mockRendering,
 };
 
 

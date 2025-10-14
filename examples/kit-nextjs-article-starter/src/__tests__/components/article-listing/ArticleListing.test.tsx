@@ -435,6 +435,7 @@ describe('ArticleListing Component', () => {
         params: defaultProps.params,
         fields: undefined as any,
         isPageEditing: false,
+        rendering: defaultProps.rendering,
       };
 
       const { container } = render(<ArticleListing {...propsUndefinedFields} />);

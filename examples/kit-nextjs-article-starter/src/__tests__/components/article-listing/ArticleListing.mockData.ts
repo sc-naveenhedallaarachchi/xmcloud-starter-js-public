@@ -204,43 +204,43 @@ export const mockFields = {
     editable: 'Discover our latest insights and tutorials',
   } as Field<string>,
   linkOptional: mockLinkField,
-  featuredContent: [mockArticle1, mockArticle2, mockArticle3, mockArticle4],
+  featuredContent: [mockArticle1, mockArticle2, mockArticle3, mockArticle4] as any,
 };
 
 export const mockFieldsWithoutTitle = {
   linkOptional: mockLinkField,
-  featuredContent: [mockArticle1, mockArticle2],
+  featuredContent: [mockArticle1, mockArticle2] as any,
 };
 
 export const mockFieldsWithoutDescription = {
   titleOptional: mockFields.titleOptional,
   linkOptional: mockLinkField,
-  featuredContent: [mockArticle1, mockArticle2],
+  featuredContent: [mockArticle1, mockArticle2] as any,
 };
 
 export const mockFieldsWithoutLink = {
   titleOptional: mockFields.titleOptional,
   descriptionOptional: mockFields.descriptionOptional,
-  featuredContent: [mockArticle1, mockArticle2],
+  featuredContent: [mockArticle1, mockArticle2] as any,
 };
 
 export const mockFieldsTwoArticles = {
   titleOptional: mockFields.titleOptional,
   descriptionOptional: mockFields.descriptionOptional,
   linkOptional: mockLinkField,
-  featuredContent: [mockArticle1, mockArticle2],
+  featuredContent: [mockArticle1, mockArticle2] as any,
 };
 
 export const mockFieldsOneArticle = {
   titleOptional: mockFields.titleOptional,
-  featuredContent: [mockArticle1],
+  featuredContent: [mockArticle1] as any,
 };
 
 export const mockFieldsNoArticles = {
   titleOptional: mockFields.titleOptional,
   descriptionOptional: mockFields.descriptionOptional,
   linkOptional: mockLinkField,
-  featuredContent: [],
+  featuredContent: [] as any,
 };
 
 // Mock params
@@ -248,53 +248,66 @@ export const mockParams = {
   styles: 'custom-listing-style',
 };
 
+// Mock rendering
+export const mockRendering = {
+  componentName: 'ArticleListing',
+} as any;
+
 // Complete props combinations
 export const defaultProps = {
   params: mockParams,
   fields: mockFields,
   isPageEditing: false,
+  rendering: mockRendering,
 };
 
 export const propsWithoutTitle = {
   params: mockParams,
   fields: mockFieldsWithoutTitle,
   isPageEditing: false,
+  rendering: mockRendering,
 };
 
 export const propsWithoutDescription = {
   params: mockParams,
   fields: mockFieldsWithoutDescription,
   isPageEditing: false,
+  rendering: mockRendering,
 };
 
 export const propsWithoutLink = {
   params: mockParams,
   fields: mockFieldsWithoutLink,
   isPageEditing: false,
+  rendering: mockRendering,
 };
 
 export const propsTwoArticles = {
   params: mockParams,
   fields: mockFieldsTwoArticles,
   isPageEditing: false,
+  rendering: mockRendering,
 };
 
 export const propsOneArticle = {
   params: mockParams,
   fields: mockFieldsOneArticle,
   isPageEditing: false,
+  rendering: mockRendering,
 };
 
 export const propsNoArticles = {
   params: mockParams,
   fields: mockFieldsNoArticles,
   isPageEditing: false,
+  rendering: mockRendering,
 };
 
 export const propsEditing = {
   params: mockParams,
   fields: mockFields,
   isPageEditing: true,
+  rendering: mockRendering,
 };
 
 

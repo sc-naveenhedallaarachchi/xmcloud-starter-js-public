@@ -3,12 +3,10 @@ import { Field, ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 // Mock fields data
 export const mockTitleField: Field<string> = {
   value: 'Important Announcement',
-  editable: 'Important Announcement',
 };
 
 export const mockDescriptionField: Field<string> = {
   value: 'Please read this important message carefully',
-  editable: 'Please read this important message carefully',
 };
 
 export const mockImageField: ImageField = {
@@ -18,7 +16,6 @@ export const mockImageField: ImageField = {
     width: 100,
     height: 100,
   },
-  editable: 'Alert Image',
 };
 
 export const mockLinkField: LinkField = {
@@ -74,7 +71,6 @@ export const mockFieldsMinimal = {
 export const mockFieldsWithEmptyTitle = {
   title: {
     value: '',
-    editable: '',
   } as Field<string>,
   description: mockDescriptionField,
   link: mockLinkField,
@@ -84,7 +80,6 @@ export const mockFieldsWithEmptyDescription = {
   title: mockTitleField,
   description: {
     value: '',
-    editable: '',
   } as Field<string>,
   link: mockLinkField,
 };
@@ -100,63 +95,76 @@ export const mockParamsEmpty = {};
 export const mockExternalFields = {
   mock_external_data: {
     value: 'External data value',
-    editable: 'External data value',
   } as Field<string>,
 };
+
+// Mock rendering data
+export const mockRendering = {
+  componentName: 'AlertBanner',
+} as any;
 
 // Complete props combinations
 export const defaultProps = {
   params: mockParams,
   fields: mockFields,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsWithoutLink = {
   params: mockParams,
   fields: mockFieldsWithoutLink,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsWithoutImage = {
   params: mockParams,
   fields: mockFieldsWithoutImage,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsWithEmptyLink = {
   params: mockParams,
   fields: mockFieldsWithEmptyLink,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsMinimal = {
   params: mockParams,
   fields: mockFieldsMinimal,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsWithEmptyTitle = {
   params: mockParams,
   fields: mockFieldsWithEmptyTitle,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsWithEmptyDescription = {
   params: mockParams,
   fields: mockFieldsWithEmptyDescription,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsWithoutFields = {
   params: mockParams,
   fields: null as any,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 export const propsWithEmptyParams = {
   params: mockParamsEmpty,
   fields: mockFields,
   externalFields: mockExternalFields,
+  rendering: mockRendering,
 };
 
 
