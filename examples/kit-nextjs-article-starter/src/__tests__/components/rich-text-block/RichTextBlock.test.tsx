@@ -12,7 +12,7 @@ import {
   propsWithComplexHtml,
   propsWithMultipleStyles,
   mockFields,
-} from './RichTextBlock.mockData';
+} from './RichTextBlock.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

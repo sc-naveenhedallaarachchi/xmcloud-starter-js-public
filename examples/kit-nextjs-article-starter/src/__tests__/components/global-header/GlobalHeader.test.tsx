@@ -9,7 +9,7 @@ import {
   propsWithEmptyItem,
   mockPageData,
   mockPageDataEditing,
-} from './GlobalHeader.mockData';
+} from './GlobalHeader.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

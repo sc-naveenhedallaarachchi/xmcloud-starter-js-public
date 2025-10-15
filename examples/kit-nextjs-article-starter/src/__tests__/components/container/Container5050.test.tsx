@@ -15,7 +15,7 @@ import {
   propsWithUndefinedParams,
   mockSitecoreContext,
   mockSitecoreContextEditing,
-} from './Container5050.mockData';
+} from './Container5050.mockProps';
 
 // Mock dependencies
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

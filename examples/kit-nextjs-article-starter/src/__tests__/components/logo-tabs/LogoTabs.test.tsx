@@ -13,7 +13,7 @@ import {
   propsWithoutFields,
   mockPageData,
   mockPageDataEditing,
-} from './LogoTabs.mockData';
+} from './LogoTabs.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

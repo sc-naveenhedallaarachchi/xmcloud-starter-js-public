@@ -12,7 +12,7 @@ import {
   propsEditing,
   mockPageData,
   mockPageDataEditing,
-} from './MultiPromoTabs.mockData';
+} from './MultiPromoTabs.mockProps';
 
 // Mock dependencies
 jest.mock('@/lib/utils', () => ({

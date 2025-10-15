@@ -13,7 +13,7 @@ import {
   propsWithoutFields,
   mockPageData,
   mockPageDataEditing,
-} from './AccordionBlock.mockData';
+} from './AccordionBlock.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

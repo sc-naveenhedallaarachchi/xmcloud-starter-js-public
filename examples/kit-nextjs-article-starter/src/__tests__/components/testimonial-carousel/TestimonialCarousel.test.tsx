@@ -10,7 +10,7 @@ import {
   propsWithoutChildren,
   propsWithoutFields,
   propsWithUndefinedFields,
-} from './TestimonialCarousel.mockData';
+} from './TestimonialCarousel.mockProps';
 
 // Mock radash debounce
 jest.mock('radash', () => ({

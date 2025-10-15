@@ -12,7 +12,7 @@ import {
   propsWithoutFields,
   propsWithUndefinedFields,
   propsWithMixedTopics,
-} from './TopicListing.mockData';
+} from './TopicListing.mockProps';
 
 // Mock Sitecore Content SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

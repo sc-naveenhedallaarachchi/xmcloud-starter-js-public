@@ -9,7 +9,7 @@ import {
   propsWithoutDynamicId,
   mockSitecoreContext,
   mockSitecoreContextEditing,
-} from './ContainerFullWidth.mockData';
+} from './ContainerFullWidth.mockProps';
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,

@@ -13,7 +13,7 @@ import {
   propsMinimal,
   propsWithCustomIcon,
   propsWithoutClassName,
-} from './Card.mockData';
+} from './Card.mockProps';
 
 // Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

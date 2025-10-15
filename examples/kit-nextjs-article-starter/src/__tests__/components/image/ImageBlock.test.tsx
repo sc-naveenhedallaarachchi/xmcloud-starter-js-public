@@ -9,7 +9,7 @@ import {
   propsWithLargeImage,
   propsWithoutStyles,
   propsWithoutFields,
-} from './ImageBlock.mockData';
+} from './ImageBlock.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

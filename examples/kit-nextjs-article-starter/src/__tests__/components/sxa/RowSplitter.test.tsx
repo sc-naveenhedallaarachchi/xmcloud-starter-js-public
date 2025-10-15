@@ -12,7 +12,7 @@ import {
   propsWithoutStyles,
   propsWithoutId,
   propsWithUndefinedParams,
-} from './RowSplitter.mockData';
+} from './RowSplitter.mockProps';
 
 // Mock the Placeholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

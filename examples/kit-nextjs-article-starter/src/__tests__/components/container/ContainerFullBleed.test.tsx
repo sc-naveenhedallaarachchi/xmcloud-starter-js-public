@@ -11,7 +11,7 @@ import {
   propsWithBackgroundImage,
   propsWithExcludeTopMargin,
   propsWithInsetAndTransparent,
-} from './ContainerFullBleed.mockData';
+} from './ContainerFullBleed.mockProps';
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,

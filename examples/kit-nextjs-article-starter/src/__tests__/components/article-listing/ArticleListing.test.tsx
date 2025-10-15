@@ -10,7 +10,7 @@ import {
   propsOneArticle,
   propsNoArticles,
   propsEditing,
-} from './ArticleListing.mockData';
+} from './ArticleListing.mockProps';
 
 // Mock useSitecore hook
 const mockUseSitecore = jest.fn();

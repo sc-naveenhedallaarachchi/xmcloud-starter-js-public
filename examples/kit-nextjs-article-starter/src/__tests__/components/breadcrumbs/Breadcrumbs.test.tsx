@@ -9,7 +9,7 @@ import {
   propsWithMixedTitles,
   propsEmptyAncestors,
   propsWithoutFields,
-} from './Breadcrumbs.mockData';
+} from './Breadcrumbs.mockProps';
 
 // Mock UI components
 jest.mock('@/components/ui/breadcrumb', () => ({

@@ -22,7 +22,7 @@ import {
   propsWithoutFields,
   propsWithUndefinedFields,
   propsInEditingMode,
-} from './TextBanner.mockData';
+} from './TextBanner.mockProps';
 
 // Mock useSitecore
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

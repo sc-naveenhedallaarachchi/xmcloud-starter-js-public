@@ -12,7 +12,7 @@ import {
   propsWithoutFields,
   propsWithAuthorNoImage,
   propsWithAuthorNoJobTitle,
-} from './ArticleHeader.mockData';
+} from './ArticleHeader.mockProps';
 
 // Mock window.matchMedia
 beforeAll(() => {

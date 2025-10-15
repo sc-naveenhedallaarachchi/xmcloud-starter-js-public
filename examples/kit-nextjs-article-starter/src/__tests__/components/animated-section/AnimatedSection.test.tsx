@@ -14,7 +14,7 @@ import {
   propsReducedMotion,
   propsPageEditing,
   propsMinimal,
-} from './AnimatedSection.mockData';
+} from './AnimatedSection.mockProps';
 
 // Mock the useIntersectionObserver hook
 const mockUseIntersectionObserver = jest.fn();

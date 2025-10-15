@@ -13,7 +13,7 @@ import {
   propsWithSecondaryColorScheme,
   propsWithoutColorScheme,
   propsWithoutFields,
-} from './CtaBanner.mockData';
+} from './CtaBanner.mockProps';
 
 // Mock useSitecore hook
 const mockUseSitecore = jest.fn();

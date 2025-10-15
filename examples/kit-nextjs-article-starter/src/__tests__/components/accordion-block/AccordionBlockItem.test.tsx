@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { AccordionBlockItem } from '@/components/accordion-block/AccordionBlockItem.dev';
-import { mockAccordionItem1, mockAccordionItem2 } from './AccordionBlock.mockData';
+import { mockAccordionItem1, mockAccordionItem2 } from './AccordionBlock.mockProps';
 
 // Mock the Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

@@ -10,7 +10,7 @@ import {
   propsWithoutAlt,
   mockPageData,
   mockPageDataEditing,
-} from './Image.mockData';
+} from './Image.mockProps';
 
 // Mock the useSitecore hook
 const mockUseSitecore = jest.fn();

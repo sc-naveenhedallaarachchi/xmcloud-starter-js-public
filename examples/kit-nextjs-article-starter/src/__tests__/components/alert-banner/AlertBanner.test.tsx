@@ -11,7 +11,7 @@ import {
   propsWithEmptyDescription,
   propsWithoutFields,
   propsWithEmptyParams,
-} from './AlertBanner.mockData';
+} from './AlertBanner.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

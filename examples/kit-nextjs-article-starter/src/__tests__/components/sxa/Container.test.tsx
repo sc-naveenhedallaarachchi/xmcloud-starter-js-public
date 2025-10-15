@@ -8,7 +8,7 @@ import {
   propsWithoutStyles,
   propsWithoutGridParameters,
   propsWithoutId,
-} from './Container.mockData';
+} from './Container.mockProps';
 
 // Mock the Placeholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

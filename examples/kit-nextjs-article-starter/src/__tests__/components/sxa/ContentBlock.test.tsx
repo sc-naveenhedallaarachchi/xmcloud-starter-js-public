@@ -6,7 +6,7 @@ import {
   propsWithEmptyHeading,
   propsWithEmptyContent,
   propsWithComplexContent,
-} from './ContentBlock.mockData';
+} from './ContentBlock.mockProps';
 
 // Mock the Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

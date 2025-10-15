@@ -14,7 +14,7 @@ import {
   propsEditing,
   mockPageData,
   mockPageDataEditing,
-} from './MultiPromo.mockData';
+} from './MultiPromo.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

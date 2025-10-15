@@ -11,7 +11,7 @@ import {
   propsWithoutSrc,
   propsWithoutLogo,
   propsWithEmptyClassName,
-} from './Logo.mockData';
+} from './Logo.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

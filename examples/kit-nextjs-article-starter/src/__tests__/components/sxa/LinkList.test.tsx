@@ -12,7 +12,7 @@ import {
   propsWithoutDatasource,
   propsWithEmptyFields,
   propsWithEmptyResults,
-} from './LinkList.mockData';
+} from './LinkList.mockProps';
 
 // Mock Sitecore SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

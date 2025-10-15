@@ -10,7 +10,7 @@ import {
   mockPageData,
   mockPageDataEditing,
   mockPageDataWithoutTitle,
-} from './Title.mockData';
+} from './Title.mockProps';
 
 // Mock the useSitecore hook
 const mockUseSitecore = jest.fn();

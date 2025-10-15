@@ -10,7 +10,7 @@ import {
   propsWithUndefinedParams,
   propsWithNullRendering,
   propsWithNumericSig,
-} from './PartialDesignDynamicPlaceholder.mockData';
+} from './PartialDesignDynamicPlaceholder.mockProps';
 
 // Mock the Placeholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

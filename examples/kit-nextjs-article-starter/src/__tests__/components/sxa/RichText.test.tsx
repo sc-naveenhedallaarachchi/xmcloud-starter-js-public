@@ -14,7 +14,7 @@ import {
   propsWithNullTextField,
   propsWithUndefinedParams,
   propsWithUndefinedId,
-} from './RichText.mockData';
+} from './RichText.mockProps';
 
 // Mock Sitecore SDK RichText component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

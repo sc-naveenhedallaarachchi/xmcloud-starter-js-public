@@ -15,7 +15,7 @@ import {
   propsWithUndefinedFields,
   propsWithEmptyVideo,
   propsWithoutParams,
-} from './Video.mockData';
+} from './Video.mockProps';
 
 // Mock useSitecore
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

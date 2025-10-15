@@ -22,7 +22,7 @@ import {
   mockSignalIconProps,
   mockIconWithAltText,
   mockIconWithoutClassName,
-} from './Icon.mockData';
+} from './Icon.mockProps';
 
 // Mock the SVG icon components
 const createMockSvgComponent = (name: string) => {

@@ -11,7 +11,7 @@ import {
   propsWithPageTitle,
   propsWithoutSubtitle,
   propsWithoutFields,
-} from './PageHeader.mockData';
+} from './PageHeader.mockProps';
 
 // Mock dependencies
 jest.mock('@/lib/utils', () => ({

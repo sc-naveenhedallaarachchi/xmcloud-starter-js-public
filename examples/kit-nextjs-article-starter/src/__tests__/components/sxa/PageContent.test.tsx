@@ -12,7 +12,7 @@ import {
   propsWithNullContent,
   mockSitecoreContext,
   mockSitecoreContextWithoutContent,
-} from './PageContent.mockData';
+} from './PageContent.mockProps';
 
 // Mock Sitecore SDK
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

@@ -8,7 +8,7 @@ import {
   propsWithFallbackTitles,
   propsWithoutDatasource,
   propsWithoutFields,
-} from './SecondaryNavigation.mockData';
+} from './SecondaryNavigation.mockProps';
 
 // Mock dependencies
 jest.mock('@/lib/utils', () => ({

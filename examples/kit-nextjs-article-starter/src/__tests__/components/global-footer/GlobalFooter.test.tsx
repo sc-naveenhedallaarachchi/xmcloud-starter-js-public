@@ -9,7 +9,7 @@ import {
   propsWithoutFields,
   mockPageData,
   mockPageDataEditing,
-} from './GlobalFooter.mockData';
+} from './GlobalFooter.mockProps';
 
 // Mock the cn utility
 jest.mock('@/lib/utils', () => ({

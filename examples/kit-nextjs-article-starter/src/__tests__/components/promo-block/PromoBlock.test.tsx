@@ -10,7 +10,7 @@ import {
   propsWithoutDescription,
   propsWithoutParams,
   propsWithoutFields,
-} from './PromoBlock.mockData';
+} from './PromoBlock.mockProps';
 
 // Mock dependencies
 jest.mock('@/lib/utils', () => ({

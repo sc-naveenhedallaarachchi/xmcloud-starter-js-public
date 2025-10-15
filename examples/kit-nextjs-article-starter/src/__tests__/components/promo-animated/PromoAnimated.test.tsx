@@ -13,7 +13,7 @@ import {
   propsWithCustomStyles,
   propsWithPositionRight,
   propsWithoutFields,
-} from './PromoAnimated.mockData';
+} from './PromoAnimated.mockProps';
 
 // Mock dependencies
 jest.mock('@/lib/utils', () => ({

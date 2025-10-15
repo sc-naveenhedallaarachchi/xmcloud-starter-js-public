@@ -36,7 +36,7 @@ import {
   editableImageButtonProps,
   editableImageButtonPropsEditing,
   editableImageButtonPropsWithoutSrc,
-} from './ButtonComponent.mockData';
+} from './ButtonComponent.mockProps';
 
 // Mock Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

@@ -13,7 +13,7 @@ import {
   propsWithoutItems,
   propsWithoutFields,
   propsWithUndefinedFields,
-} from './VerticalImageAccordion.mockData';
+} from './VerticalImageAccordion.mockProps';
 
 // Mock useSitecore
 jest.mock('@sitecore-content-sdk/nextjs', () => ({

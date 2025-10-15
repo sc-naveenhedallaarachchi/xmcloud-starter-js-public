@@ -8,7 +8,7 @@ import {
   propsWithEmptyTitle,
   propsWithoutFields,
   propsWithUndefinedFields,
-} from './SubscriptionBanner.mockData';
+} from './SubscriptionBanner.mockProps';
 
 // Mock next-localization
 jest.mock('next-localization', () => ({

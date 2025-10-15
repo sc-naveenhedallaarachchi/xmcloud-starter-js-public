@@ -10,7 +10,7 @@ import {
   propsEmpty,
   mockPageData,
   mockPageDataEditing,
-} from './Navigation.mockData';
+} from './Navigation.mockProps';
 
 // Mock the useSitecore hook
 const mockUseSitecore = jest.fn();

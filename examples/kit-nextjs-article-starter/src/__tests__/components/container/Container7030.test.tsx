@@ -9,7 +9,7 @@ import {
   propsWithOnlyRightPlaceholder,
   mockSitecoreContext,
   mockSitecoreContextEditing,
-} from './Container7030.mockData';
+} from './Container7030.mockProps';
 
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,

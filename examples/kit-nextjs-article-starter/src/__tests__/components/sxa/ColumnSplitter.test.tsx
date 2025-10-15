@@ -9,7 +9,7 @@ import {
   propsWithoutColumnStyles,
   propsWithNoColumns,
   propsWithMaxColumns,
-} from './ColumnSplitter.mockData';
+} from './ColumnSplitter.mockProps';
 
 // Mock the Placeholder component
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
