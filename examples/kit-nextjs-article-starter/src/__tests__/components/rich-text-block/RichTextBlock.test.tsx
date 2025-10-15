@@ -14,6 +14,28 @@ import {
   mockFields,
 } from './RichTextBlock.mockData';
 
+// Mock the cn utility
+jest.mock('@/lib/utils', () => ({
+  cn: (...args: any[]) => {
+    return args
+      .flat(2)
+      .filter(Boolean)
+      .map((arg) => {
+        if (typeof arg === 'string') return arg;
+        if (typeof arg === 'object' && !Array.isArray(arg)) {
+          return Object.entries(arg)
+            .filter(([, value]) => Boolean(value))
+            .map(([key]) => key)
+            .join(' ');
+        }
+        return '';
+      })
+      .filter(Boolean)
+      .join(' ')
+      .trim();
+  },
+}));
+
 // RichText component is already mocked in setup.js
 
 describe('RichTextBlock Component', () => {

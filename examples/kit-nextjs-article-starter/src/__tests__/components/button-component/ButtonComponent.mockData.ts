@@ -123,7 +123,8 @@ export const mockParamsEditing = {
   size: ButtonSize.DEFAULT,
   iconPosition: IconPosition.TRAILING,
   iconClassName: 'h-5 w-5',
-};
+  isPageEditing: true,
+} as any;
 
 export const mockParamsLarge = {
   size: ButtonSize.LG,
@@ -163,7 +164,6 @@ export const propsInEditing = {
   fields: mockFieldsDefault,
   params: mockParamsEditing,
   rendering: { componentName: 'ButtonComponent' } as any,
-  isPageEditing: true,
 };
 
 export const propsWithInvalidLink = {

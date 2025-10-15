@@ -44,7 +44,7 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     <a
       href={field?.value?.href || field?.value?.url}
       data-testid="sitecore-link"
-      data-editable={editable}
+      data-editable={editable ? 'true' : undefined}
       className={className}
       aria-label={ariaLabel}
     >

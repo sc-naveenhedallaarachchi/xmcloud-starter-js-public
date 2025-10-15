@@ -13,6 +13,28 @@ import {
   propsWithEmptyParams,
 } from './AlertBanner.mockData';
 
+// Mock the cn utility
+jest.mock('@/lib/utils', () => ({
+  cn: (...args: any[]) => {
+    return args
+      .flat(2)
+      .filter(Boolean)
+      .map((arg) => {
+        if (typeof arg === 'string') return arg;
+        if (typeof arg === 'object' && !Array.isArray(arg)) {
+          return Object.entries(arg)
+            .filter(([, value]) => Boolean(value))
+            .map(([key]) => key)
+            .join(' ');
+        }
+        return '';
+      })
+      .filter(Boolean)
+      .join(' ')
+      .trim();
+  },
+}));
+
 // Mock the Sitecore Content SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
   Text: ({ field, tag, className }: any) => {

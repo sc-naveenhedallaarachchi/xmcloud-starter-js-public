@@ -8,23 +8,19 @@ export const mockImageField: ImageField = {
     width: 100,
     height: 100,
   },
-  editable: 'Promo Icon',
 };
 
 export const mockImageFieldEmpty: ImageField = {
-  value: null,
-  editable: '',
+  value: undefined,
 };
 
 // Mock text field data
 export const mockTextField: Field<string> = {
   value: 'Test Promo Text',
-  editable: 'Test Promo Text',
 };
 
 export const mockTextFieldEmpty: Field<string> = {
   value: '',
-  editable: '',
 };
 
 // Mock link field data
@@ -37,7 +33,9 @@ export const mockLinkField: LinkField = {
 };
 
 export const mockLinkFieldEmpty: LinkField = {
-  value: null,
+  value: {
+    href: '',
+  },
 };
 
 // Mock fields data
