@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as RowSplitter } from '@/components/sxa/RowSplitter';
 import {
@@ -13,15 +12,6 @@ import {
   propsWithoutId,
   propsWithUndefinedParams,
 } from './RowSplitter.mockProps';
-
-// Mock the Placeholder component
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name}`} data-rendering={rendering.componentName}>
-      Placeholder Content for {name}
-    </div>
-  ),
-}));
 
 describe('RowSplitter Component', () => {
   beforeEach(() => {
@@ -245,7 +235,7 @@ describe('RowSplitter Component', () => {
             EnabledPlaceholders: undefined,
           },
         },
-      };
+      } as any;
 
       const { container } = render(<RowSplitter {...propsWithUndefined} />);
 
@@ -277,7 +267,7 @@ describe('RowSplitter Component', () => {
             RenderingIdentifier: undefined,
           },
         },
-      };
+      } as any;
 
       const { container } = render(<RowSplitter {...propsWithUndefinedId} />);
 

@@ -14,93 +14,11 @@ import {
   mockPageData,
   mockPageDataEditing,
 } from './LogoTabs.mockProps';
-
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className }, field?.value || '');
-  },
-  Image: ({ field, className }: any) => {
-    if (!field?.value?.src) return null;
-    return React.createElement('img', {
-      src: field.value.src,
-      alt: field.value.alt,
-      className,
-      'data-testid': 'logo-tabs-image',
-    });
-  },
-  Field: ({ field }: any) => {
-    return React.createElement('span', {}, field?.value || '');
-  },
-}));
-
-// Mock EditableButton component
-jest.mock('@/components/button-component/ButtonComponent', () => ({
-  EditableButton: ({ buttonLink, variant, className, isPageEditing }: any) => (
-    <button
-      data-testid="logo-tabs-button"
-      data-href={buttonLink?.value?.href}
-      data-variant={variant}
-      data-editing={isPageEditing}
-      className={className}
-    >
-      {buttonLink?.value?.text || 'Button'}
-    </button>
-  ),
-}));
-
-// Mock LogoItem component
-jest.mock('@/components/logo-tabs/LogoItem', () => ({
-  LogoItem: ({ logo, title, isActive, onClick, id, controls }: any) => (
-    <button
-      data-testid="logo-item"
-      data-active={isActive}
-      onClick={onClick}
-      id={id}
-      aria-controls={controls}
-      role="tab"
-      aria-selected={isActive}
-    >
-      <img src={logo?.jsonValue?.value?.src} alt={logo?.jsonValue?.value?.alt} />
-      <span>{title?.jsonValue?.value}</span>
-    </button>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 
 describe('LogoTabs Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockPageData);
   });
 
   describe('Basic rendering', () => {
@@ -345,21 +263,21 @@ describe('LogoTabs Component', () => {
 
   describe('Editing mode behavior', () => {
     it('should render all items stacked in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<LogoTabs {...propsEditing} />);
 
       expect(screen.getAllByTestId('logo-tabs-image')).toHaveLength(5); // 4 logos + 1 background
     });
 
     it('should show empty state message in editing mode without logos', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<LogoTabs {...propsEditingWithoutLogos} />);
 
       expect(screen.getByText('Add a logo tab item to edit.')).toBeInTheDocument();
     });
 
     it('should not show tab interface in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       const { container } = render(<LogoTabs {...propsEditing} />);
 
       const tablist = container.querySelector('[role="tablist"]');
@@ -367,7 +285,7 @@ describe('LogoTabs Component', () => {
     });
 
     it('should pass editing state to buttons', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<LogoTabs {...propsEditing} />);
 
       const buttons = screen.getAllByTestId('logo-tabs-button');
@@ -378,6 +296,10 @@ describe('LogoTabs Component', () => {
   });
 
   describe('Placeholder data in normal mode', () => {
+    beforeEach(() => {
+      mockUseSitecoreContext.mockReturnValue(mockPageData);
+    });
+
     it('should show placeholder logos when no data in normal mode', () => {
       render(<LogoTabs {...propsWithoutLogos} />);
 
@@ -394,6 +316,10 @@ describe('LogoTabs Component', () => {
   });
 
   describe('Optional fields handling', () => {
+    beforeEach(() => {
+      mockUseSitecoreContext.mockReturnValue(mockPageData);
+    });
+
     it('should render without title', () => {
       render(<LogoTabs {...propsWithoutTitle} />);
 
@@ -443,6 +369,10 @@ describe('LogoTabs Component', () => {
   });
 
   describe('Edge cases and fallbacks', () => {
+    beforeEach(() => {
+      mockUseSitecoreContext.mockReturnValue(mockPageData);
+    });
+
     it('should render NoDataFallback when fields is null', () => {
       render(<LogoTabs {...propsWithoutFields} />);
 
@@ -516,6 +446,10 @@ describe('LogoTabs Component', () => {
   });
 
   describe('Accessibility', () => {
+    beforeEach(() => {
+      mockUseSitecoreContext.mockReturnValue(mockPageData);
+    });
+
     it('should render tablist with proper role', () => {
       const { container } = render(<LogoTabs {...defaultProps} />);
 

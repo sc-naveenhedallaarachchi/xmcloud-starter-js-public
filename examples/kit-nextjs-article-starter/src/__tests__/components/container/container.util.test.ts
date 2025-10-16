@@ -49,7 +49,7 @@ describe('Container Utility Functions', () => {
     it('should handle undefined DynamicPlaceholderId', () => {
       const params = {
         DynamicPlaceholderId: undefined,
-      };
+      } as any;
 
       const result = getContainerPlaceholderProps('container', params);
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as AnimatedSection } from '@/components/animated-section/AnimatedSection.dev';
+import { mockUseIntersectionObserver } from '@/__tests__/testUtils/componentMocks';
 import {
   defaultProps,
   propsSlideUp,
@@ -16,17 +17,9 @@ import {
   propsMinimal,
 } from './AnimatedSection.mockProps';
 
-// Mock the useIntersectionObserver hook
-const mockUseIntersectionObserver = jest.fn();
-jest.mock('@/hooks/use-intersection-observer', () => ({
-  useIntersectionObserver: () => mockUseIntersectionObserver(),
-}));
-
 describe('AnimatedSection Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Default: element is visible
-    mockUseIntersectionObserver.mockReturnValue([true, { current: null }]);
   });
 
   describe('Basic rendering', () => {

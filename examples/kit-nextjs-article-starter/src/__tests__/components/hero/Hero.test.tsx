@@ -17,127 +17,11 @@ import {
   mockPageData,
   mockPageDataEditing,
 } from './Hero.mockProps';
-
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className }, field?.value || '');
-  },
-}));
-
-// Mock EditableButton component
-jest.mock('@/components/button-component/ButtonComponent', () => ({
-  EditableButton: ({ buttonLink, className, isPageEditing }: any) => (
-    <button
-      data-testid="hero-button"
-      data-href={buttonLink?.value?.href}
-      data-editing={isPageEditing}
-      className={className}
-    >
-      {buttonLink?.value?.text || 'Button'}
-    </button>
-  ),
-}));
-
-// Mock AnimatedSection component
-jest.mock('@/components/animated-section/AnimatedSection.dev', () => ({
-  Default: ({ children, direction, className, isPageEditing }: any) => (
-    <div
-      data-testid="animated-section"
-      data-direction={direction}
-      data-editing={isPageEditing}
-      className={className}
-    >
-      {children}
-    </div>
-  ),
-}));
-
-// Mock MediaSection component
-jest.mock('@/components/media-section/MediaSection.dev', () => ({
-  Default: ({ video, image, className, pause, reducedMotion }: any) => (
-    <div
-      data-testid="media-section"
-      data-video={video}
-      data-image={image?.value?.src}
-      data-pause={pause}
-      data-reduced-motion={reducedMotion}
-      className={className}
-    />
-  ),
-}));
-
-// Mock UI Button component
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, variant, size, onClick, className, ...props }: any) => (
-    <button
-      data-testid="control-button"
-      data-variant={variant}
-      data-size={size}
-      onClick={onClick}
-      className={className}
-      {...props}
-    >
-      {children}
-    </button>
-  ),
-}));
-
-// Mock lucide-react icons
-jest.mock('lucide-react', () => ({
-  Play: () => React.createElement('div', { 'data-testid': 'play-icon' }, 'Play'),
-  Pause: () => React.createElement('div', { 'data-testid': 'pause-icon' }, 'Pause'),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 
 describe('Hero Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockPageData);
-
-    // Mock window.matchMedia
-    Object.defineProperty(window, 'matchMedia', {
-      writable: true,
-      value: jest.fn().mockImplementation((query) => ({
-        matches: false,
-        media: query,
-        onchange: null,
-        addListener: jest.fn(),
-        removeListener: jest.fn(),
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-        dispatchEvent: jest.fn(),
-      })),
-    });
   });
 
   describe('Basic rendering', () => {
@@ -322,7 +206,7 @@ describe('Hero Component', () => {
     it('should render play/pause button', () => {
       render(<Hero {...defaultProps} />);
 
-      const controlButton = screen.getByTestId('control-button');
+      const controlButton = screen.getByLabelText('Pause Ambient Video');
       expect(controlButton).toBeInTheDocument();
     });
 
@@ -335,7 +219,7 @@ describe('Hero Component', () => {
     it('should toggle play/pause state on button click', () => {
       render(<Hero {...defaultProps} />);
 
-      const controlButton = screen.getByTestId('control-button');
+      const controlButton = screen.getByLabelText('Pause Ambient Video');
       
       // Initially showing pause icon (playing)
       expect(screen.getByTestId('pause-icon')).toBeInTheDocument();
@@ -351,14 +235,14 @@ describe('Hero Component', () => {
     it('should have correct aria-label when playing', () => {
       render(<Hero {...defaultProps} />);
 
-      const controlButton = screen.getByTestId('control-button');
+      const controlButton = screen.getByLabelText('Pause Ambient Video');
       expect(controlButton).toHaveAttribute('aria-label', 'Pause Ambient Video');
     });
 
     it('should have correct aria-label when paused', () => {
       render(<Hero {...defaultProps} />);
 
-      const controlButton = screen.getByTestId('control-button');
+      const controlButton = screen.getByLabelText('Pause Ambient Video');
       fireEvent.click(controlButton);
       
       expect(controlButton).toHaveAttribute('aria-label', 'Play Ambient');
@@ -384,14 +268,14 @@ describe('Hero Component', () => {
 
   describe('Editing mode behavior', () => {
     it('should render fields in editing mode even without values', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<Hero {...propsEditing} />);
 
       expect(screen.getByTestId('animated-section')).toHaveAttribute('data-editing', 'true');
     });
 
     it('should pass editing state to EditableButton', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<Hero {...propsEditing} />);
 
       const button = screen.getByTestId('hero-button');
@@ -399,7 +283,7 @@ describe('Hero Component', () => {
     });
 
     it('should set reducedMotion to true in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<Hero {...propsEditing} />);
 
       const mediaSections = screen.getAllByTestId('media-section');
@@ -525,10 +409,24 @@ describe('Hero Component', () => {
   });
 
   describe('Accessibility', () => {
+    beforeEach(() => {
+      // Reset matchMedia to default (no reduced motion)
+      window.matchMedia = jest.fn().mockImplementation(query => ({
+        matches: false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+    });
+
     it('should render control button with proper aria-label', () => {
       render(<Hero {...defaultProps} />);
 
-      const controlButton = screen.getByTestId('control-button');
+      const controlButton = screen.getByLabelText('Pause Ambient Video');
       expect(controlButton).toHaveAttribute('aria-label');
     });
 

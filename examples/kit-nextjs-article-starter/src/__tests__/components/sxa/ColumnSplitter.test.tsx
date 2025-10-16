@@ -11,15 +11,6 @@ import {
   propsWithMaxColumns,
 } from './ColumnSplitter.mockProps';
 
-// Mock the Placeholder component
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name}`} data-rendering={rendering.componentName}>
-      Placeholder Content for {name}
-    </div>
-  ),
-}));
-
 describe('ColumnSplitter Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -165,7 +156,7 @@ describe('ColumnSplitter Component', () => {
             EnabledPlaceholders: undefined,
           },
         },
-      };
+      } as any;
 
       const { container } = render(<ColumnSplitter {...propsWithUndefined} />);
 
@@ -206,7 +197,7 @@ describe('ColumnSplitter Component', () => {
             RenderingIdentifier: undefined,
           },
         },
-      };
+      } as any;
 
       const { container } = render(<ColumnSplitter {...propsWithoutId} />);
 

@@ -10,135 +10,11 @@ import {
   mockPageData,
   mockPageDataEditing,
 } from './GlobalHeader.mockProps';
-
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Link: ({ field, children }: any) => {
-    if (!field?.value?.href) return null;
-    return React.createElement('a', { href: field.value.href }, field.value.text || children);
-  },
-  Image: ({ field, className }: any) => {
-    if (!field?.value?.src) return null;
-    return React.createElement('img', {
-      src: field.value.src,
-      alt: field.value.alt,
-      className,
-      'data-testid': 'header-logo-image',
-    });
-  },
-}));
-
-// Mock Next.js Link
-jest.mock('next/link', () => ({
-  __esModule: true,
-  default: ({ children, href }: any) => {
-    return React.createElement('a', { href }, children);
-  },
-}));
-
-// Mock the Logo component
-jest.mock('@/components/logo/Logo.dev', () => ({
-  Default: ({ logo, className }: any) => (
-    <div data-testid="logo-component" className={className}>
-      <img src={logo?.value?.src} alt={logo?.value?.alt} />
-    </div>
-  ),
-}));
-
-// Mock framer-motion
-jest.mock('framer-motion', () => ({
-  motion: {
-    header: React.forwardRef(({ children, ...props }: any, ref: any) =>
-      React.createElement('header', { ...props, ref }, children)
-    ),
-  },
-  AnimatePresence: ({ children }: any) => <>{children}</>,
-}));
-
-// Mock lucide-react
-jest.mock('lucide-react', () => ({
-  Menu: () => React.createElement('div', { 'data-testid': 'menu-icon' }, 'Menu'),
-}));
-
-// Mock UI components
-jest.mock('@/components/ui/navigation-menu', () => ({
-  NavigationMenu: ({ children }: any) => (
-    <nav data-testid="navigation-menu">{children}</nav>
-  ),
-  NavigationMenuList: ({ children }: any) => <ul data-testid="nav-menu-list">{children}</ul>,
-  NavigationMenuItem: ({ children }: any) => <li data-testid="nav-menu-item">{children}</li>,
-}));
-
-jest.mock('@/components/ui/button', () => ({
-  Button: React.forwardRef(
-    ({ children, variant, size, asChild, className, onClick, ...props }: any, ref: any) => {
-      const buttonProps = {
-        ...props,
-        ref,
-        className,
-        onClick,
-        'data-variant': variant,
-        'data-size': size,
-        'data-as-child': asChild,
-      };
-      return React.createElement('button', buttonProps, children);
-    }
-  ),
-}));
-
-jest.mock('@/components/ui/sheet', () => ({
-  Sheet: ({ children, open, onOpenChange }: any) => (
-    <div data-testid="sheet" data-open={open}>
-      {children}
-    </div>
-  ),
-  SheetTrigger: React.forwardRef(({ children, asChild, ...props }: any, ref: any) =>
-    React.createElement('div', { ...props, ref, 'data-testid': 'sheet-trigger' }, children)
-  ),
-  SheetContent: ({ children, side }: any) => (
-    <div data-testid="sheet-content" data-side={side}>
-      {children}
-    </div>
-  ),
-}));
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 
 describe('GlobalHeader Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockPageData);
-    
-    // Mock window.scrollY
-    Object.defineProperty(window, 'scrollY', {
-      writable: true,
-      configurable: true,
-      value: 0,
-    });
-
-    // Mock addEventListener
-    jest.spyOn(window, 'addEventListener');
-    jest.spyOn(window, 'removeEventListener');
   });
 
   describe('Basic rendering', () => {
@@ -169,10 +45,10 @@ describe('GlobalHeader Component', () => {
     });
 
     it('should render logo as Image when in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<GlobalHeader {...defaultProps} />);
 
-      expect(screen.getByTestId('header-logo-image')).toBeInTheDocument();
+      expect(screen.getByTestId('image-field')).toBeInTheDocument();
     });
 
     it('should not render logo link when logo value is missing', () => {
@@ -271,16 +147,16 @@ describe('GlobalHeader Component', () => {
 
   describe('Editing mode behavior', () => {
     it('should render Sitecore Link components in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<GlobalHeader {...defaultProps} />);
 
       // In editing mode, links are rendered differently
       expect(screen.getByRole('banner')).toBeInTheDocument();
-      expect(screen.getByTestId('header-logo-image')).toBeInTheDocument();
+      expect(screen.getByTestId('image-field')).toBeInTheDocument();
     });
 
     it('should render CTA with Sitecore Link in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<GlobalHeader {...defaultProps} />);
 
       const ctaButtons = screen.getAllByText('Get Started');
@@ -289,10 +165,23 @@ describe('GlobalHeader Component', () => {
   });
 
   describe('Scroll behavior', () => {
+    let addEventListenerSpy: jest.SpyInstance;
+    let removeEventListenerSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      addEventListenerSpy = jest.spyOn(window, 'addEventListener');
+      removeEventListenerSpy = jest.spyOn(window, 'removeEventListener');
+    });
+
+    afterEach(() => {
+      addEventListenerSpy.mockRestore();
+      removeEventListenerSpy.mockRestore();
+    });
+
     it('should add scroll event listener on mount', () => {
       render(<GlobalHeader {...defaultProps} />);
 
-      expect(window.addEventListener).toHaveBeenCalledWith(
+      expect(addEventListenerSpy).toHaveBeenCalledWith(
         'scroll',
         expect.any(Function),
         { passive: true }
@@ -304,7 +193,7 @@ describe('GlobalHeader Component', () => {
 
       unmount();
 
-      expect(window.removeEventListener).toHaveBeenCalledWith(
+      expect(removeEventListenerSpy).toHaveBeenCalledWith(
         'scroll',
         expect.any(Function)
       );

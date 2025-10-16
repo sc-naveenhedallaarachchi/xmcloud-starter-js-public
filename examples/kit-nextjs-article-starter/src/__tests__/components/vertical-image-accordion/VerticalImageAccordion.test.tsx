@@ -15,92 +15,6 @@ import {
   propsWithUndefinedFields,
 } from './VerticalImageAccordion.mockProps';
 
-// Mock useSitecore
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => ({
-    page: {
-      mode: {
-        isEditing: false,
-      },
-    },
-  }),
-  Text: ({ field, tag, className, id }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(
-      Tag,
-      { className, 'data-testid': 'text-field', id },
-      field?.value || ''
-    );
-  },
-  Link: ({ field, editable, className }: any) => (
-    <a
-      href={field?.value?.href}
-      className={className}
-      data-testid="link-field"
-      data-editable={editable}
-    >
-      {field?.value?.text}
-    </a>
-  ),
-}));
-
-// Mock cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock ImageWrapper
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: React.forwardRef(({ image, className, wrapperClass }: any, ref: any) => (
-    <div className={wrapperClass} data-testid="image-wrapper-container">
-      <img
-        ref={ref}
-        src={image?.value?.src}
-        alt={image?.value?.alt}
-        className={className}
-        data-testid="image-wrapper"
-      />
-    </div>
-  )),
-}));
-
-// Mock EditableButton
-jest.mock('@/components/button-component/ButtonComponent', () => ({
-  EditableButton: ({ buttonLink, variant, className }: any) => (
-    <button
-      data-testid="editable-button"
-      data-variant={variant}
-      className={className}
-    >
-      {buttonLink?.value?.text}
-    </button>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('VerticalImageAccordion Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -154,7 +68,7 @@ describe('VerticalImageAccordion Component', () => {
     it('should render call-to-action buttons', () => {
       render(<VerticalImageAccordion {...defaultProps} />);
 
-      const buttons = screen.getAllByTestId('editable-button');
+      const buttons = screen.getAllByTestId('hero-button');
       expect(buttons.length).toBeGreaterThan(0);
     });
   });
@@ -288,7 +202,7 @@ describe('VerticalImageAccordion Component', () => {
     it('should render editable links in editing mode', () => {
       render(<VerticalImageAccordion {...propsInEditingMode} />);
 
-      const links = screen.getAllByTestId('link-field');
+      const links = screen.getAllByTestId('sitecore-link');
       links.forEach((link) => {
         expect(link).toHaveAttribute('data-editable', 'true');
       });
@@ -320,9 +234,9 @@ describe('VerticalImageAccordion Component', () => {
     it('should not render CTA button when link is not provided', () => {
       render(<VerticalImageAccordion {...propsWithItemWithoutLink} />);
 
-      const buttons = screen.getAllByTestId('editable-button');
-      // Only items with links should have buttons
-      expect(buttons.length).toBeLessThan(2);
+      const buttons = screen.queryAllByTestId('hero-button');
+      // Only items with links should have buttons (1 item has no link)
+      expect(buttons.length).toBe(1);
     });
 
     it('should handle item without image gracefully', () => {
@@ -353,7 +267,7 @@ describe('VerticalImageAccordion Component', () => {
       render(<VerticalImageAccordion {...propsWithoutFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('VerticalImageAccordion')).toBeInTheDocument();
+      expect(screen.getByText(/Verticalimageaccordion/i)).toBeInTheDocument();
     });
 
     it('should show NoDataFallback when fields is undefined', () => {
@@ -454,7 +368,7 @@ describe('VerticalImageAccordion Component', () => {
     it('should render buttons with secondary variant', () => {
       render(<VerticalImageAccordion {...defaultProps} />);
 
-      const buttons = screen.getAllByTestId('editable-button');
+      const buttons = screen.getAllByTestId('hero-button');
       buttons.forEach((button) => {
         expect(button).toHaveAttribute('data-variant', 'secondary');
       });
@@ -463,7 +377,7 @@ describe('VerticalImageAccordion Component', () => {
     it('should render buttons with correct styling classes', () => {
       render(<VerticalImageAccordion {...defaultProps} />);
 
-      const buttons = screen.getAllByTestId('editable-button');
+      const buttons = screen.getAllByTestId('hero-button');
       buttons.forEach((button) => {
         expect(button).toHaveClass('font-heading', 'mt-4', 'inline-flex', 'w-fit');
       });

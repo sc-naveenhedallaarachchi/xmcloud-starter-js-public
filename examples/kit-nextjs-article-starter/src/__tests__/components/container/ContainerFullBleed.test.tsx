@@ -13,23 +13,6 @@ import {
   propsWithInsetAndTransparent,
 } from './ContainerFullBleed.mockProps';
 
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
-}));
-
-jest.mock('@/components/flex/Flex.dev', () => ({
-  Flex: ({ children, fullBleed, className }: any) => (
-    <div data-testid="flex" data-full-bleed={fullBleed} className={className}>
-      {children}
-    </div>
-  ),
-  FlexItem: ({ children, basis }: any) => (
-    <div data-testid="flex-item" data-basis={basis}>
-      {children}
-    </div>
-  ),
-}));
-
 describe('ContainerFullBleed Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,20 +20,20 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Basic rendering', () => {
     it('should render container with placeholder', () => {
-      render(<ContainerFullBleed {...defaultProps} />);
+      render(<ContainerFullBleed {...defaultProps as any} />);
 
       expect(screen.getByTestId('placeholder-container-fullbleed-main-fullbleed')).toBeInTheDocument();
     });
 
     it('should render with container--full-bleed class', () => {
-      const { container } = render(<ContainerFullBleed {...defaultProps} />);
+      const { container } = render(<ContainerFullBleed {...defaultProps as any} />);
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('container--full-bleed');
     });
 
     it('should have @container and group classes', () => {
-      const { container } = render(<ContainerFullBleed {...defaultProps} />);
+      const { container } = render(<ContainerFullBleed {...defaultProps as any} />);
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('@container', 'group');
@@ -108,7 +91,7 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Background image', () => {
     it('should apply background image styles when provided', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithBackgroundImage} />);
+      const { container } = render(<ContainerFullBleed {...propsWithBackgroundImage as any} />);
 
       const section = container.querySelector('section');
       expect(section).toHaveStyle({
@@ -118,7 +101,7 @@ describe('ContainerFullBleed Component', () => {
     });
 
     it('should not apply background image when not provided', () => {
-      const { container } = render(<ContainerFullBleed {...defaultProps} />);
+      const { container } = render(<ContainerFullBleed {...defaultProps as any} />);
 
       const section = container.querySelector('section');
       // Check that style attribute is either empty or doesn't contain backgroundImage
@@ -129,7 +112,7 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Margin handling', () => {
     it('should apply default margin', () => {
-      const { container } = render(<ContainerFullBleed {...defaultProps} />);
+      const { container } = render(<ContainerFullBleed {...defaultProps as any} />);
 
       const section = container.querySelector('section');
       // Default margin variant should include margin classes
@@ -137,7 +120,7 @@ describe('ContainerFullBleed Component', () => {
     });
 
     it('should exclude margin when excludeTopMargin is 1', () => {
-      const { container } = render(<ContainerFullBleed {...propsWithExcludeTopMargin} />);
+      const { container } = render(<ContainerFullBleed {...propsWithExcludeTopMargin as any} />);
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('mt-0', 'mb-0');
@@ -170,7 +153,7 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Layout structure', () => {
     it('should render with Flex wrapper', () => {
-      render(<ContainerFullBleed {...defaultProps} />);
+      render(<ContainerFullBleed {...defaultProps as any} />);
 
       const flex = screen.getByTestId('flex');
       expect(flex).toBeInTheDocument();
@@ -178,14 +161,14 @@ describe('ContainerFullBleed Component', () => {
     });
 
     it('should apply group-[.is-inset]:p-0 class to Flex', () => {
-      render(<ContainerFullBleed {...defaultProps} />);
+      render(<ContainerFullBleed {...defaultProps as any} />);
 
       const flex = screen.getByTestId('flex');
       expect(flex).toHaveClass('group-[.is-inset]:p-0');
     });
 
     it('should render FlexItem with full basis', () => {
-      render(<ContainerFullBleed {...defaultProps} />);
+      render(<ContainerFullBleed {...defaultProps as any} />);
 
       const flexItem = screen.getByTestId('flex-item');
       expect(flexItem).toHaveAttribute('data-basis', 'full');
@@ -194,7 +177,7 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Custom styles', () => {
     it('should apply custom styles parameter', () => {
-      const { container } = render(<ContainerFullBleed {...defaultProps} />);
+      const { container } = render(<ContainerFullBleed {...defaultProps as any} />);
 
       const section = container.querySelector('section');
       expect(section).toHaveClass('custom-fullbleed-style');
@@ -203,14 +186,14 @@ describe('ContainerFullBleed Component', () => {
 
   describe('Component structure', () => {
     it('should render section as root element', () => {
-      const { container } = render(<ContainerFullBleed {...defaultProps} />);
+      const { container } = render(<ContainerFullBleed {...defaultProps as any} />);
 
       const section = container.querySelector('section');
       expect(section?.tagName).toBe('SECTION');
     });
 
     it('should have correct class hierarchy', () => {
-      const { container } = render(<ContainerFullBleed {...defaultProps} />);
+      const { container } = render(<ContainerFullBleed {...defaultProps as any} />);
 
       const section = container.querySelector('section');
       const flex = section?.querySelector('[data-testid="flex"]');

@@ -12,15 +12,6 @@ import {
   propsWithNumericSig,
 } from './PartialDesignDynamicPlaceholder.mockProps';
 
-// Mock the Placeholder component
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name || 'empty'}`} data-rendering={rendering?.componentName || 'unknown'}>
-      Dynamic Placeholder Content: {name || 'empty'}
-    </div>
-  ),
-}));
-
 describe('PartialDesignDynamicPlaceholder Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -70,21 +61,21 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
     it('should render with empty sig', () => {
       render(<PartialDesignDynamicPlaceholder {...propsWithEmptySig} />);
 
-      const placeholder = screen.getByTestId('placeholder-empty');
+      const placeholder = screen.getByTestId('placeholder-');
       expect(placeholder).toBeInTheDocument();
     });
 
     it('should handle missing sig parameter', () => {
       render(<PartialDesignDynamicPlaceholder {...propsWithoutSig} />);
 
-      const placeholder = screen.getByTestId('placeholder-empty');
+      const placeholder = screen.getByTestId('placeholder-');
       expect(placeholder).toBeInTheDocument();
     });
 
     it('should handle undefined params', () => {
       render(<PartialDesignDynamicPlaceholder {...propsWithUndefinedParams} />);
 
-      const placeholder = screen.getByTestId('placeholder-empty');
+      const placeholder = screen.getByTestId('placeholder-');
       expect(placeholder).toBeInTheDocument();
     });
   });
@@ -93,7 +84,7 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
     it('should handle null rendering gracefully', () => {
       render(<PartialDesignDynamicPlaceholder {...propsWithNullRendering} />);
 
-      const placeholder = screen.getByTestId('placeholder-empty');
+      const placeholder = screen.getByTestId('placeholder-');
       expect(placeholder).toBeInTheDocument();
     });
 
@@ -104,7 +95,7 @@ describe('PartialDesignDynamicPlaceholder Component', () => {
 
       render(<PartialDesignDynamicPlaceholder {...propsWithUndefinedRendering} />);
 
-      const placeholder = screen.getByTestId('placeholder-empty');
+      const placeholder = screen.getByTestId('placeholder-');
       expect(placeholder).toBeInTheDocument();
     });
 

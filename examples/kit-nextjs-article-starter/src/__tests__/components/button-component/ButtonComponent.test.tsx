@@ -38,74 +38,13 @@ import {
   editableImageButtonPropsWithoutSrc,
 } from './ButtonComponent.mockProps';
 
-// Mock Sitecore Content SDK components
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Link: ({ field, children, editable, className, 'aria-label': ariaLabel }: any) => (
-    <a
-      href={field?.value?.href || field?.value?.url}
-      data-testid="sitecore-link"
-      data-editable={editable ? 'true' : undefined}
-      className={className}
-      aria-label={ariaLabel}
-    >
-      {children || field?.value?.text}
-    </a>
-  ),
-}));
-
-// Mock UI components
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, variant, size, className }: any) => (
-    <div
-      data-testid="button"
-      data-as-child={asChild}
-      data-variant={variant}
-      data-size={size}
-      className={className}
-    >
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/components/icon/Icon', () => ({
-  Default: ({ iconName, className, isAriaHidden }: any) => (
-    <span
-      data-testid={`icon-${iconName}`}
-      className={className}
-      aria-hidden={isAriaHidden}
-    >
-      {iconName}
-    </span>
-  ),
-}));
-
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: React.forwardRef(({ image, className, 'aria-hidden': ariaHidden }: any, ref: any) => (
-    <img
-      ref={ref}
-      src={image?.value?.src}
-      alt={image?.value?.alt}
-      className={className}
-      aria-hidden={ariaHidden}
-      data-testid="image-wrapper"
-    />
-  )),
-}));
-
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('ButtonComponent', () => {
   describe('Default variant', () => {
     describe('Basic rendering', () => {
       it('should render button with link', () => {
         render(<ButtonComponent {...defaultProps} />);
 
-        expect(screen.getByTestId('button')).toBeInTheDocument();
+        expect(screen.getByTestId('ui-button')).toBeInTheDocument();
         expect(screen.getByTestId('sitecore-link')).toBeInTheDocument();
       });
 
@@ -126,21 +65,21 @@ describe('ButtonComponent', () => {
         render(<ButtonComponent {...defaultProps} />);
 
         // Component uses linktype as icon when icon prop value is provided but not used as fallback
-        expect(screen.getByTestId('icon-internal')).toBeInTheDocument();
+        expect(screen.getByTestId('icon-InternalIcon')).toBeInTheDocument();
       });
 
       it('should render leading icon when iconPosition is leading', () => {
         render(<ButtonComponent {...propsWithLeadingIcon} />);
 
         // Component uses linktype as icon when icon prop value is provided but not used as fallback
-        expect(screen.getByTestId('icon-internal')).toBeInTheDocument();
+        expect(screen.getByTestId('icon-InternalIcon')).toBeInTheDocument();
       });
 
       it('should render without icon when not provided', () => {
         render(<ButtonComponent {...propsWithoutIcon} />);
 
         // Icon should still render with default value based on linktype
-        expect(screen.queryByTestId('icon-internal')).toBeInTheDocument();
+        expect(screen.queryByTestId('icon-InternalIcon')).toBeInTheDocument();
       });
     });
 
@@ -148,7 +87,7 @@ describe('ButtonComponent', () => {
       it('should render without explicit variant (undefined)', () => {
         render(<ButtonComponent {...defaultProps} />);
 
-        const button = screen.getByTestId('button');
+        const button = screen.getByTestId('ui-button');
         // When no variant is specified, it will be undefined
         expect(button).toBeInTheDocument();
       });
@@ -156,7 +95,7 @@ describe('ButtonComponent', () => {
       it('should render button with asChild prop', () => {
         render(<ButtonComponent {...defaultProps} />);
 
-        const button = screen.getByTestId('button');
+        const button = screen.getByTestId('ui-button');
         expect(button).toHaveAttribute('data-as-child', 'true');
       });
     });
@@ -202,21 +141,21 @@ describe('ButtonComponent', () => {
       it('should render with default size', () => {
         render(<ButtonComponent {...defaultProps} />);
 
-        const button = screen.getByTestId('button');
+        const button = screen.getByTestId('ui-button');
         expect(button).toHaveAttribute('data-size', 'default');
       });
 
       it('should render with large size', () => {
         render(<ButtonComponent {...propsLargeSize} />);
 
-        const button = screen.getByTestId('button');
+        const button = screen.getByTestId('ui-button');
         expect(button).toHaveAttribute('data-size', 'lg');
       });
 
       it('should render with small size', () => {
         render(<ButtonComponent {...propsSmallSize} />);
 
-        const button = screen.getByTestId('button');
+        const button = screen.getByTestId('ui-button');
         expect(button).toHaveAttribute('data-size', 'sm');
       });
     });
@@ -225,14 +164,14 @@ describe('ButtonComponent', () => {
       it('should apply icon className', () => {
         render(<ButtonComponent {...defaultProps} />);
 
-        const icon = screen.getByTestId('icon-internal');
+        const icon = screen.getByTestId('icon-InternalIcon');
         expect(icon).toHaveClass('h-5 w-5');
       });
 
       it('should set aria-hidden on icon', () => {
         render(<ButtonComponent {...defaultProps} />);
 
-        const icon = screen.getByTestId('icon-internal');
+        const icon = screen.getByTestId('icon-InternalIcon');
         expect(icon).toHaveAttribute('aria-hidden', 'true');
       });
     });
@@ -251,7 +190,7 @@ describe('ButtonComponent', () => {
     it('should render Primary variant (maps to default)', () => {
       render(<Primary {...propsPrimary} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       // PRIMARY and DEFAULT both map to 'default' in the enum
       expect(button).toHaveAttribute('data-variant', 'default');
     });
@@ -259,42 +198,42 @@ describe('ButtonComponent', () => {
     it('should render Secondary variant', () => {
       render(<Secondary {...propsSecondary} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-variant', 'secondary');
     });
 
     it('should render Destructive variant', () => {
       render(<Destructive {...propsDestructive} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-variant', 'destructive');
     });
 
     it('should render Ghost variant', () => {
       render(<Ghost {...propsGhost} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-variant', 'ghost');
     });
 
     it('should render Outline variant', () => {
       render(<Outline {...propsOutline} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-variant', 'outline');
     });
 
     it('should render Link variant', () => {
       render(<LinkButton {...propsLink} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-variant', 'link');
     });
 
     it('should render Tertiary variant', () => {
       render(<Tertiary {...propsTertiary} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-variant', 'tertiary');
     });
   });
@@ -303,7 +242,7 @@ describe('ButtonComponent', () => {
     it('should render editable button', () => {
       render(<EditableButton {...editableButtonProps} />);
 
-      expect(screen.getByTestId('button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
       expect(screen.getByTestId('sitecore-link')).toBeInTheDocument();
     });
 
@@ -347,7 +286,7 @@ describe('ButtonComponent', () => {
     it('should render editable image button', () => {
       render(<EditableImageButton {...editableImageButtonProps} />);
 
-      expect(screen.getByTestId('button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
       expect(screen.getByTestId('sitecore-link')).toBeInTheDocument();
     });
 

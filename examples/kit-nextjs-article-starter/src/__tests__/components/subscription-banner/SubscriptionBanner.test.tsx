@@ -10,94 +10,6 @@ import {
   propsWithUndefinedFields,
 } from './SubscriptionBanner.mockProps';
 
-// Mock next-localization
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        'Demo1_SubscriptionBanner_ButtonLabel': 'Subscribe',
-        'Demo1_SubscriptionBanner_EmailFieldPlaceholder': 'Enter your email address',
-        'Demo1_SubscriptionBanner_SuccessMessage': 'Thank you for subscribing!',
-        'Demo1_SubscriptionBanner_EmailFormatError': 'Invalid email format',
-      };
-      return translations[key] || key;
-    },
-  }),
-}));
-
-// Mock Sitecore Content SDK
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
-  },
-}));
-
-// Mock react-hook-form
-jest.mock('react-hook-form', () => ({
-  useForm: () => ({
-    handleSubmit: (fn: any) => (e: any) => {
-      e.preventDefault();
-      fn({ email: 'test@example.com' });
-    },
-    control: {},
-    reset: jest.fn(),
-    formState: { errors: {} },
-  }),
-}));
-
-// Mock UI components
-jest.mock('@/components/ui/form', () => ({
-  Form: ({ children }: any) => <div data-testid="form">{children}</div>,
-  FormField: ({ render }: any) =>
-    render({
-      field: {
-        value: '',
-        onChange: jest.fn(),
-        onBlur: jest.fn(),
-        name: 'email',
-        ref: jest.fn(),
-      },
-    }),
-  FormItem: ({ children, className }: any) => (
-    <div className={className} data-testid="form-item">
-      {children}
-    </div>
-  ),
-  FormControl: ({ children }: any) => <div data-testid="form-control">{children}</div>,
-  FormMessage: ({ children, className }: any) => (
-    <div className={className} data-testid="form-message">
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/components/ui/input', () => ({
-  Input: ({ type, placeholder, disabled, className, ...props }: any) => (
-    <input
-      type={type}
-      placeholder={placeholder}
-      disabled={disabled}
-      className={className}
-      data-testid="email-input"
-      {...props}
-    />
-  ),
-}));
-
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, type, disabled, className }: any) => (
-    <button
-      type={type}
-      disabled={disabled}
-      className={className}
-      data-testid="submit-button"
-    >
-      {children}
-    </button>
-  ),
-}));
-
 describe('SubscriptionBanner Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -112,7 +24,7 @@ describe('SubscriptionBanner Component', () => {
         screen.getByText('Get the latest updates delivered directly to your inbox')
       ).toBeInTheDocument();
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
-      expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should render title in h2 tag', () => {
@@ -142,7 +54,7 @@ describe('SubscriptionBanner Component', () => {
     it('should render submit button with correct text', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
-      const submitButton = screen.getByTestId('submit-button');
+      const submitButton = screen.getByTestId('ui-button');
       expect(submitButton).toHaveTextContent('Subscribe');
     });
   });
@@ -163,15 +75,15 @@ describe('SubscriptionBanner Component', () => {
 
       expect(screen.getByText('Subscribe to Our Newsletter')).toBeInTheDocument();
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
-      expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should handle empty title value', () => {
       render(<SubscriptionBanner {...propsWithEmptyTitle} />);
 
-      const textFields = screen.getAllByTestId('text-field');
-      const emptyTitle = textFields.find((el) => el.textContent === '');
+      const emptyTitle = screen.getByTestId('text-h2');
       expect(emptyTitle).toBeInTheDocument();
+      expect(emptyTitle).toBeEmptyDOMElement();
     });
   });
 
@@ -232,7 +144,7 @@ describe('SubscriptionBanner Component', () => {
     it('should apply correct button classes', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
-      const button = screen.getByTestId('submit-button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveClass('flex-1', 'rounded-full', 'px-8', 'py-2.5');
     });
   });
@@ -241,7 +153,7 @@ describe('SubscriptionBanner Component', () => {
     it('should have submit button type', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
-      const submitButton = screen.getByTestId('submit-button');
+      const submitButton = screen.getByTestId('ui-button');
       expect(submitButton).toHaveAttribute('type', 'submit');
     });
 
@@ -293,7 +205,7 @@ describe('SubscriptionBanner Component', () => {
 
       // Component should still render the form structure
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
-      expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should handle undefined fields gracefully', () => {
@@ -301,7 +213,7 @@ describe('SubscriptionBanner Component', () => {
 
       // Component should still render the form structure
       expect(screen.getByTestId('email-input')).toBeInTheDocument();
-      expect(screen.getByTestId('submit-button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
   });
 
@@ -316,7 +228,7 @@ describe('SubscriptionBanner Component', () => {
     it('should use translated button text', () => {
       render(<SubscriptionBanner {...defaultProps} />);
 
-      const button = screen.getByTestId('submit-button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveTextContent('Subscribe');
     });
   });

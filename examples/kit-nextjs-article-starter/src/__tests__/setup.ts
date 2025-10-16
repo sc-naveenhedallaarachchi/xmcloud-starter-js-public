@@ -1,6 +1,9 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 
+// Import centralized component mocks
+import './testUtils/componentMocks';
+
 // Mock Next.js router
 jest.mock('next/router', () => ({
   useRouter() {
@@ -32,29 +35,4 @@ jest.mock('next/image', () => ({
     // eslint-disable-next-line @next/next/no-img-element
     return React.createElement('img', props);
   },
-}));
-
-// Mock Sitecore Content SDK components
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  RichText: jest.fn(({ field }: { field: any }) => {
-    return React.createElement('div', { 'data-testid': 'rich-text-content' }, field?.value || 'No content');
-  }),
-  Field: ({ field }: { field: any }) => {
-    return React.createElement('span', {}, field?.value || '');
-  },
-}));
-
-// Mock utility functions
-jest.mock('@/lib/utils', () => ({
-  cn: (...classes: (string | undefined)[]) => {
-    return classes.filter(Boolean).join(' ');
-  },
-}));
-
-// Mock NoDataFallback component
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: { componentName: string }) => 
-    React.createElement('div', { 'data-testid': 'no-data-fallback' }, 
-      `${componentName} requires a datasource item assigned.`
-    ),
 }));

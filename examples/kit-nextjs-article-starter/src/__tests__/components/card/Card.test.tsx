@@ -15,69 +15,6 @@ import {
   propsWithoutClassName,
 } from './Card.mockProps';
 
-// Mock Sitecore Content SDK components
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field, tag }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { 'data-testid': 'text-field' }, field?.value || '');
-  },
-  RichText: ({ field }: any) => (
-    <div data-testid="rich-text-field" dangerouslySetInnerHTML={{ __html: field?.value || '' }} />
-  ),
-  Link: ({ field, children, editable }: any) => (
-    <a
-      href={field?.value?.href || field?.value?.url}
-      data-testid="sitecore-link"
-      data-editable={editable}
-    >
-      {children || field?.value?.text}
-    </a>
-  ),
-}));
-
-// Mock UI components
-jest.mock('@/components/ui/card', () => ({
-  Card: ({ children, className }: any) => (
-    <div data-testid="card" className={className}>
-      {children}
-    </div>
-  ),
-  CardHeader: ({ children }: any) => <div data-testid="card-header">{children}</div>,
-  CardTitle: ({ children }: any) => <div data-testid="card-title">{children}</div>,
-  CardFooter: ({ children }: any) => <div data-testid="card-footer">{children}</div>,
-}));
-
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild }: any) => (
-    <div data-testid="button" data-as-child={asChild}>
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/components/icon/Icon', () => ({
-  Default: ({ iconName }: any) => <span data-testid={`icon-${iconName}`}>{iconName}</span>,
-}));
-
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: React.forwardRef(({ image, className }: any, ref: any) => {
-    if (!image?.value?.src) return null;
-    return (
-      <img
-        ref={ref}
-        src={image?.value?.src}
-        alt={image?.value?.alt}
-        className={className}
-        data-testid="image-wrapper"
-      />
-    );
-  }),
-}));
-
-jest.mock('@/lib/utils', () => ({
-  cn: (...classes: (string | undefined)[]) => classes.filter(Boolean).join(' '),
-}));
-
 describe('Card Component', () => {
   describe('Basic rendering', () => {
     it('should render card container', () => {
@@ -107,7 +44,7 @@ describe('Card Component', () => {
     it('should render description as rich text', () => {
       render(<Card {...defaultProps} />);
 
-      const richText = screen.getByTestId('rich-text-field');
+      const richText = screen.getByTestId('rich-text-content');
       expect(richText).toBeInTheDocument();
       expect(richText.innerHTML).toContain('rich text');
       expect(richText.innerHTML).toContain('<strong>');
@@ -140,7 +77,7 @@ describe('Card Component', () => {
     it('should render button in footer', () => {
       render(<Card {...defaultProps} />);
 
-      expect(screen.getByTestId('button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should render link with correct href', () => {
@@ -181,7 +118,7 @@ describe('Card Component', () => {
     it('should use default icon when not provided in editable mode', () => {
       render(<Card {...propsWithoutIcon} editable={true} />);
 
-      expect(screen.getByTestId('icon-internal')).toBeInTheDocument();
+      expect(screen.getByTestId('icon-InternalIcon')).toBeInTheDocument();
     });
 
     it('should render custom icon', () => {
@@ -258,7 +195,7 @@ describe('Card Component', () => {
     it('should handle empty description field', () => {
       render(<Card {...propsWithEmptyFields} />);
 
-      const richText = screen.getByTestId('rich-text-field');
+      const richText = screen.getByTestId('rich-text-content');
       expect(richText).toBeInTheDocument();
       expect(richText.innerHTML).toBe('');
     });
@@ -297,7 +234,7 @@ describe('Card Component', () => {
     it('should render button with asChild prop', () => {
       render(<Card {...defaultProps} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-as-child', 'true');
     });
   });
@@ -309,7 +246,7 @@ describe('Card Component', () => {
       const card = container.querySelector('[data-testid="card"]');
       const children = card?.children;
 
-      expect(children?.[0]).toHaveAttribute('data-testid', 'image-wrapper');
+      expect(children?.[0]).toHaveAttribute('data-testid', 'image-wrapper-container');
       expect(children?.[1]).toHaveAttribute('data-testid', 'card-header');
       expect(children?.[2]).toHaveAttribute('data-testid', 'card-footer');
     });
@@ -319,7 +256,7 @@ describe('Card Component', () => {
 
       const header = screen.getByTestId('card-header');
       const title = screen.getByTestId('card-title');
-      const richText = screen.getByTestId('rich-text-field');
+      const richText = screen.getByTestId('rich-text-content');
 
       expect(header).toContainElement(title);
       expect(header).toContainElement(richText);
@@ -329,7 +266,7 @@ describe('Card Component', () => {
       render(<Card {...defaultProps} />);
 
       const footer = screen.getByTestId('card-footer');
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       const link = screen.getByTestId('sitecore-link');
 
       expect(footer).toContainElement(button);

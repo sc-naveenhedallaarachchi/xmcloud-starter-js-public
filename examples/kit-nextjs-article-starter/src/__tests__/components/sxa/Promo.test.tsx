@@ -11,32 +11,6 @@ import {
   propsEmpty,
 } from './Promo.mockProps';
 
-// Mock the Sitecore Content SDK components
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  NextImage: ({ field, ...props }: any) => {
-    // Don't render if field.value is null or undefined
-    if (!field?.value) {
-      return <img data-testid="promo-image" alt="" />;
-    }
-    return (
-      <img 
-        src={field.value.src || ''} 
-        alt={field.value.alt || ''} 
-        {...props}
-        data-testid="promo-image"
-      />
-    );
-  },
-  RichText: ({ field, className }: any) => (
-    <div className={className} dangerouslySetInnerHTML={{ __html: field?.value || '' }} />
-  ),
-  Link: ({ field, children }: any) => (
-    <a href={field?.value?.href || '#'} data-testid="promo-link">
-      {children}
-    </a>
-  ),
-}));
-
 describe('Promo Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -46,15 +20,15 @@ describe('Promo Component', () => {
     it('should render promo with icon, text, and link', () => {
       render(<Promo {...defaultProps} />);
 
-      expect(screen.getByTestId('promo-image')).toBeInTheDocument();
+      expect(screen.getByTestId('image-field')).toBeInTheDocument();
       expect(screen.getByText('Test Promo Text')).toBeInTheDocument();
-      expect(screen.getByTestId('promo-link')).toBeInTheDocument();
+      expect(screen.getByTestId('sitecore-link')).toBeInTheDocument();
     });
 
     it('should render with correct container structure', () => {
       render(<Promo {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveClass('component', 'promo', 'custom-promo-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -64,14 +38,14 @@ describe('Promo Component', () => {
     it('should apply custom styles', () => {
       render(<Promo {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveClass('custom-promo-style');
     });
 
     it('should render without custom styles when not provided', () => {
       render(<Promo {...propsWithoutStyles} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveClass('component', 'promo');
       expect(container).not.toHaveClass('custom-promo-style');
     });
@@ -79,14 +53,14 @@ describe('Promo Component', () => {
     it('should have correct rendering identifier', () => {
       render(<Promo {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveAttribute('id', 'promo-rendering-id');
     });
 
     it('should render without id when RenderingIdentifier is not provided', () => {
       render(<Promo {...propsWithoutId} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).not.toHaveAttribute('id');
     });
 
@@ -120,14 +94,14 @@ describe('Promo Component', () => {
     it('should render promo with icon and two text fields', () => {
       render(<PromoWithText {...defaultProps} />);
 
-      expect(screen.getByTestId('promo-image')).toBeInTheDocument();
+      expect(screen.getByTestId('image-field')).toBeInTheDocument();
       expect(screen.getAllByText('Test Promo Text')).toHaveLength(2);
     });
 
     it('should render with correct container structure', () => {
       render(<PromoWithText {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveClass('component', 'promo', 'custom-promo-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -137,14 +111,14 @@ describe('Promo Component', () => {
     it('should apply custom styles', () => {
       render(<PromoWithText {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveClass('custom-promo-style');
     });
 
     it('should have correct rendering identifier', () => {
       render(<PromoWithText {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveAttribute('id', 'promo-rendering-id');
     });
 
@@ -165,7 +139,7 @@ describe('Promo Component', () => {
     it('should render correct DOM structure for Default component', () => {
       render(<Promo {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveClass('component', 'promo', 'custom-promo-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -181,7 +155,7 @@ describe('Promo Component', () => {
     it('should render correct DOM structure for WithText component', () => {
       render(<PromoWithText {...defaultProps} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toHaveClass('component', 'promo', 'custom-promo-style');
       
       const contentDiv = container?.querySelector('.component-content');
@@ -199,7 +173,7 @@ describe('Promo Component', () => {
     it('should render promo icon with correct attributes', () => {
       render(<Promo {...defaultProps} />);
 
-      const image = screen.getByTestId('promo-image');
+      const image = screen.getByTestId('image-field');
       expect(image).toBeInTheDocument();
       expect(image).toHaveAttribute('src', '/test-promo-icon.jpg');
       expect(image).toHaveAttribute('alt', 'Promo Icon');
@@ -219,7 +193,7 @@ describe('Promo Component', () => {
     it('should render promo link with correct href', () => {
       render(<Promo {...defaultProps} />);
 
-      const link = screen.getByTestId('promo-link');
+      const link = screen.getByTestId('sitecore-link');
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('href', '/test-promo-link');
     });
@@ -243,7 +217,7 @@ describe('Promo Component', () => {
     it('should handle empty icon field', () => {
       render(<Promo {...propsWithEmptyIcon} />);
 
-      const image = screen.getByTestId('promo-image');
+      const image = screen.getByTestId('image-field');
       expect(image).toBeInTheDocument();
       // When field.value is null, NextImage doesn't render src attribute
       expect(image).not.toHaveAttribute('src');
@@ -252,14 +226,14 @@ describe('Promo Component', () => {
     it('should handle empty text field', () => {
       render(<Promo {...propsWithEmptyText} />);
 
-      const textDiv = screen.getByTestId('promo-image').closest('.component.promo')?.querySelector('.field-promotext');
+      const textDiv = screen.getByTestId('image-field').closest('.component.promo')?.querySelector('.field-promotext');
       expect(textDiv).toHaveTextContent('');
     });
 
     it('should handle empty link field', () => {
       render(<Promo {...propsWithEmptyLink} />);
 
-      const link = screen.getByTestId('promo-link');
+      const link = screen.getByTestId('sitecore-link');
       expect(link).toBeInTheDocument();
       expect(link).toHaveAttribute('href', '#');
     });
@@ -272,7 +246,7 @@ describe('Promo Component', () => {
 
       render(<Promo {...propsWithoutParams} />);
 
-      const container = screen.getByTestId('promo-image').closest('.component.promo');
+      const container = screen.getByTestId('image-field').closest('.component.promo');
       expect(container).toBeInTheDocument();
       expect(container).toHaveClass('component', 'promo');
     });
@@ -282,7 +256,7 @@ describe('Promo Component', () => {
     it('should apply correct CSS classes to elements', () => {
       render(<Promo {...defaultProps} />);
 
-      const iconDiv = screen.getByTestId('promo-image').closest('.field-promoicon');
+      const iconDiv = screen.getByTestId('image-field').closest('.field-promoicon');
       expect(iconDiv).toBeInTheDocument();
       
       const promoTextDiv = screen.getByText('Test Promo Text').closest('.promo-text');
@@ -292,7 +266,7 @@ describe('Promo Component', () => {
       const textContainer = screen.getByText('Test Promo Text').closest('.field-promotext');
       expect(textContainer).toBeInTheDocument();
       
-      const linkDiv = screen.getByTestId('promo-link').closest('.field-promolink');
+      const linkDiv = screen.getByTestId('sitecore-link').closest('.field-promolink');
       expect(linkDiv).toBeInTheDocument();
     });
 

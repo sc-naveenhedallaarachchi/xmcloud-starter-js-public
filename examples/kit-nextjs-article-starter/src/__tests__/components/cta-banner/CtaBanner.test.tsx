@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as CtaBanner } from '@/components/cta-banner/CtaBanner';
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 import {
   defaultProps,
   propsWithoutDescription,
@@ -15,66 +16,9 @@ import {
   propsWithoutFields,
 } from './CtaBanner.mockProps';
 
-// Mock useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(
-      Tag,
-      { 'data-testid': `text-${tag || 'span'}`, className },
-      field?.value || ''
-    );
-  },
-  Link: ({ field, editable }: any) => (
-    <a
-      href={field?.value?.href || field?.value?.url}
-      data-testid="sitecore-link"
-      data-editable={editable}
-    >
-      {field?.value?.text}
-    </a>
-  ),
-}));
-
-// Mock UI components
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, className }: any) => (
-    <div data-testid="button" data-as-child={asChild} className={className}>
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/components/animated-section/AnimatedSection.dev', () => ({
-  Default: ({ children, direction, isPageEditing }: any) => (
-    <div
-      data-testid="animated-section"
-      data-direction={direction}
-      data-editing={isPageEditing}
-    >
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('CtaBanner Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue({
-      page: {
-        mode: {
-          isEditing: false,
-        },
-      },
-    });
   });
 
   describe('Basic rendering', () => {
@@ -124,7 +68,7 @@ describe('CtaBanner Component', () => {
     it('should render button when link is provided', () => {
       render(<CtaBanner {...defaultProps} />);
 
-      expect(screen.getByTestId('button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should render link with correct href', () => {
@@ -175,7 +119,7 @@ describe('CtaBanner Component', () => {
     it('should apply color scheme to button', () => {
       render(<CtaBanner {...propsWithPrimaryColorScheme} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveClass('bg-accent', 'text-accent-foreground');
     });
   });
@@ -192,14 +136,14 @@ describe('CtaBanner Component', () => {
       render(<CtaBanner {...propsWithoutLink} />);
 
       expect(screen.getByText('Ready to Get Started?')).toBeInTheDocument();
-      expect(screen.queryByTestId('button')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('ui-button')).not.toBeInTheDocument();
     });
 
     it('should render with minimal fields', () => {
       render(<CtaBanner {...propsMinimal} />);
 
       expect(screen.getByText('Ready to Get Started?')).toBeInTheDocument();
-      expect(screen.queryByTestId('button')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('ui-button')).not.toBeInTheDocument();
     });
   });
 
@@ -207,7 +151,7 @@ describe('CtaBanner Component', () => {
     it('should render button when link has empty values', () => {
       render(<CtaBanner {...propsWithEmptyLink} />);
 
-      expect(screen.getByTestId('button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should render external link', () => {
@@ -239,7 +183,7 @@ describe('CtaBanner Component', () => {
 
   describe('Page editing mode', () => {
     beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: true,
@@ -267,7 +211,7 @@ describe('CtaBanner Component', () => {
 
       expect(screen.getByTestId('text-h2')).toBeInTheDocument();
       expect(screen.getByTestId('text-p')).toBeInTheDocument();
-      expect(screen.getByTestId('button')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
   });
 
@@ -325,7 +269,7 @@ describe('CtaBanner Component', () => {
     it('should render button with correct typography classes', () => {
       render(<CtaBanner {...defaultProps} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveClass('text-sm', 'font-heading', 'font-medium');
     });
   });
@@ -334,14 +278,14 @@ describe('CtaBanner Component', () => {
     it('should render button with asChild prop', () => {
       render(<CtaBanner {...defaultProps} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       expect(button).toHaveAttribute('data-as-child', 'true');
     });
 
     it('should wrap link in button', () => {
       render(<CtaBanner {...defaultProps} />);
 
-      const button = screen.getByTestId('button');
+      const button = screen.getByTestId('ui-button');
       const link = screen.getByTestId('sitecore-link');
 
       expect(button).toContainElement(link);

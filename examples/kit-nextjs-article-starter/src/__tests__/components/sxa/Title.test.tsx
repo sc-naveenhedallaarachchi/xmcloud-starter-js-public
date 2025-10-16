@@ -11,24 +11,18 @@ import {
   mockPageDataEditing,
   mockPageDataWithoutTitle,
 } from './Title.mockProps';
-
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Text: ({ field, tag, className, editable }: any) => {
-    const Tag = tag || 'h2';
-    return React.createElement(Tag, { className, 'data-editable': editable }, field?.value || 'Add Title');
-  },
-}));
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 
 describe('Title Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockPageData);
   });
 
   describe('Rendering in normal mode', () => {
+    beforeEach(() => {
+      mockUseSitecoreContext.mockReturnValue(mockPageData as any);
+    });
+
     it('should render with page title when available', () => {
       render(<Title {...defaultProps} />);
 
@@ -36,25 +30,31 @@ describe('Title Component', () => {
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
     });
 
-    it('should render with default text when page title is not available', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
+    it('should render with empty text when page title is not available', () => {
+      mockUseSitecoreContext.mockReturnValue(mockPageDataWithoutTitle as any);
       render(<Title {...defaultProps} />);
 
-      expect(screen.getByText('Add Title')).toBeInTheDocument();
+      const titleElement = screen.getByTestId('text-h1');
+      expect(titleElement).toBeInTheDocument();
+      expect(titleElement).toBeEmptyDOMElement();
     });
 
-    it('should render with default text when datasource is not available', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
+    it('should render with empty text when datasource is not available', () => {
+      mockUseSitecoreContext.mockReturnValue(mockPageDataWithoutTitle as any);
       render(<Title {...(propsWithoutDatasource as any)} />);
 
-      expect(screen.getByText('Add Title')).toBeInTheDocument();
+      const titleElement = screen.getByTestId('text-h1');
+      expect(titleElement).toBeInTheDocument();
+      expect(titleElement).toBeEmptyDOMElement();
     });
 
-    it('should render with default text when fields are empty', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
+    it('should render with empty text when fields are empty', () => {
+      mockUseSitecoreContext.mockReturnValue(mockPageDataWithoutTitle as any);
       render(<Title {...(propsWithEmptyFields as any)} />);
 
-      expect(screen.getByText('Add Title')).toBeInTheDocument();
+      const titleElement = screen.getByTestId('text-h1');
+      expect(titleElement).toBeInTheDocument();
+      expect(titleElement).toBeEmptyDOMElement();
     });
 
     it('should apply custom styles', () => {
@@ -78,10 +78,12 @@ describe('Title Component', () => {
       expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
     });
 
-    it('should use default tag when not provided', () => {
+    it('should use default tag (span) when not provided', () => {
       render(<Title {...propsWithoutTag} />);
 
-      expect(screen.getByRole('heading', { level: 2 })).toBeInTheDocument();
+      const titleElement = screen.getByTestId('text-field');
+      expect(titleElement).toBeInTheDocument();
+      expect(titleElement.tagName).toBe('SPAN');
     });
 
     it('should have correct rendering identifier', () => {
@@ -94,7 +96,7 @@ describe('Title Component', () => {
 
   describe('Rendering in editing mode', () => {
     beforeEach(() => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing as any);
     });
 
     it('should render with editable text in editing mode', () => {
@@ -114,7 +116,7 @@ describe('Title Component', () => {
           },
         },
       };
-      mockUseSitecore.mockReturnValue(editingModeData);
+      mockUseSitecoreContext.mockReturnValue(editingModeData as any);
       
       render(<Title {...defaultProps} />);
 
@@ -147,8 +149,25 @@ describe('Title Component', () => {
   });
 
   describe('Edge cases', () => {
+    beforeEach(() => {
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing as any);
+    });
+
     it('should handle empty field values gracefully', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
+      const editingContextWithoutTitle = {
+        ...mockPageDataEditing,
+        page: {
+          ...mockPageDataEditing.page,
+          layout: {
+            sitecore: {
+              route: {
+                fields: {},
+              },
+            },
+          },
+        },
+      };
+      mockUseSitecoreContext.mockReturnValue(editingContextWithoutTitle as any);
       render(<Title {...(propsWithEmptyFields as any)} />);
 
       expect(screen.getByText('Add Title')).toBeInTheDocument();
@@ -171,7 +190,20 @@ describe('Title Component', () => {
         fields: null as any,
       };
       
-      mockUseSitecore.mockReturnValue(mockPageDataWithoutTitle);
+      const editingContextWithoutTitle = {
+        ...mockPageDataEditing,
+        page: {
+          ...mockPageDataEditing.page,
+          layout: {
+            sitecore: {
+              route: {
+                fields: {},
+              },
+            },
+          },
+        },
+      };
+      mockUseSitecoreContext.mockReturnValue(editingContextWithoutTitle as any);
       render(<Title {...propsWithoutFields} />);
 
       expect(screen.getByText('Add Title')).toBeInTheDocument();

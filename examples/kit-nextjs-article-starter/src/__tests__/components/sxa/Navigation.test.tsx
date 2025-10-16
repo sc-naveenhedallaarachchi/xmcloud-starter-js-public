@@ -11,27 +11,11 @@ import {
   mockPageData,
   mockPageDataEditing,
 } from './Navigation.mockProps';
-
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Link: ({ field, children, onClick, editable }: any) => (
-    <a 
-      href={field?.value?.href || '#'} 
-      onClick={onClick}
-      data-editable={editable}
-      data-testid="nav-link"
-    >
-      {children}
-    </a>
-  ),
-}));
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 
 describe('Navigation Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockPageData);
   });
 
   describe('Basic rendering', () => {
@@ -39,7 +23,7 @@ describe('Navigation Component', () => {
       render(<Navigation {...defaultProps} />);
 
       expect(screen.getByText('Home')).toBeInTheDocument();
-      expect(screen.getByTestId('nav-link')).toBeInTheDocument();
+      expect(screen.getByTestId('sitecore-link')).toBeInTheDocument();
     });
 
     it('should render navigation with children', () => {
@@ -109,7 +93,7 @@ describe('Navigation Component', () => {
     });
 
     it('should prevent default when in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing as any);
       const mockPreventDefault = jest.fn();
       
       render(<Navigation {...defaultProps} />);
@@ -156,7 +140,7 @@ describe('Navigation Component', () => {
     it('should generate correct link field', () => {
       render(<Navigation {...defaultProps} />);
 
-      const link = screen.getByTestId('nav-link');
+      const link = screen.getByTestId('sitecore-link');
       expect(link).toHaveAttribute('href', '/home');
     });
 
@@ -173,7 +157,7 @@ describe('Navigation Component', () => {
 
       render(<Navigation {...propsWithQuerystring} />);
 
-      const link = screen.getByTestId('nav-link');
+      const link = screen.getByTestId('sitecore-link');
       expect(link).toHaveAttribute('href', '/home');
     });
   });
@@ -191,7 +175,7 @@ describe('Navigation Component', () => {
     it('should handle click events for children', () => {
       render(<Navigation {...propsWithChildren} />);
 
-      // Find the link by getting all nav-link elements and filtering by text
+      // Find the link by getting all sitecore-link elements and filtering by text
       const product1 = screen.getByText('Product 1');
       const product1Link = product1.closest('a');
       
@@ -256,20 +240,20 @@ describe('Navigation Component', () => {
 
   describe('Editing mode', () => {
     it('should render with editable links in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing as any);
       
       render(<Navigation {...defaultProps} />);
 
-      const link = screen.getByTestId('nav-link');
+      const link = screen.getByTestId('sitecore-link');
       expect(link).toHaveAttribute('data-editable', 'true');
     });
 
     it('should render without editable links in normal mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageData);
+      mockUseSitecoreContext.mockReturnValue(mockPageData as any);
       
       render(<Navigation {...defaultProps} />);
 
-      const link = screen.getByTestId('nav-link');
+      const link = screen.getByTestId('sitecore-link');
       expect(link).toHaveAttribute('data-editable', 'false');
     });
   });

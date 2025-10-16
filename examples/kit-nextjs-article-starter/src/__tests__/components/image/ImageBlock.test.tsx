@@ -11,54 +11,6 @@ import {
   propsWithoutFields,
 } from './ImageBlock.mockProps';
 
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock Sitecore Text component
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field }: any) => {
-    return React.createElement('span', {}, field?.value || '');
-  },
-}));
-
-// Mock ImageWrapper component
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: ({ image, className }: any) => (
-    <div data-testid="image-wrapper" className={className}>
-      <img
-        src={image?.value?.src}
-        alt={image?.value?.alt}
-        width={image?.value?.width}
-        height={image?.value?.height}
-      />
-    </div>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('ImageBlock Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();

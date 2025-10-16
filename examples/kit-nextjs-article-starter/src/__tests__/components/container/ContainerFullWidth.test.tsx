@@ -1,6 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as ContainerFullWidth } from '@/components/container/container-full-width/ContainerFullWidth';
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 import {
   defaultProps,
   propsWithExcludeTopMargin,
@@ -11,51 +12,9 @@ import {
   mockSitecoreContextEditing,
 } from './ContainerFullWidth.mockProps';
 
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: any) => <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>,
-  useSitecore: jest.fn(),
-}));
-
-jest.mock('@/components/flex/Flex.dev', () => ({
-  Flex: ({ children, className }: any) => (
-    <div data-testid="flex" className={className}>
-      {children}
-    </div>
-  ),
-  FlexItem: ({ children, basis }: any) => (
-    <div data-testid="flex-item" data-basis={basis}>
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ');
-  },
-}));
-
-import { useSitecore } from '@sitecore-content-sdk/nextjs';
-
-const mockUseSitecore = useSitecore as jest.MockedFunction<typeof useSitecore>;
-
 describe('ContainerFullWidth Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
   });
 
   describe('Basic rendering', () => {
@@ -127,14 +86,14 @@ describe('ContainerFullWidth Component', () => {
 
   describe('Empty placeholder handling', () => {
     it('should not render when placeholder is empty and not in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const { container } = render(<ContainerFullWidth {...propsWithEmptyPlaceholders} />);
 
       expect(container.firstChild).toBeNull();
     });
 
     it('should render when placeholder is empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContextEditing as any);
       const { container } = render(<ContainerFullWidth {...propsWithEmptyPlaceholders} />);
 
       const section = container.querySelector('section');
@@ -142,7 +101,7 @@ describe('ContainerFullWidth Component', () => {
     });
 
     it('should render when children are provided', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const propsWithEmptyAndChildren = {
         ...propsWithEmptyPlaceholders,
         children: 'Child content' as any,

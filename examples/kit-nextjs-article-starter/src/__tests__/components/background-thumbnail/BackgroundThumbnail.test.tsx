@@ -1,21 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as BackgroundThumbnail } from '@/components/background-thumbnail/BackgroundThumbnail.dev';
-
-// Mock useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-}));
-
-// Mock Badge component
-jest.mock('@/components/ui/badge', () => ({
-  Badge: ({ children, className }: any) => (
-    <div className={className} data-testid="badge">
-      {children}
-    </div>
-  ),
-}));
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 
 describe('BackgroundThumbnail Component', () => {
   const mockChildren = <div data-testid="child-element">Child Content</div>;
@@ -25,15 +11,7 @@ describe('BackgroundThumbnail Component', () => {
   });
 
   describe('Normal mode (not editing)', () => {
-    beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
-        page: {
-          mode: {
-            isEditing: false,
-          },
-        },
-      });
-    });
+    beforeEach(() => {});
 
     it('should render null when not in editing mode', () => {
       const { container } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
@@ -53,12 +31,20 @@ describe('BackgroundThumbnail Component', () => {
 
   describe('Editing mode', () => {
     beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: true,
           },
-        },
+          layout: {
+            sitecore: {
+              route: {
+                fields: {
+                  pageTitle: { value: '' },
+                },
+              },
+            },
+          },
       });
     });
 
@@ -104,7 +90,7 @@ describe('BackgroundThumbnail Component', () => {
 
   describe('Different children types', () => {
     beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: true,
@@ -146,7 +132,7 @@ describe('BackgroundThumbnail Component', () => {
 
   describe('Edge cases', () => {
     it('should handle undefined children gracefully in editing mode', () => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: true,
@@ -160,7 +146,7 @@ describe('BackgroundThumbnail Component', () => {
     });
 
     it('should handle null children gracefully in editing mode', () => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: true,
@@ -176,7 +162,7 @@ describe('BackgroundThumbnail Component', () => {
 
   describe('useSitecore integration', () => {
     it('should call useSitecore hook', () => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: false,
@@ -185,11 +171,11 @@ describe('BackgroundThumbnail Component', () => {
       });
 
       render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
-      expect(mockUseSitecore).toHaveBeenCalled();
+      expect(mockUseSitecoreContext).toHaveBeenCalled();
     });
 
     it('should react to editing mode changes', () => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: false,
@@ -200,7 +186,7 @@ describe('BackgroundThumbnail Component', () => {
       const { container, rerender } = render(<BackgroundThumbnail>{mockChildren}</BackgroundThumbnail>);
       expect(container.firstChild).toBeNull();
 
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: true,

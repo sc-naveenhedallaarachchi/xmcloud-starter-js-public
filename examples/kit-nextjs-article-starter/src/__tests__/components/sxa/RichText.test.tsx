@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as RichText } from '@/components/sxa/RichText';
 import {
@@ -12,18 +11,8 @@ import {
   propsWithoutTextField,
   propsWithNullFields,
   propsWithNullTextField,
-  propsWithUndefinedParams,
   propsWithUndefinedId,
 } from './RichText.mockProps';
-
-// Mock Sitecore SDK RichText component
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  RichText: ({ field }: any) => (
-    <div data-testid="rich-text-content">
-      {field?.value || ''}
-    </div>
-  ),
-}));
 
 describe('RichText Component', () => {
   beforeEach(() => {
@@ -232,7 +221,7 @@ describe('RichText Component', () => {
       render(<RichText {...defaultProps} />);
 
       const content = screen.getByTestId('rich-text-content');
-      expect(content).toHaveTextContent(defaultProps.fields.Text.value);
+      expect(content.innerHTML).toBe(defaultProps.fields.Text.value);
     });
   });
 

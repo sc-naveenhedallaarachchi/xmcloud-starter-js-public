@@ -16,14 +16,21 @@ import {
 
 // Mock Sitecore SDK components
 jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Link: ({ field }: any) => (
-    <a href={field.value.href} title={field.value.title} data-testid="link">
+  Link: ({ field, editable }: any) => (
+    <a 
+      href={field.value.href} 
+      title={field.value.title} 
+      data-testid="sitecore-link"
+      data-editable={editable ? 'true' : 'false'}
+    >
       {field.value.text}
     </a>
   ),
-  Text: ({ field, tag: Tag = 'span' }: any) => (
-    <Tag data-testid="title">{field.value}</Tag>
-  ),
+  Text: ({ field, tag, className }: any) => {
+    const Tag = tag || 'span';
+    const testId = tag ? `text-${tag}` : 'text-field';
+    return <Tag className={className} data-testid={testId}>{field?.value || ''}</Tag>;
+  },
 }));
 
 describe('LinkList Component', () => {
@@ -43,7 +50,7 @@ describe('LinkList Component', () => {
     it('should render title', () => {
       render(<LinkList {...defaultProps} />);
 
-      const title = screen.getByTestId('title');
+      const title = screen.getByTestId('text-h3');
       expect(title).toBeInTheDocument();
       expect(title.tagName).toBe('H3');
       expect(title).toHaveTextContent('Quick Links');
@@ -59,7 +66,7 @@ describe('LinkList Component', () => {
     it('should render correct number of links', () => {
       render(<LinkList {...defaultProps} />);
 
-      const links = screen.getAllByTestId('link');
+      const links = screen.getAllByTestId('sitecore-link');
       expect(links.length).toBe(3);
     });
   });
@@ -68,7 +75,7 @@ describe('LinkList Component', () => {
     it('should render links with correct content', () => {
       render(<LinkList {...defaultProps} />);
 
-      const links = screen.getAllByTestId('link');
+      const links = screen.getAllByTestId('sitecore-link');
       expect(links[0]).toHaveTextContent('Page 1');
       expect(links[0]).toHaveAttribute('href', '/page1');
       expect(links[0]).toHaveAttribute('title', 'Go to Page 1');
@@ -83,7 +90,7 @@ describe('LinkList Component', () => {
     it('should render single link correctly', () => {
       render(<LinkList {...propsWithSingleLink} />);
 
-      const links = screen.getAllByTestId('link');
+      const links = screen.getAllByTestId('sitecore-link');
       expect(links.length).toBe(1);
       expect(links[0]).toHaveTextContent('Page 1');
     });
@@ -91,14 +98,14 @@ describe('LinkList Component', () => {
     it('should render four links correctly', () => {
       render(<LinkList {...propsWithFourLinks} />);
 
-      const links = screen.getAllByTestId('link');
+      const links = screen.getAllByTestId('sitecore-link');
       expect(links.length).toBe(4);
     });
 
     it('should filter out invalid links', () => {
       render(<LinkList {...propsWithInvalidLinks} />);
 
-      const links = screen.getAllByTestId('link');
+      const links = screen.getAllByTestId('sitecore-link');
       // Should only render valid links (mockLink1 and mockLink2)
       expect(links.length).toBe(2);
       expect(links[0]).toHaveTextContent('Page 1');
@@ -199,7 +206,7 @@ describe('LinkList Component', () => {
     it('should handle empty title', () => {
       render(<LinkList {...propsWithoutTitle} />);
 
-      const title = screen.getByTestId('title');
+      const title = screen.getByTestId('text-h3');
       expect(title).toBeInTheDocument();
       expect(title).toHaveTextContent('');
     });
@@ -276,7 +283,7 @@ describe('LinkList Component', () => {
         ...defaultProps,
         params: {
           ...defaultProps.params,
-          RenderingIdentifier: undefined,
+          RenderingIdentifier: undefined as any,
         },
       };
 
@@ -291,7 +298,7 @@ describe('LinkList Component', () => {
     it('should only render items with valid link fields', () => {
       render(<LinkList {...propsWithInvalidLinks} />);
 
-      const links = screen.getAllByTestId('link');
+      const links = screen.getAllByTestId('sitecore-link');
       // Only valid links should be rendered
       expect(links.length).toBe(2);
     });
@@ -319,7 +326,7 @@ describe('LinkList Component', () => {
 
       render(<LinkList {...propsWithUndefinedField} />);
 
-      const links = screen.getAllByTestId('link');
+      const links = screen.getAllByTestId('sitecore-link');
       expect(links.length).toBe(2);
     });
   });

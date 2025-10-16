@@ -21,119 +21,7 @@ import {
   propsWithEmptyHeading,
   propsWithoutFields,
   propsWithUndefinedFields,
-  propsInEditingMode,
 } from './TextBanner.mockProps';
-
-// Mock useSitecore
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => ({
-    page: {
-      mode: {
-        isEditing: false,
-      },
-    },
-  }),
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
-  },
-  Link: ({ field, editable, className }: any) => (
-    <a
-      href={field?.value?.href}
-      className={className}
-      data-testid="link-field"
-      data-editable={editable}
-    >
-      {field?.value?.text}
-    </a>
-  ),
-}));
-
-// Mock cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock UI components
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, variant, size, className }: any) => (
-    <div
-      data-testid="button"
-      data-as-child={asChild}
-      data-variant={variant}
-      data-size={size}
-      className={className}
-    >
-      {children}
-    </div>
-  ),
-}));
-
-// Mock Flex components
-jest.mock('@/components/flex/Flex.dev', () => ({
-  Flex: ({ children, wrap, align, justify, as, gap, className }: any) => {
-    const Tag = as || 'div';
-    return React.createElement(
-      Tag,
-      {
-        className,
-        'data-testid': 'flex',
-        'data-wrap': wrap,
-        'data-align': align,
-        'data-justify': justify,
-        'data-gap': gap,
-      },
-      children
-    );
-  },
-  FlexItem: ({ children, basis, grow, className }: any) => (
-    <div
-      data-testid="flex-item"
-      data-basis={basis}
-      data-grow={grow}
-      className={className}
-    >
-      {children}
-    </div>
-  ),
-}));
-
-// Mock ButtonBase
-jest.mock('@/components/button-component/ButtonComponent', () => ({
-  ButtonBase: ({ buttonLink, variant }: any) => (
-    <a
-      href={buttonLink?.value?.href}
-      data-testid="button-base"
-      data-variant={variant}
-    >
-      {buttonLink?.value?.text}
-    </a>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
 
 describe('TextBanner Component', () => {
   beforeEach(() => {
@@ -179,7 +67,7 @@ describe('TextBanner Component', () => {
       it('should render link when provided', () => {
         render(<TextBanner {...defaultProps} />);
 
-        const links = screen.getAllByTestId('link-field');
+        const links = screen.getAllByTestId('sitecore-link');
         expect(links.length).toBeGreaterThan(0);
         expect(links[0]).toHaveAttribute('href', '/learn-more');
       });
@@ -187,7 +75,7 @@ describe('TextBanner Component', () => {
       it('should render single link when only one is provided', () => {
         render(<TextBanner {...propsWithSingleLink} />);
 
-        const links = screen.getAllByTestId('link-field');
+        const links = screen.getAllByTestId('sitecore-link');
         expect(links).toHaveLength(1);
         expect(links[0]).toHaveAttribute('href', '/learn-more');
       });
@@ -195,7 +83,7 @@ describe('TextBanner Component', () => {
       it('should render without links when not provided', () => {
         render(<TextBanner {...propsWithoutLinks} />);
 
-        expect(screen.queryByTestId('link-field')).not.toBeInTheDocument();
+        expect(screen.queryByTestId('sitecore-link')).not.toBeInTheDocument();
       });
     });
 
@@ -321,7 +209,7 @@ describe('TextBanner Component', () => {
       render(<TextBanner {...propsWithoutFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('Text Banner')).toBeInTheDocument();
+      expect(screen.getByText(/Text Banner/)).toBeInTheDocument();
     });
 
     it('should show NoDataFallback when fields is undefined', () => {
@@ -356,7 +244,7 @@ describe('TextBanner Component', () => {
       render(<TextBanner01 {...propsWithoutFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('Text Banner: 01')).toBeInTheDocument();
+      expect(screen.getByText(/Text Banner: 01/)).toBeInTheDocument();
     });
   });
 
@@ -385,13 +273,13 @@ describe('TextBanner Component', () => {
       render(<TextBanner02 {...propsWithoutFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('Text Banner: 02')).toBeInTheDocument();
+      expect(screen.getByText(/Text Banner: 02/)).toBeInTheDocument();
     });
 
     it('should render buttons with small size', () => {
       render(<TextBanner02 {...defaultProps} />);
 
-      const buttons = screen.getAllByTestId('button');
+      const buttons = screen.getAllByTestId('ui-button');
       buttons.forEach((button) => {
         expect(button).toHaveAttribute('data-size', 'sm');
       });
@@ -427,7 +315,7 @@ describe('TextBanner Component', () => {
     it('should render links with proper href attributes', () => {
       render(<TextBanner {...defaultProps} />);
 
-      const links = screen.getAllByTestId('link-field');
+      const links = screen.getAllByTestId('sitecore-link');
       expect(links[0]).toHaveAttribute('href', '/learn-more');
     });
   });

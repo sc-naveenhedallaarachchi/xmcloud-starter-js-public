@@ -12,123 +12,9 @@ import {
   propsWithUndefinedFields,
 } from './TestimonialCarousel.mockProps';
 
-// Mock radash debounce
-jest.mock('radash', () => ({
-  debounce: ({ delay }: any, fn: any) => {
-    const debouncedFn = (...args: any[]) => fn(...args);
-    debouncedFn.cancel = jest.fn();
-    return debouncedFn;
-  },
-}));
-
-// Mock cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock Carousel components
-let mockApi: any = null;
-
-jest.mock('@/components/ui/carousel', () => ({
-  Carousel: ({ children, setApi, className }: any) => {
-    React.useEffect(() => {
-      const api = {
-        on: jest.fn(),
-        scrollNext: jest.fn(),
-        scrollPrev: jest.fn(),
-        selectedScrollSnap: jest.fn(() => 0),
-        canScrollPrev: jest.fn(() => true),
-        canScrollNext: jest.fn(() => true),
-        rootNode: jest.fn(() => ({
-          addEventListener: jest.fn(),
-          removeEventListener: jest.fn(),
-        })),
-      };
-      mockApi = api;
-      setApi?.(api);
-    }, [setApi]);
-    return (
-      <div className={className} data-testid="carousel">
-        {children}
-      </div>
-    );
-  },
-  CarouselContent: ({ children, className }: any) => (
-    <div className={className} data-testid="carousel-content">
-      {children}
-    </div>
-  ),
-  CarouselItem: ({ children, className }: any) => (
-    <div className={className} data-testid="carousel-item">
-      {children}
-    </div>
-  ),
-  CarouselNext: ({ variant, className, disabled, onFocus, onBlur }: any) => (
-    <button
-      className={className}
-      disabled={disabled}
-      data-testid="carousel-next"
-      data-variant={variant}
-      onFocus={onFocus}
-      onBlur={onBlur}
-    >
-      Next
-    </button>
-  ),
-  CarouselPrevious: ({ variant, className, disabled, onFocus, onBlur }: any) => (
-    <button
-      className={className}
-      disabled={disabled}
-      data-testid="carousel-previous"
-      data-variant={variant}
-      onFocus={onFocus}
-      onBlur={onBlur}
-    >
-      Previous
-    </button>
-  ),
-}));
-
-// Mock TestimonialCarouselItem
-jest.mock('@/components/testimonial-carousel/TestimonialCarouselItem', () => ({
-  Default: ({ testimonialQuote, testimonialAttribution }: any) => (
-    <div data-testid="testimonial-item">
-      <p data-testid="testimonial-quote">{testimonialQuote?.jsonValue?.value}</p>
-      {testimonialAttribution && (
-        <p data-testid="testimonial-attribution">{testimonialAttribution?.jsonValue?.value}</p>
-      )}
-    </div>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('TestimonialCarousel Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockApi = null;
   });
 
   describe('Basic rendering', () => {
@@ -326,14 +212,14 @@ describe('TestimonialCarousel Component', () => {
       render(<TestimonialCarousel {...propsWithoutFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('Testimonial Carousel')).toBeInTheDocument();
+      expect(screen.getByText(/Testimonial Carousel/)).toBeInTheDocument();
     });
 
     it('should show NoDataFallback when fields is undefined', () => {
       render(<TestimonialCarousel {...propsWithUndefinedFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('Testimonial Carousel')).toBeInTheDocument();
+      expect(screen.getByText(/Testimonial Carousel/)).toBeInTheDocument();
     });
   });
 

@@ -1,6 +1,6 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Default as Video } from '@/components/video/Video';
+import { mockOpenModal } from '@/__tests__/testUtils/componentMocks';
 import {
   defaultProps,
   propsWithoutImage,
@@ -16,139 +16,6 @@ import {
   propsWithEmptyVideo,
   propsWithoutParams,
 } from './Video.mockProps';
-
-// Mock useSitecore
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => ({
-    page: {
-      mode: {
-        isEditing: false,
-      },
-    },
-  }),
-}));
-
-// Mock useVideoModal hook
-const mockOpenModal = jest.fn();
-const mockCloseModal = jest.fn();
-jest.mock('@/hooks/useVideoModal', () => ({
-  useVideoModal: () => ({
-    isOpen: false,
-    openModal: mockOpenModal,
-    closeModal: mockCloseModal,
-  }),
-}));
-
-// Mock useVideo context
-const mockSetPlayingVideoId = jest.fn();
-jest.mock('@/contexts/VideoContext', () => ({
-  useVideo: () => ({
-    playingVideoId: null,
-    setPlayingVideoId: mockSetPlayingVideoId,
-  }),
-}));
-
-// Mock Icon component
-jest.mock('@/components/icon/Icon', () => ({
-  Default: ({ iconName, className }: any) => (
-    <span data-testid={`icon-${iconName}`} className={className}>
-      {iconName}
-    </span>
-  ),
-}));
-
-// Mock ImageWrapper
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: ({ image, className, wrapperClass }: any) => (
-    <div className={wrapperClass} data-testid="image-wrapper-container">
-      <img
-        src={image?.value?.src}
-        alt={image?.value?.alt}
-        className={className}
-        data-testid="image-wrapper"
-      />
-    </div>
-  ),
-}));
-
-// Mock VideoPlayer
-jest.mock('@/components/video/VideoPlayer.dev', () => ({
-  VideoPlayer: ({ videoUrl, isPlaying, onPlay, fullScreen, btnClasses }: any) => (
-    <div data-testid="video-player" data-is-playing={isPlaying} data-full-screen={fullScreen}>
-      <button onClick={onPlay} className={btnClasses} data-testid="video-play-button">
-        Play Video
-      </button>
-      <div data-testid="video-url">{videoUrl}</div>
-    </div>
-  ),
-}));
-
-// Mock VideoModal
-jest.mock('@/components/video/VideoModal.dev', () => ({
-  VideoModal: ({ isOpen, onClose, videoUrl }: any) => (
-    <div data-testid="video-modal" data-is-open={isOpen}>
-      <button onClick={onClose} data-testid="modal-close-button">
-        Close
-      </button>
-      <div data-testid="modal-video-url">{videoUrl}</div>
-    </div>
-  ),
-}));
-
-// Mock framer-motion
-jest.mock('framer-motion', () => ({
-  motion: {
-    div: ({ children, className, whileHover, initial, variants, ...props }: any) => (
-      <div className={className} data-testid="motion-div" {...props}>
-        {children}
-      </div>
-    ),
-  },
-}));
-
-// Mock isMobile utility
-jest.mock('@/utils/isMobile', () => ({
-  isMobile: jest.fn(() => false),
-}));
-
-// Mock video utility
-jest.mock('@/utils/video', () => ({
-  extractVideoId: jest.fn((url) => {
-    if (url?.includes('youtube.com')) return 'dQw4w9WgXcQ';
-    if (url?.includes('vimeo.com')) return '123456789';
-    return null;
-  }),
-}));
-
-// Mock lib/utils
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-  getYouTubeThumbnail: jest.fn(() => 'https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg'),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
 
 describe('Video Component', () => {
   beforeEach(() => {
@@ -429,7 +296,7 @@ describe('Video Component', () => {
     });
 
     it('should style error message appropriately', () => {
-      const { container } = render(<Video {...propsWithoutVideoUrl} />);
+      render(<Video {...propsWithoutVideoUrl} />);
 
       const errorMessage = screen.getByText('Please add video');
       expect(errorMessage.parentElement).toHaveClass('bg-secondary', 'flex', 'aspect-video');

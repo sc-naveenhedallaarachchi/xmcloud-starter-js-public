@@ -13,35 +13,6 @@ import {
   propsWithEmptyClassName,
 } from './Logo.mockProps';
 
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock ImageWrapper component
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: ({ image, className, sizes, alt }: any) => (
-    <div data-testid="image-wrapper" className={className} data-sizes={sizes} data-alt={alt}>
-      <img src={image?.value?.src} alt={alt || image?.value?.alt} />
-    </div>
-  ),
-}));
-
 describe('Logo Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();

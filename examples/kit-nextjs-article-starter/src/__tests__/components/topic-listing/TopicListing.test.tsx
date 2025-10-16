@@ -14,48 +14,6 @@ import {
   propsWithMixedTopics,
 } from './TopicListing.mockProps';
 
-// Mock Sitecore Content SDK
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
-  },
-}));
-
-// Mock Meteors component
-jest.mock('@/components/magicui/meteors', () => ({
-  Meteors: ({ number, minDelay, maxDelay, minDuration, maxDuration, angle, size }: any) => (
-    <div
-      data-testid="meteors"
-      data-number={number}
-      data-min-delay={minDelay}
-      data-max-delay={maxDelay}
-      data-min-duration={minDuration}
-      data-max-duration={maxDuration}
-      data-angle={angle}
-      data-size={size}
-    >
-      Meteors Effect
-    </div>
-  ),
-}));
-
-// Mock TopicItem component
-jest.mock('@/components/topic-listing/TopicItem.dev', () => ({
-  TopicItem: ({ link }: any) => (
-    <div data-testid="topic-item">
-      {link?.jsonValue?.value?.text || 'No Link'}
-    </div>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('TopicListing Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -203,9 +161,9 @@ describe('TopicListing Component', () => {
     it('should render without title when empty', () => {
       render(<TopicListing {...propsWithoutTitle} />);
 
-      const textFields = screen.getAllByTestId('text-field');
-      const emptyTitle = textFields.find((el) => el.textContent === '');
+      const emptyTitle = screen.getByTestId('text-h2');
       expect(emptyTitle).toBeInTheDocument();
+      expect(emptyTitle).toBeEmptyDOMElement();
     });
 
     it('should render without topics when array is empty', () => {
@@ -226,7 +184,8 @@ describe('TopicListing Component', () => {
       render(<TopicListing {...propsWithMixedTopics} />);
 
       const topicItems = screen.getAllByTestId('topic-item');
-      expect(topicItems).toHaveLength(3);
+      // Only valid topics with links should render (2 out of 3)
+      expect(topicItems).toHaveLength(2);
     });
   });
 
@@ -235,14 +194,14 @@ describe('TopicListing Component', () => {
       render(<TopicListing {...propsWithoutFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('Topic Listing')).toBeInTheDocument();
+      expect(screen.getByText(/Topic Listing/)).toBeInTheDocument();
     });
 
     it('should show NoDataFallback when fields is undefined', () => {
       render(<TopicListing {...propsWithUndefinedFields} />);
 
       expect(screen.getByTestId('no-data-fallback')).toBeInTheDocument();
-      expect(screen.getByText('Topic Listing')).toBeInTheDocument();
+      expect(screen.getByText(/Topic Listing/)).toBeInTheDocument();
     });
   });
 

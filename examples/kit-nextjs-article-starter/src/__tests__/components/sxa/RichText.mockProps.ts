@@ -134,5 +134,5 @@ export const propsWithUndefinedId = {
   fields: {
     Text: mockTextField,
   },
-};
+} as any;
 

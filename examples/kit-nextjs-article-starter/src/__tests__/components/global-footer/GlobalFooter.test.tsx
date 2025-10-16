@@ -1,101 +1,19 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as GlobalFooter } from '@/components/global-footer/GlobalFooter';
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 import {
   defaultProps,
   propsWithoutPromoLink,
   propsWithoutSocialLinks,
   propsWithoutDatasource,
   propsWithoutFields,
-  mockPageData,
   mockPageDataEditing,
 } from './GlobalFooter.mockProps';
-
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Text: ({ field, className, encode }: any) => {
-    return React.createElement('span', { className }, field?.value || '');
-  },
-  Placeholder: ({ name, rendering }: any) => (
-    <div data-testid={`placeholder-${name}`} data-rendering={rendering?.uid}>
-      Placeholder: {name}
-    </div>
-  ),
-}));
-
-// Mock the Logo component
-jest.mock('@/components/logo/Logo.dev', () => ({
-  Default: ({ logo }: any) => (
-    <div data-testid="footer-logo">
-      <img src={logo?.value?.src} alt={logo?.value?.alt} />
-    </div>
-  ),
-}));
-
-// Mock FooterCallout component
-jest.mock('@/components/footer-navigation-callout/FooterNavigationCallout.dev', () => ({
-  Default: ({ fields }: any) => (
-    <div data-testid="footer-callout">
-      <div data-testid="callout-title">{fields.title?.value}</div>
-      <div data-testid="callout-description">{fields.description?.value}</div>
-      {fields.linkOptional?.value && (
-        <a href={fields.linkOptional.value.href} data-testid="callout-link">
-          {fields.linkOptional.value.text}
-        </a>
-      )}
-    </div>
-  ),
-}));
-
-// Mock EditableImageButton component
-jest.mock('@/components/button-component/ButtonComponent', () => ({
-  EditableImageButton: ({ buttonLink, icon, className, variant, size, isPageEditing }: any) => (
-    <button
-      data-testid="social-link-button"
-      data-href={buttonLink?.value?.href}
-      data-variant={variant}
-      data-size={size}
-      data-editing={isPageEditing}
-      className={className}
-    >
-      {icon?.value?.src && <img src={icon.value.src} alt={icon.value.alt} />}
-    </button>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
 
 describe('GlobalFooter Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockPageData);
   });
 
   describe('Basic rendering', () => {
@@ -103,7 +21,7 @@ describe('GlobalFooter Component', () => {
       render(<GlobalFooter {...defaultProps} />);
 
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
-      expect(screen.getByTestId('footer-logo')).toBeInTheDocument();
+      expect(screen.getByTestId('logo-component')).toBeInTheDocument();
       expect(screen.getByTestId('footer-callout')).toBeInTheDocument();
       expect(screen.getByText('© 2024 Company Name. All rights reserved.')).toBeInTheDocument();
     });
@@ -119,7 +37,7 @@ describe('GlobalFooter Component', () => {
     it('should render logo section', () => {
       render(<GlobalFooter {...defaultProps} />);
 
-      const logo = screen.getByTestId('footer-logo');
+      const logo = screen.getByTestId('logo-component');
       expect(logo).toBeInTheDocument();
       expect(logo.querySelector('img')).toHaveAttribute('src', '/images/footer-logo.svg');
     });
@@ -187,7 +105,7 @@ describe('GlobalFooter Component', () => {
     });
 
     it('should render social links with default size in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<GlobalFooter {...defaultProps} />);
 
       const socialButtons = screen.getAllByTestId('social-link-button');
@@ -209,7 +127,7 @@ describe('GlobalFooter Component', () => {
     it('should render without promo link', () => {
       render(<GlobalFooter {...propsWithoutPromoLink} />);
 
-      expect(screen.getByTestId('footer-logo')).toBeInTheDocument();
+      expect(screen.getByTestId('logo-component')).toBeInTheDocument();
       expect(screen.getByTestId('footer-callout')).toBeInTheDocument();
       expect(screen.queryByTestId('callout-link')).not.toBeInTheDocument();
     });
@@ -219,7 +137,7 @@ describe('GlobalFooter Component', () => {
 
       // Component should still render but with no content
       expect(screen.getByRole('contentinfo')).toBeInTheDocument();
-      expect(screen.queryByTestId('footer-logo')).toBeInTheDocument();
+      expect(screen.queryByTestId('logo-component')).toBeInTheDocument();
     });
   });
 
@@ -253,7 +171,7 @@ describe('GlobalFooter Component', () => {
       render(<GlobalFooter {...defaultProps} />);
 
       const placeholder = screen.getByTestId('placeholder-container-footer-column');
-      expect(placeholder).toHaveAttribute('data-rendering', 'footer-uid');
+      expect(placeholder).toHaveAttribute('data-rendering', 'GlobalFooter');
     });
   });
 

@@ -1,14 +1,12 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Default as Container5050 } from '@/components/container/container-5050/Container5050';
+import { mockUseSitecoreContext } from '@/__tests__/testUtils/componentMocks';
 import {
   defaultProps,
   propsWithExcludeTopMargin,
   propsWithoutStyles,
   propsWithEmptyPlaceholders,
-  propsWithLeftChild,
-  propsWithRightChild,
-  propsWithBothChildren,
   propsWithOnlyLeftPlaceholder,
   propsWithOnlyRightPlaceholder,
   propsWithoutDynamicId,
@@ -17,54 +15,9 @@ import {
   mockSitecoreContextEditing,
 } from './Container5050.mockProps';
 
-// Mock dependencies
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Placeholder: ({ name }: any) => (
-    <div data-testid={`placeholder-${name}`}>Placeholder: {name}</div>
-  ),
-  useSitecore: jest.fn(),
-}));
-
-jest.mock('@/components/flex/Flex.dev', () => ({
-  Flex: ({ children, wrap }: any) => (
-    <div data-testid="flex" data-wrap={wrap}>
-      {children}
-    </div>
-  ),
-  FlexItem: ({ children, basis, as: Component = 'div' }: any) => (
-    <Component data-testid="flex-item" data-basis={basis}>
-      {children}
-    </Component>
-  ),
-}));
-
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ');
-  },
-}));
-
-import { useSitecore } from '@sitecore-content-sdk/nextjs';
-
-const mockUseSitecore = useSitecore as jest.MockedFunction<typeof useSitecore>;
-
 describe('Container5050 Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
   });
 
   describe('Basic rendering', () => {
@@ -155,7 +108,7 @@ describe('Container5050 Component', () => {
           ...defaultProps.params,
           excludeTopMargin: undefined,
         },
-      };
+      } as any;
 
       const { container } = render(<Container5050 {...propsWithoutMarginParam} />);
 
@@ -187,7 +140,7 @@ describe('Container5050 Component', () => {
           ...defaultProps.params,
           styles: undefined,
         },
-      };
+      } as any;
 
       const { container } = render(<Container5050 {...propsWithUndefinedStyles} />);
 
@@ -198,7 +151,7 @@ describe('Container5050 Component', () => {
 
   describe('Empty placeholder handling', () => {
     it('should not render when placeholders are empty and not in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const { container } = render(<Container5050 {...propsWithEmptyPlaceholders} />);
 
       const section = container.querySelector('section.container--5050');
@@ -206,7 +159,7 @@ describe('Container5050 Component', () => {
     });
 
     it('should render when placeholders are empty but in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContextEditing as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContextEditing as any);
       const { container } = render(<Container5050 {...propsWithEmptyPlaceholders} />);
 
       const section = container.querySelector('section.container--5050');
@@ -214,7 +167,7 @@ describe('Container5050 Component', () => {
     });
 
     it('should render when left placeholder is populated', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const { container } = render(<Container5050 {...propsWithOnlyLeftPlaceholder} />);
 
       const section = container.querySelector('section.container--5050');
@@ -222,7 +175,7 @@ describe('Container5050 Component', () => {
     });
 
     it('should render when right placeholder is populated', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const { container } = render(<Container5050 {...propsWithOnlyRightPlaceholder} />);
 
       const section = container.querySelector('section.container--5050');
@@ -232,7 +185,7 @@ describe('Container5050 Component', () => {
 
   describe('Children handling', () => {
     it('should render when left child is provided', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const propsWithEmptyPlaceholdersAndLeftChild = {
         ...propsWithEmptyPlaceholders,
         left: <div>Left child</div> as any,
@@ -247,7 +200,7 @@ describe('Container5050 Component', () => {
     });
 
     it('should render when right child is provided', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const propsWithEmptyPlaceholdersAndRightChild = {
         ...propsWithEmptyPlaceholders,
         right: <div>Right child</div> as any,
@@ -262,7 +215,7 @@ describe('Container5050 Component', () => {
     });
 
     it('should render when both children are provided', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const propsWithEmptyPlaceholdersAndBothChildren = {
         ...propsWithEmptyPlaceholders,
         left: <div>Left child</div> as any,
@@ -326,7 +279,7 @@ describe('Container5050 Component', () => {
         rendering: undefined as any,
       };
 
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const { container } = render(<Container5050 {...propsWithUndefinedRendering} />);
 
       // Should not render when rendering is undefined and not in editing mode
@@ -335,7 +288,7 @@ describe('Container5050 Component', () => {
     });
 
     it('should render null when empty and not in editing mode', () => {
-      mockUseSitecore.mockReturnValue(mockSitecoreContext as any);
+      mockUseSitecoreContext.mockReturnValue(mockSitecoreContext as any);
       const { container } = render(<Container5050 {...propsWithEmptyPlaceholders} />);
 
       expect(container.firstChild).toBeNull();

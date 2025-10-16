@@ -2,183 +2,26 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { Default as ArticleHeader } from '@/components/article-header/ArticleHeader';
 import {
+  mockUseSitecoreContext,
+  mockBack,
+  mockWindowOpen,
+} from '@/__tests__/testUtils/componentMocks';
+import {
   defaultProps,
   propsWithoutEyebrow,
   propsWithoutAuthor,
   propsWithoutReadTime,
   propsWithoutDate,
-  propsWithoutImage,
   propsMinimal,
   propsWithoutFields,
   propsWithAuthorNoImage,
   propsWithAuthorNoJobTitle,
 } from './ArticleHeader.mockProps';
 
-// Mock window.matchMedia
-beforeAll(() => {
-  Object.defineProperty(window, 'matchMedia', {
-    writable: true,
-    value: jest.fn().mockImplementation((query) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    })),
-  });
-});
-
-// Mock window.history
-const mockBack = jest.fn();
-Object.defineProperty(window, 'history', {
-  writable: true,
-  value: { back: mockBack },
-});
-
-// Mock window.open
-const mockWindowOpen = jest.fn();
-window.open = mockWindowOpen;
-
-// Mock navigator.clipboard
-Object.assign(navigator, {
-  clipboard: {
-    writeText: jest.fn().mockResolvedValue(undefined),
-  },
-});
-
-// Mock useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
-  },
-  DateField: ({ field, render, tag, className }: any) => {
-    const Tag = tag || 'span';
-    const formattedDate = render ? render(field?.value) : field?.value;
-    return React.createElement(
-      Tag,
-      { className, 'data-testid': 'date-field' },
-      formattedDate || ''
-    );
-  },
-}));
-
-// Mock useI18n hook
-jest.mock('next-localization', () => ({
-  useI18n: () => ({
-    t: (key: string) => {
-      const translations: Record<string, string> = {
-        'article-header.back-to-news': 'Back to News',
-        'article-header.author-label': 'Written by',
-      };
-      return translations[key] || key;
-    },
-  }),
-}));
-
-// Mock UI components
-jest.mock('@/components/ui/avatar', () => ({
-  Avatar: ({ children }: any) => <div data-testid="avatar">{children}</div>,
-  AvatarImage: ({ src, alt }: any) => <img src={src} alt={alt} data-testid="avatar-image" />,
-  AvatarFallback: ({ children }: any) => (
-    <div data-testid="avatar-fallback">{children}</div>
-  ),
-}));
-
-jest.mock('@/components/ui/badge', () => ({
-  Badge: ({ children, className }: any) => (
-    <div className={className} data-testid="badge">
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, onClick, variant, className }: any) => (
-    <button
-      className={className}
-      onClick={onClick}
-      data-testid="button"
-      data-variant={variant}
-    >
-      {children}
-    </button>
-  ),
-}));
-
-jest.mock('@/components/ui/toaster', () => ({
-  Toaster: () => <div data-testid="toaster"></div>,
-}));
-
-// Mock hooks
-jest.mock('@/hooks/use-toast', () => ({
-  useToast: () => ({
-    toast: jest.fn(),
-  }),
-}));
-
-// Mock components
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: React.forwardRef(({ image, alt, className }: any, ref: any) => (
-    <img
-      ref={ref}
-      src={image?.value?.src}
-      alt={alt}
-      className={className}
-      data-testid="image-wrapper"
-    />
-  )),
-}));
-
-jest.mock('@/components/icon/Icon', () => ({
-  Default: ({ iconName, className }: any) => (
-    <span className={className} data-testid={`icon-${iconName}`}>
-      {iconName}
-    </span>
-  ),
-}));
-
-jest.mock('@/components/floating-dock/floating-dock.dev', () => ({
-  FloatingDock: ({ items }: any) => (
-    <div data-testid="floating-dock">
-      {items.map((item: any, index: number) => (
-        <button key={index} onClick={item.onClick} data-testid={`dock-item-${index}`}>
-          {item.title}
-        </button>
-      ))}
-    </div>
-  ),
-}));
-
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
-jest.mock('@/utils/date-utils', () => ({
-  formatDateInUTC: (date: string) => `Formatted: ${date}`,
-}));
-
-// Mock lucide-react icons
-jest.mock('lucide-react', () => ({
-  Facebook: () => <span data-testid="facebook-icon">Facebook</span>,
-  Twitter: () => <span data-testid="twitter-icon">Twitter</span>,
-  Linkedin: () => <span data-testid="linkedin-icon">LinkedIn</span>,
-  Mail: () => <span data-testid="mail-icon">Mail</span>,
-  Link: () => <span data-testid="link-icon">Link</span>,
-  Check: () => <span data-testid="check-icon">Check</span>,
-}));
-
 describe('ArticleHeader Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue({
+    mockUseSitecoreContext.mockReturnValue({
       page: {
         mode: {
           isEditing: false,
@@ -439,7 +282,7 @@ describe('ArticleHeader Component', () => {
 
   describe('Page editing mode', () => {
     beforeEach(() => {
-      mockUseSitecore.mockReturnValue({
+      mockUseSitecoreContext.mockReturnValue({
         page: {
           mode: {
             isEditing: true,

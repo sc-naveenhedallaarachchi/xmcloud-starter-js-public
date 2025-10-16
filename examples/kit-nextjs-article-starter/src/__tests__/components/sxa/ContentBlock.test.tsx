@@ -8,26 +8,6 @@ import {
   propsWithComplexContent,
 } from './ContentBlock.mockProps';
 
-// Mock the Sitecore Content SDK components
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className }, field?.value || '');
-  },
-  RichText: ({ field, className }: any) => (
-    <div className={className} dangerouslySetInnerHTML={{ __html: field?.value || '' }} />
-  ),
-  withDatasourceCheck: () => (Component: any) => {
-    return (props: any) => {
-      // Check if fields exist, if not return null (mimics withDatasourceCheck behavior)
-      if (!props.fields) {
-        return null;
-      }
-      return <Component {...props} />;
-    };
-  },
-}));
-
 describe('ContentBlock Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();

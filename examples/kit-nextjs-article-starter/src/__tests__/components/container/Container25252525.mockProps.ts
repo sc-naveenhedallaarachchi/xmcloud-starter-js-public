@@ -1,3 +1,4 @@
+import React from 'react';
 import { ComponentRendering } from '@sitecore-content-sdk/nextjs';
 
 export const mockSitecoreContext = {
@@ -24,7 +25,8 @@ export const defaultProps = {
       'container-25-four-main-25': [{ componentName: 'Col4' }],
     },
   } as ComponentRendering,
-};
+  children: null,
+} as any;
 
 export const propsWithExcludeTopMargin = {
   params: {
@@ -42,7 +44,8 @@ export const propsWithExcludeTopMargin = {
       'container-25-four-no-margin': [{ componentName: 'Col4' }],
     },
   } as ComponentRendering,
-};
+  children: null,
+} as any;
 
 export const propsWithEmptyPlaceholders = {
   params: {
@@ -55,5 +58,6 @@ export const propsWithEmptyPlaceholders = {
     dataSource: '',
     placeholders: {},
   } as ComponentRendering,
-};
+  children: null,
+} as any;
 

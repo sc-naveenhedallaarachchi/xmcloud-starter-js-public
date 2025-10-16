@@ -11,26 +11,6 @@ import {
   propsWithoutFields,
 } from './Breadcrumbs.mockProps';
 
-// Mock UI components
-jest.mock('@/components/ui/breadcrumb', () => ({
-  Breadcrumb: ({ children }: any) => <nav data-testid="breadcrumb">{children}</nav>,
-  BreadcrumbList: ({ children }: any) => <ol data-testid="breadcrumb-list">{children}</ol>,
-  BreadcrumbItem: ({ children }: any) => <li data-testid="breadcrumb-item">{children}</li>,
-  BreadcrumbLink: ({ children, href }: any) => (
-    <a href={href} data-testid="breadcrumb-link">
-      {children}
-    </a>
-  ),
-  BreadcrumbPage: ({ children }: any) => <span data-testid="breadcrumb-page">{children}</span>,
-  BreadcrumbSeparator: () => <span data-testid="breadcrumb-separator">/</span>,
-}));
-
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('Breadcrumbs Component', () => {
   describe('Basic rendering', () => {
     it('should render breadcrumb navigation', () => {

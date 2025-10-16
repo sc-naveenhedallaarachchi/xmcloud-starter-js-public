@@ -14,32 +14,7 @@ import {
   mockFields,
 } from './RichTextBlock.mockProps';
 
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-}));
-
-// RichText component is already mocked in setup.js
-
 describe('RichTextBlock Component', () => {
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -108,14 +83,14 @@ describe('RichTextBlock Component', () => {
       render(<RichTextBlock {...propsWithEmptyText} />);
 
       expect(screen.getByTestId('rich-text-content')).toBeInTheDocument();
-      expect(screen.getByTestId('rich-text-content')).toHaveTextContent('No content');
+      expect(screen.getByTestId('rich-text-content')).toBeEmptyDOMElement();
     });
 
     it('should handle undefined text field value', () => {
       render(<RichTextBlock {...propsWithUndefinedText} />);
 
       expect(screen.getByTestId('rich-text-content')).toBeInTheDocument();
-      expect(screen.getByTestId('rich-text-content')).toHaveTextContent('No content');
+      expect(screen.getByTestId('rich-text-content')).toBeEmptyDOMElement();
     });
 
     it('should handle complex HTML content in text field', () => {

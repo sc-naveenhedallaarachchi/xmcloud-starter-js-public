@@ -12,82 +12,6 @@ import {
   propsWithoutFields,
 } from './PromoBlock.mockProps';
 
-// Mock dependencies
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-}));
-
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field }: any) => React.createElement('span', {}, field?.value || ''),
-  RichText: ({ field }: any) =>
-    React.createElement('div', {
-      dangerouslySetInnerHTML: { __html: field?.value || '' },
-    }),
-  Link: ({ field }: any) => {
-    if (!field?.value?.href) return null;
-    return React.createElement('a', { href: field.value.href }, field.value.text);
-  },
-}));
-
-jest.mock('@/components/flex/Flex.dev', () => ({
-  Flex: ({ children, direction, justify, gap, className }: any) => (
-    <div
-      data-testid="flex"
-      data-direction={direction}
-      data-justify={justify}
-      data-gap={gap}
-      className={className}
-    >
-      {children}
-    </div>
-  ),
-}));
-
-jest.mock('@/components/image/ImageWrapper.dev', () => ({
-  Default: ({ image, className }: any) => (
-    <div data-testid="image-wrapper" className={className}>
-      <img src={image?.value?.src} alt={image?.value?.alt} />
-    </div>
-  ),
-}));
-
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, className, ...props }: any) => {
-    if (asChild && React.isValidElement(children)) {
-      return React.cloneElement(children, {
-        'data-testid': 'promo-button',
-        className,
-        ...(children.props || {}),
-        ...props,
-      } as any);
-    }
-    return React.createElement('button', { 'data-testid': 'promo-button', className, ...props }, children);
-  },
-}));
-
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('PromoBlock Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -145,10 +69,11 @@ describe('PromoBlock Component', () => {
       const { container } = render(<PromoBlock {...defaultProps} />);
 
       const imageContainer = container.querySelectorAll('[data-testid="image-wrapper"]')[0]
-        ?.parentElement;
-      const hasExpectedClasses = imageContainer?.className.includes('col-start-1') &&
-        imageContainer?.className.includes('sm:col-end-13');
-      expect(hasExpectedClasses).toBe(true);
+        ?.parentElement?.parentElement;
+      // Check for classes specific to image-left orientation
+      expect(imageContainer?.className).toContain('col-start-1');
+      expect(imageContainer?.className).toContain('sm:col-end-13');
+      expect(imageContainer?.className).toContain('sm:@2xl:col-end-7');
     });
 
     it('should apply correct copy classes for image-left', () => {
@@ -167,10 +92,11 @@ describe('PromoBlock Component', () => {
       const { container } = render(<PromoBlock {...propsImageRight} />);
 
       const imageContainer = container.querySelectorAll('[data-testid="image-wrapper"]')[0]
-        ?.parentElement;
-      const hasExpectedClass = imageContainer?.className.includes('col-start-1') &&
-        imageContainer?.className.includes('sm:col-end-13');
-      expect(hasExpectedClass).toBe(true);
+        ?.parentElement?.parentElement;
+      // Check for classes specific to image-right orientation
+      expect(imageContainer?.className).toContain('col-start-1');
+      expect(imageContainer?.className).toContain('sm:col-end-13');
+      expect(imageContainer?.className).toContain('@2xl:col-start-7');
     });
 
     it('should apply correct copy classes for image-right', () => {
@@ -260,10 +186,11 @@ describe('PromoBlock Component', () => {
       const { container } = render(<PromoBlock {...propsWithoutParams} />);
 
       const imageContainer = container.querySelectorAll('[data-testid="image-wrapper"]')[0]
-        ?.parentElement;
-      const hasExpectedClass = imageContainer?.className.includes('col-start-1') &&
-        imageContainer?.className.includes('sm:col-end-13');
-      expect(hasExpectedClass).toBe(true);
+        ?.parentElement?.parentElement;
+      // Check for classes specific to image-left (default) orientation
+      expect(imageContainer?.className).toContain('col-start-1');
+      expect(imageContainer?.className).toContain('sm:col-end-13');
+      expect(imageContainer?.className).toContain('sm:@2xl:col-end-7');
     });
 
     it('should default to default variation when not specified', () => {

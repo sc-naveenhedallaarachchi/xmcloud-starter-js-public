@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { Default as MultiPromo } from '@/components/multi-promo/MultiPromo';
 import {
   defaultProps,
@@ -8,123 +8,16 @@ import {
   propsWithoutDescription,
   propsWithoutTitle,
   propsWithoutChildren,
-  propsWith3Items,
   propsWithoutDatasource,
   propsWithoutFields,
   propsEditing,
-  mockPageData,
   mockPageDataEditing,
 } from './MultiPromo.mockProps';
-
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat()
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object') {
-          return Object.keys(arg)
-            .filter((key) => arg[key])
-            .join(' ');
-        }
-        return '';
-      })
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock the useSitecore hook
-const mockUseSitecore = jest.fn();
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  useSitecore: () => mockUseSitecore(),
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className }, field?.value || '');
-  },
-  RichText: ({ field, className }: any) => {
-    return React.createElement('div', {
-      className,
-      dangerouslySetInnerHTML: { __html: field?.value || '' },
-    });
-  },
-}));
-
-// Mock radash debounce
-jest.mock('radash', () => ({
-  debounce: ({ delay }: any, fn: any) => {
-    const debouncedFn = fn;
-    debouncedFn.cancel = jest.fn();
-    return debouncedFn;
-  },
-}));
-
-// Mock Carousel components
-const mockSetApi = jest.fn();
-const mockApi = {
-  on: jest.fn(),
-  scrollNext: jest.fn(),
-  scrollPrev: jest.fn(),
-  selectedScrollSnap: jest.fn(() => 0),
-  rootNode: jest.fn(() => ({
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-  })),
-};
-
-jest.mock('@/components/ui/carousel', () => ({
-  Carousel: React.forwardRef(({ children, setApi, opts, className }: any, ref: any) => {
-    React.useEffect(() => {
-      if (setApi) {
-        setApi(mockApi);
-      }
-    }, [setApi]);
-
-    return React.createElement(
-      'div',
-      {
-        ref,
-        'data-testid': 'carousel',
-        'data-opts': JSON.stringify(opts),
-        className,
-      },
-      children
-    );
-  }),
-  CarouselContent: ({ children, className }: any) =>
-    React.createElement('div', { 'data-testid': 'carousel-content', className }, children),
-  CarouselItem: ({ children, className }: any) =>
-    React.createElement('div', { 'data-testid': 'carousel-item', className }, children),
-}));
-
-// Mock MultiPromoItem component
-jest.mock('@/components/multi-promo/MultiPromoItem.dev', () => ({
-  Default: ({ heading, image, link, isPageEditing }: any) => (
-    <div data-testid="multi-promo-item" data-editing={isPageEditing}>
-      <img src={image?.jsonValue?.value?.src} alt={image?.jsonValue?.value?.alt} />
-      <h3>{heading?.jsonValue?.value}</h3>
-      {link?.jsonValue?.value?.href && <a href={link.jsonValue.value.href}>{link.jsonValue.value.text}</a>}
-    </div>
-  ),
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
+import { mockUseSitecoreContext, mockApi } from '@/__tests__/testUtils/componentMocks';
 
 describe('MultiPromo Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSitecore.mockReturnValue(mockPageData);
-    mockApi.on.mockClear();
-    mockApi.scrollNext.mockClear();
-    mockApi.scrollPrev.mockClear();
-    mockApi.selectedScrollSnap.mockReturnValue(0);
   });
 
   describe('Basic rendering', () => {
@@ -190,7 +83,7 @@ describe('MultiPromo Component', () => {
     });
 
     it('should pass isPageEditing to MultiPromoItem', () => {
-      mockUseSitecore.mockReturnValue(mockPageDataEditing);
+      mockUseSitecoreContext.mockReturnValue(mockPageDataEditing);
       render(<MultiPromo {...propsEditing} />);
 
       const promoItems = screen.getAllByTestId('multi-promo-item');

@@ -17,7 +17,7 @@ export const defaultProps = {
       'container-fullbleed-main-fullbleed': [{ componentName: 'Content' }],
     },
   } as ComponentRendering,
-};
+} as any;
 
 export const propsWithPrimaryBackground = {
   params: {
@@ -125,7 +125,7 @@ export const propsWithBackgroundImage = {
       'container-fullbleed-bg-image': [{ componentName: 'Content' }],
     },
   } as ComponentRendering,
-};
+} as any;
 
 export const propsWithExcludeTopMargin = {
   params: {
@@ -143,7 +143,7 @@ export const propsWithExcludeTopMargin = {
       'container-fullbleed-no-margin': [{ componentName: 'Content' }],
     },
   } as ComponentRendering,
-};
+} as any;
 
 export const propsWithInsetAndTransparent = {
   params: {

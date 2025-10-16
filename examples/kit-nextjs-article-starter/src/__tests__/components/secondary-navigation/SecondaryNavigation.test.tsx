@@ -10,76 +10,6 @@ import {
   propsWithoutFields,
 } from './SecondaryNavigation.mockProps';
 
-// Mock dependencies
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-}));
-
-jest.mock('next/link', () => {
-  return ({ children, href, className }: any) =>
-    React.createElement('a', { href, className, 'data-testid': 'next-link' }, children);
-});
-
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, asChild, variant, className, ...props }: any) => {
-    // The Button component with asChild passes props to the child link
-    // In the actual component, it doesn't render the Button wrapper
-    if (asChild && React.isValidElement(children)) {
-      return children;
-    }
-    return React.createElement(
-      'button',
-      { 'data-testid': 'button', 'data-variant': variant, className, ...props },
-      children
-    );
-  },
-}));
-
-jest.mock('@radix-ui/react-navigation-menu', () => ({
-  Root: ({ children, className, orientation }: any) => (
-    <nav data-testid="navigation-root" data-orientation={orientation} className={className}>
-      {children}
-    </nav>
-  ),
-  List: ({ children, className }: any) => (
-    <ul data-testid="navigation-list" className={className}>
-      {children}
-    </ul>
-  ),
-  Item: ({ children }: any) => <li data-testid="navigation-item">{children}</li>,
-}));
-
-jest.mock('@radix-ui/react-icons', () => ({
-  ChevronDownIcon: ({ className }: any) => (
-    <span data-testid="chevron-icon" className={className}>
-      ▼
-    </span>
-  ),
-}));
-
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('SecondaryNavigation Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -190,13 +120,13 @@ describe('SecondaryNavigation Component', () => {
       const chevron = screen.getByTestId('chevron-icon');
 
       // Initially not rotated
-      expect(chevron.className).not.toContain('rotate-180');
+      expect(chevron).not.toHaveClass('rotate-180');
 
       // Click to open
       fireEvent.click(mobileButton);
 
       // Should be rotated
-      expect(chevron.className).toContain('rotate-180');
+      expect(chevron).toHaveClass('rotate-180');
     });
   });
 

@@ -13,94 +13,6 @@ import {
   propsWithEmptyParams,
 } from './AlertBanner.mockProps';
 
-// Mock the cn utility
-jest.mock('@/lib/utils', () => ({
-  cn: (...args: any[]) => {
-    return args
-      .flat(2)
-      .filter(Boolean)
-      .map((arg) => {
-        if (typeof arg === 'string') return arg;
-        if (typeof arg === 'object' && !Array.isArray(arg)) {
-          return Object.entries(arg)
-            .filter(([, value]) => Boolean(value))
-            .map(([key]) => key)
-            .join(' ');
-        }
-        return '';
-      })
-      .filter(Boolean)
-      .join(' ')
-      .trim();
-  },
-}));
-
-// Mock the Sitecore Content SDK components
-jest.mock('@sitecore-content-sdk/nextjs', () => ({
-  Text: ({ field, tag, className }: any) => {
-    const Tag = tag || 'span';
-    return React.createElement(Tag, { className, 'data-testid': 'text-field' }, field?.value || '');
-  },
-}));
-
-// Mock the Button component
-jest.mock('@/components/button-component/ButtonComponent', () => ({
-  ButtonBase: ({ buttonLink, variant }: any) => (
-    <a
-      href={buttonLink?.value?.href || '#'}
-      data-testid="alert-button"
-      data-variant={variant}
-    >
-      {buttonLink?.value?.text || 'Button'}
-    </a>
-  ),
-}));
-
-// Mock the UI components
-jest.mock('@/components/ui/button', () => ({
-  Button: ({ children, variant, size, onClick, className }: any) => (
-    <button
-      className={className}
-      data-testid="close-button"
-      data-variant={variant}
-      data-size={size}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  ),
-}));
-
-jest.mock('@/components/ui/alert', () => ({
-  Alert: ({ children, className }: any) => (
-    <div className={className} data-testid="alert" role="alert">
-      {children}
-    </div>
-  ),
-  AlertTitle: ({ children, className }: any) => (
-    <div className={className} data-testid="alert-title">
-      {children}
-    </div>
-  ),
-  AlertDescription: ({ children, className }: any) => (
-    <div className={className} data-testid="alert-description">
-      {children}
-    </div>
-  ),
-}));
-
-// Mock lucide-react icons
-jest.mock('lucide-react', () => ({
-  X: () => <span data-testid="x-icon">X</span>,
-}));
-
-// Mock NoDataFallback
-jest.mock('@/utils/NoDataFallback', () => ({
-  NoDataFallback: ({ componentName }: any) => (
-    <div data-testid="no-data-fallback">{componentName}</div>
-  ),
-}));
-
 describe('AlertBanner Component', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -113,8 +25,8 @@ describe('AlertBanner Component', () => {
       expect(screen.getByTestId('alert')).toBeInTheDocument();
       expect(screen.getByText('Important Announcement')).toBeInTheDocument();
       expect(screen.getByText('Please read this important message carefully')).toBeInTheDocument();
-      expect(screen.getByTestId('alert-button')).toBeInTheDocument();
-      expect(screen.getByTestId('close-button')).toBeInTheDocument();
+      expect(screen.getByTestId('button-base')).toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should render title in AlertTitle component', () => {
@@ -136,14 +48,14 @@ describe('AlertBanner Component', () => {
     it('should render close button with X icon', () => {
       render(<AlertBanner {...defaultProps} />);
 
-      const closeButton = screen.getByTestId('close-button');
+      const closeButton = screen.getByTestId('ui-button');
       expect(closeButton).toContainElement(screen.getByTestId('x-icon'));
     });
 
     it('should render link button when link is provided', () => {
       render(<AlertBanner {...defaultProps} />);
 
-      const button = screen.getByTestId('alert-button');
+      const button = screen.getByTestId('button-base');
       expect(button).toHaveAttribute('href', '/learn-more');
       expect(button).toHaveTextContent('Learn More');
     });
@@ -155,21 +67,21 @@ describe('AlertBanner Component', () => {
 
       expect(screen.getByText('Important Announcement')).toBeInTheDocument();
       expect(screen.getByText('Please read this important message carefully')).toBeInTheDocument();
-      expect(screen.queryByTestId('alert-button')).not.toBeInTheDocument();
-      expect(screen.getByTestId('close-button')).toBeInTheDocument();
+      expect(screen.queryByTestId('button-base')).not.toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
 
     it('should render without image field', () => {
       render(<AlertBanner {...propsWithoutImage} />);
 
       expect(screen.getByText('Important Announcement')).toBeInTheDocument();
-      expect(screen.getByTestId('alert-button')).toBeInTheDocument();
+      expect(screen.getByTestId('button-base')).toBeInTheDocument();
     });
 
     it('should not render link button when link href is empty', () => {
       render(<AlertBanner {...propsWithEmptyLink} />);
 
-      expect(screen.queryByTestId('alert-button')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('button-base')).not.toBeInTheDocument();
     });
 
     it('should render with only required fields', () => {
@@ -177,8 +89,8 @@ describe('AlertBanner Component', () => {
 
       expect(screen.getByText('Important Announcement')).toBeInTheDocument();
       expect(screen.getByText('Please read this important message carefully')).toBeInTheDocument();
-      expect(screen.queryByTestId('alert-button')).not.toBeInTheDocument();
-      expect(screen.getByTestId('close-button')).toBeInTheDocument();
+      expect(screen.queryByTestId('button-base')).not.toBeInTheDocument();
+      expect(screen.getByTestId('ui-button')).toBeInTheDocument();
     });
   });
 
@@ -189,7 +101,7 @@ describe('AlertBanner Component', () => {
       const alert = screen.getByTestId('alert');
       expect(alert).not.toHaveClass('hidden');
 
-      const closeButton = screen.getByTestId('close-button');
+      const closeButton = screen.getByTestId('ui-button');
       fireEvent.click(closeButton);
 
       expect(alert).toHaveClass('hidden');
@@ -201,7 +113,7 @@ describe('AlertBanner Component', () => {
       const alert = container.querySelector('[data-testid="alert"]');
       expect(alert).not.toHaveClass('hidden');
 
-      const closeButton = screen.getByTestId('close-button');
+      const closeButton = screen.getByTestId('ui-button');
       fireEvent.click(closeButton);
 
       expect(alert).toHaveClass('hidden');
@@ -211,7 +123,7 @@ describe('AlertBanner Component', () => {
       render(<AlertBanner {...defaultProps} />);
 
       const alert = screen.getByTestId('alert');
-      const closeButton = screen.getByTestId('close-button');
+      const closeButton = screen.getByTestId('ui-button');
 
       fireEvent.click(closeButton);
       expect(alert).toHaveClass('hidden');
@@ -265,7 +177,7 @@ describe('AlertBanner Component', () => {
     it('should apply correct close button attributes', () => {
       render(<AlertBanner {...defaultProps} />);
 
-      const closeButton = screen.getByTestId('close-button');
+      const closeButton = screen.getByTestId('ui-button');
       expect(closeButton).toHaveAttribute('data-variant', 'default');
       expect(closeButton).toHaveAttribute('data-size', 'icon');
     });
@@ -275,17 +187,17 @@ describe('AlertBanner Component', () => {
     it('should pass correct props to ButtonBase component', () => {
       render(<AlertBanner {...defaultProps} />);
 
-      const button = screen.getByTestId('alert-button');
+      const button = screen.getByTestId('button-base');
       expect(button).toHaveAttribute('href', '/learn-more');
       expect(button).toHaveAttribute('data-variant', 'default');
     });
 
     it('should conditionally render ButtonBase based on link href', () => {
       const { rerender } = render(<AlertBanner {...defaultProps} />);
-      expect(screen.getByTestId('alert-button')).toBeInTheDocument();
+      expect(screen.getByTestId('button-base')).toBeInTheDocument();
 
       rerender(<AlertBanner {...propsWithEmptyLink} />);
-      expect(screen.queryByTestId('alert-button')).not.toBeInTheDocument();
+      expect(screen.queryByTestId('button-base')).not.toBeInTheDocument();
     });
   });
 
@@ -354,8 +266,8 @@ describe('AlertBanner Component', () => {
 
       const buttonsContainer = container.querySelector('.flex.items-center.gap-2');
       expect(buttonsContainer).toBeInTheDocument();
-      expect(buttonsContainer).toContainElement(screen.getByTestId('alert-button'));
-      expect(buttonsContainer).toContainElement(screen.getByTestId('close-button'));
+      expect(buttonsContainer).toContainElement(screen.getByTestId('button-base'));
+      expect(buttonsContainer).toContainElement(screen.getByTestId('ui-button'));
     });
 
     it('should apply spacing classes to content container', () => {
@@ -377,7 +289,7 @@ describe('AlertBanner Component', () => {
     it('should render close button as clickable element', () => {
       render(<AlertBanner {...defaultProps} />);
 
-      const closeButton = screen.getByTestId('close-button');
+      const closeButton = screen.getByTestId('ui-button');
       expect(closeButton.tagName).toBe('BUTTON');
     });
 
@@ -401,7 +313,7 @@ describe('AlertBanner Component', () => {
       render(<AlertBanner {...defaultProps} />);
 
       const alert = screen.getByTestId('alert');
-      const closeButton = screen.getByTestId('close-button');
+      const closeButton = screen.getByTestId('ui-button');
 
       expect(alert).not.toHaveClass('hidden');
 
