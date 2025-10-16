@@ -24,6 +24,7 @@ export const defaultProps = {
       'container-25-four-main-25': [{ componentName: 'Col4' }],
     },
   } as ComponentRendering,
+  children: undefined as any,
 };
 
 export const propsWithExcludeTopMargin = {
@@ -42,6 +43,7 @@ export const propsWithExcludeTopMargin = {
       'container-25-four-no-margin': [{ componentName: 'Col4' }],
     },
   } as ComponentRendering,
+  children: undefined as any,
 };
 
 export const propsWithEmptyPlaceholders = {
@@ -55,5 +57,6 @@ export const propsWithEmptyPlaceholders = {
     dataSource: '',
     placeholders: {},
   } as ComponentRendering,
+  children: undefined as any,
 };
 

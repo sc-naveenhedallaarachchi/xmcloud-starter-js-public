@@ -277,7 +277,7 @@ describe('LinkList Component', () => {
         params: {
           ...defaultProps.params,
           RenderingIdentifier: undefined,
-        },
+        } as any,
       };
 
       const { container } = render(<LinkList {...propsWithUndefinedId} />);

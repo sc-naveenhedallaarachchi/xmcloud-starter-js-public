@@ -155,7 +155,7 @@ describe('Container5050 Component', () => {
           ...defaultProps.params,
           excludeTopMargin: undefined,
         },
-      };
+      } as any;
 
       const { container } = render(<Container5050 {...propsWithoutMarginParam} />);
 
@@ -187,7 +187,7 @@ describe('Container5050 Component', () => {
           ...defaultProps.params,
           styles: undefined,
         },
-      };
+      } as any;
 
       const { container } = render(<Container5050 {...propsWithUndefinedStyles} />);
 

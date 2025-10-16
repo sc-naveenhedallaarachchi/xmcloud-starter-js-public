@@ -117,7 +117,7 @@ describe('PageContent Component', () => {
         params: {
           ...defaultProps.params,
           RenderingIdentifier: undefined,
-        },
+        } as any,
       };
 
       const { container } = render(<PageContent {...propsWithUndefinedId} />);
@@ -305,7 +305,7 @@ describe('PageContent Component', () => {
 
       const richText = screen.getByTestId('rich-text');
       expect(richText).toHaveClass('field-content');
-      expect(richText).toHaveTextContent(defaultProps.fields.Content.value);
+      expect(richText).toHaveTextContent(defaultProps.fields.Content.value || '');
     });
 
     it('should render route content with correct field class', () => {

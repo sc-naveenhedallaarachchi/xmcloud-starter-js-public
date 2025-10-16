@@ -130,7 +130,7 @@ export const propsWithUndefinedId = {
   params: {
     styles: 'custom-style',
     RenderingIdentifier: undefined,
-  },
+  } as any,
   fields: {
     Text: mockTextField,
   },

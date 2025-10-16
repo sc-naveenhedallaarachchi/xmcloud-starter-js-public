@@ -157,13 +157,13 @@ describe('ColumnSplitter Component', () => {
         params: {
           ...defaultProps.params,
           EnabledPlaceholders: undefined,
-        },
+        } as any,
         rendering: {
           ...defaultProps.rendering,
           params: {
             ...defaultProps.params,
             EnabledPlaceholders: undefined,
-          },
+          } as any,
         },
       };
 
@@ -198,13 +198,13 @@ describe('ColumnSplitter Component', () => {
         params: {
           ...defaultProps.params,
           RenderingIdentifier: undefined,
-        },
+        } as any,
         rendering: {
           ...defaultProps.rendering,
           params: {
             ...defaultProps.params,
             RenderingIdentifier: undefined,
-          },
+          } as any,
         },
       };
 
