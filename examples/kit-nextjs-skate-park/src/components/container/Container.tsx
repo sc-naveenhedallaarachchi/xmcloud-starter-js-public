@@ -1,6 +1,7 @@
+'use client';
 import React, { JSX } from 'react';
 import { ComponentProps } from 'lib/component-props';
-import componentMap from '.sitecore/component-map';
+import componentMap from '.sitecore/component-map.client';
 import { AppPlaceholder } from "@sitecore-content-sdk/nextjs";
 
 interface ContainerProps extends ComponentProps {
