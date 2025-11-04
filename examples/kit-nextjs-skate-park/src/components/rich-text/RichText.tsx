@@ -1,3 +1,4 @@
+'use client';
 import React, { JSX } from 'react';
 import { Field, RichText as ContentSdkRichText } from '@sitecore-content-sdk/nextjs';
 import { ComponentProps } from 'lib/component-props';
