@@ -13,8 +13,17 @@
 - [ ] Unit Test Added
 - [ ] Manual Test/Other (Please elaborate)
 
+Explain how to test this PR. Include specific areas to test, relevant test cases, and any setup required.
+<textarea rows="5" cols="60" placeholder="Explain how to test"></textarea>
+
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to change)
+
+## Terms
+<!-- Place an X in the [] to check. -->
+
+<!-- The Code of Conduct helps create a safe space for everyone. We require that everyone agrees to it. -->
+- [ ] I agree to follow this project's [Code of Conduct](../CODE_OF_CONDUCT.md).
