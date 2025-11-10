@@ -5,8 +5,8 @@
 <!--- Describe your changes in detail -->
 <!--- Why is this change required? What problem does it solve? -->
 <!--- If it fixes an open issue, please link to the issue here. -->
-[Please describe the context and motivation for this change. Why is this PR necessary? What problem does it solve or what feature does it add?
-Include information on major design decisions, approaches taken, and any technical details important for reviewers to know.]
+*Please describe the context and motivation for this change. Why is this PR necessary? What problem does it solve or what feature does it add?*
+*Include information on major design decisions, approaches taken, and any technical details important for reviewers to know.*
 
 ## Testing Details
 <!--- Please describe how you tested your changes. -->
@@ -15,8 +15,8 @@ Include information on major design decisions, approaches taken, and any technic
 - [ ] Unit Test Added
 - [ ] Manual Test/Other (Please elaborate)
 
-[Explain how to test this PR. Include specific areas to test, relevant test cases, and any setup required.]
-## Description
+*Explain how to test this PR. Include specific areas to test, relevant test cases, and any setup required.*
+
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 - [ ] Bug fix (non-breaking change which fixes an issue)
