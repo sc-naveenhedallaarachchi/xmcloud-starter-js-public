@@ -10,37 +10,37 @@ import { ImageGalleryNoSpacing } from './ImageGalleryNoSpacing.dev';
 
 // Default display of the component
 export const Default: React.FC<ImageGalleryProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
 
   return <ImageGalleryDefault {...props} isPageEditing={isPageEditing} />;
 };
 
 // Variants
 export const FiftyFifty: React.FC<ImageGalleryProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
 
   return <ImageGalleryFiftyFifty {...props} isPageEditing={isPageEditing} />;
 };
 
 export const Grid: React.FC<ImageGalleryProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
 
   return <ImageGalleryGrid {...props} isPageEditing={isPageEditing} />;
 };
 
 export const FeaturedImage: React.FC<ImageGalleryProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
 
   return <ImageGalleryFeaturedImage {...props} isPageEditing={isPageEditing} />;
 };
 
 export const NoSpacing: React.FC<ImageGalleryProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
 
   return <ImageGalleryNoSpacing {...props} isPageEditing={isPageEditing} />;
 };
