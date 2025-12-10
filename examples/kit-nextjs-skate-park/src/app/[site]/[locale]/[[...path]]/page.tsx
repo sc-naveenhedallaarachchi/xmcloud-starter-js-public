@@ -58,10 +58,16 @@ export default async function Page({ params, searchParams }: PageProps) {
 // pages for SSG ("paths", as tokenized array).
 export const generateStaticParams = async () => {
   if (process.env.NODE_ENV !== 'development' && scConfig.generateStaticPaths) {
-    return await client.getAppRouterStaticParams(
-      sites.map((site: SiteInfo) => site.name),
-      routing.locales.slice()
-    );
+    // Filter sites to only include the site(s) this starter is designed to serve.
+    // This prevents cross-site build errors when multiple starters share the same XM Cloud instance.
+    const defaultSite = scConfig.defaultSite;
+    const allowedSites = defaultSite
+      ? sites
+          .filter((site: SiteInfo) => site.name === defaultSite)
+          .map((site: SiteInfo) => site.name)
+      : sites.map((site: SiteInfo) => site.name);
+
+    return await client.getAppRouterStaticParams(allowedSites, routing.locales.slice());
   }
   return [];
 };

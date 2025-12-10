@@ -1,3 +1,4 @@
+'use client';
 import { ComponentProps } from '@/lib/component-props';
 import {
   ImageField,
