@@ -6,14 +6,14 @@ import { PromoAnimatedImageRight } from './PromoAnimatedImageRight.dev';
 
 // Default display of the component
 export const Default: React.FC<PromoAnimatedProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
   return <PromoAnimatedDefault {...props} isPageEditing={isPageEditing} />;
 };
 
 // Variants
 export const ImageRight: React.FC<PromoAnimatedProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
   return <PromoAnimatedImageRight {...props} isPageEditing={isPageEditing} />;
 };

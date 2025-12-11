@@ -16,6 +16,7 @@ import * as Navigation from 'src/components/sxa/Navigation';
 import * as LinkList from 'src/components/sxa/LinkList';
 import * as SubscriptionBanner from 'src/components/subscription-banner/SubscriptionBanner';
 import * as SlideCarouseldev from 'src/components/slide-carousel/SlideCarousel.dev';
+import * as Video from 'src/components/site-three/Video';
 import * as TextSlider from 'src/components/site-three/TextSlider';
 import * as ProductPageHeader from 'src/components/site-three/ProductPageHeader';
 import * as ProductComparison from 'src/components/site-three/ProductComparison';
@@ -104,6 +105,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['LinkList', { ...LinkList }],
   ['SubscriptionBanner', { ...SubscriptionBanner }],
   ['SlideCarousel', { ...SlideCarouseldev }],
+  ['Video', { ...Video }],
   ['TextSlider', { ...TextSlider }],
   ['ProductPageHeader', { ...ProductPageHeader }],
   ['ProductComparison', { ...ProductComparison }],

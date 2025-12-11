@@ -277,7 +277,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['submission-form', { ...submissionformprops }],
   ['SlideCarousel', { ...SlideCarouseldev }],
   ['slide-carousel', { ...slidecarouselprops }],
-  ['Video', { ...Video }],
+  ['Video', { ...Video, componentType: 'client' }],
   ['TextSlider', { ...TextSlider, componentType: 'client' }],
   ['SignupBanner', { ...SignupBanner }],
   ['ProductPageHeader', { ...ProductPageHeader, componentType: 'client' }],
