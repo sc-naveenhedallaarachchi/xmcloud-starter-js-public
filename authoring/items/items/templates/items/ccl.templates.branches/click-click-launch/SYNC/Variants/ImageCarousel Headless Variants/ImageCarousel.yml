@@ -1,6 +1,6 @@
 ---
-ID: "g2h3i4j5-k6l7-4m8n-9o0p-1q2r3s4t5u6v"
-Parent: "f1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c"
+ID: "b8e2f32c-44a1-4ad5-915b-f3a64d9c81b7"
+Parent: "29b98939-c574-460f-a381-1a32b260751e"
 Template: "49c111d0-6867-4798-a724-1f103166e6e9"
 Path: "/sitecore/templates/Branches/Project/click-click-launch/SYNC/Variants/ImageCarousel Headless Variants/ImageCarousel"
 Languages:
@@ -21,7 +21,7 @@ Languages:
         sitecore\Admin
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "b2c3d4e5-f6a7-4b8c-9d0e-1f2a3b4c5d6e"
+      Value: "a44cf7bf-ebd3-4e64-ba94-2e36b75d5b16"
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
