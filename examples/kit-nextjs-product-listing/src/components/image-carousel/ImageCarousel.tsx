@@ -12,32 +12,32 @@ import { ImageCarouselFeaturedImageLeft } from './ImageCarouselFeaturedImageLeft
 
 // Default display of the component
 export const Default: React.FC<ImageCarouselProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
   return <ImageCarouselDefault {...props} isPageEditing={isPageEditing} />;
 };
 
 // Variants
 export const LeftRightPreview: React.FC<ImageCarouselProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
   return <ImageCarouselLeftRightPreview {...props} isPageEditing={isPageEditing} />;
 };
 
 export const FullBleed: React.FC<ImageCarouselProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
   return <ImageCarouselFullBleed {...props} isPageEditing={isPageEditing} />;
 };
 
 export const PreviewBelow: React.FC<ImageCarouselProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
   return <ImageCarouselPreviewBelow {...props} isPageEditing={isPageEditing} />;
 };
 
 export const FeaturedImageLeft: React.FC<ImageCarouselProps> = (props) => {
-  const { page } = props;
-  const isPageEditing = page.mode.isEditing;
+  const { page } = props || {};
+  const isPageEditing = page?.mode?.isEditing ?? false;
   return <ImageCarouselFeaturedImageLeft {...props} isPageEditing={isPageEditing} />;
 };
