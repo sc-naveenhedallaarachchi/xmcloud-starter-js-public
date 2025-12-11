@@ -50,7 +50,7 @@ export const PromoAnimatedImageRight: React.FC<PromoAnimatedProps> = (props) => 
   if (fields) {
     const { image, title, description, primaryLink, secondaryLink } = fields;
 
-    const colorScheme = params.colorScheme as EnumValues<typeof ColorScheme>;
+    const colorScheme = params?.colorScheme as EnumValues<typeof ColorScheme>;
     const hasLinks = primaryLink?.value?.href || secondaryLink?.value?.href;
 
     return (
