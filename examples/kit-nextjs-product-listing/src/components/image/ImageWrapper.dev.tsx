@@ -1,5 +1,4 @@
 'use client';
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 import { useContext } from 'react';
 import { cn } from '@/lib/utils';
@@ -18,6 +17,7 @@ type ImageWrapperProps = {
   blurDataURL?: string;
   alt?: string;
   wrapperClass?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
