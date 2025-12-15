@@ -29,7 +29,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
   const {
     items,
     header,
-    isPageEditing,
+    isPageEditing = false,
     parentRef,
     indicatorClassName = 'h-0-5 bg-secondary rounded-default bottom-0',
     alignItems = 'start',
@@ -56,36 +56,52 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
     }
   }, [items]);
 
-  // Early return if no items and not in editing mode
-  if (!items || !Array.isArray(items) || items.length === 0) {
-    if (!isPageEditing) {
-      return null;
-    }
+  // Filter out items with invalid or missing link fields
+  const validItems = Array.isArray(items)
+    ? items.filter((item: FooterNavigationLink) => {
+        return (
+          item &&
+          item.link &&
+          item.link.jsonValue !== null &&
+          item.link.jsonValue !== undefined
+        );
+      })
+    : [];
+
+  // Early return if no valid items and not in editing mode
+  if (validItems.length === 0 && !isPageEditing) {
+    return null;
   }
 
   // Render mobile accordion view
-  if (isMobile && header?.jsonValue?.value) {
+  if (isMobile && header?.jsonValue) {
+    const headerValue = header.jsonValue?.value;
     return (
       <nav aria-label="Footer navigation">
         <Accordion type="single" collapsible className="w-full" aria-labelledby={accordionId}>
-          <AccordionItem value={`item-${header?.jsonValue?.value}`}>
+          <AccordionItem value={`item-${headerValue || accordionId}`}>
             <AccordionTrigger className="text-lg font-medium" id={accordionId}>
-              <Text field={header?.jsonValue} />
+              {header?.jsonValue && <Text field={header.jsonValue} />}
             </AccordionTrigger>
             <AccordionContent>
               <ul className="space-y-2 py-2">
-                {items && Array.isArray(items) && items.length > 0
-                  ? items.map((item: FooterNavigationLink, index) => (
-                      <li key={`footerlinks-${index}-accordion-item`}>
-                        <Button
-                          variant="link"
-                          asChild
-                          className="h-auto text-pretty p-0 text-base font-normal text-white"
-                        >
-                          <Link field={item?.link?.jsonValue} />
-                        </Button>
-                      </li>
-                    ))
+                {validItems.length > 0
+                  ? validItems.map((item: FooterNavigationLink, index) => {
+                      const linkField = item?.link?.jsonValue;
+                      if (!linkField) return null;
+
+                      return (
+                        <li key={`footerlinks-${index}-accordion-item`}>
+                          <Button
+                            variant="link"
+                            asChild
+                            className="h-auto text-pretty p-0 text-base font-normal text-white"
+                          >
+                            <Link field={linkField} />
+                          </Button>
+                        </li>
+                      );
+                    })
                   : null}
               </ul>
             </AccordionContent>
@@ -115,17 +131,22 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
             '@md:flex-row  flex-col ': orientation !== 'vertical',
           })}
         >
-          {items && Array.isArray(items) && items.length > 0
-            ? items.map((item: FooterNavigationLink, index) => (
-                <li key={index} className="relative">
-                  <EditableButton
-                    buttonLink={item?.link?.jsonValue}
-                    isPageEditing={isPageEditing}
-                    variant="secondary"
-                    className="bg-transparent text-lg hover:bg-transparent"
-                  />
-                </li>
-              ))
+          {validItems.length > 0
+            ? validItems.map((item: FooterNavigationLink, index) => {
+                const linkField = item?.link?.jsonValue;
+                if (!linkField) return null;
+
+                return (
+                  <li key={index} className="relative">
+                    <EditableButton
+                      buttonLink={linkField}
+                      isPageEditing={isPageEditing}
+                      variant="secondary"
+                      className="bg-transparent text-lg hover:bg-transparent"
+                    />
+                  </li>
+                );
+              })
             : null}
         </ul>
       </AnimatedHoverNav>
