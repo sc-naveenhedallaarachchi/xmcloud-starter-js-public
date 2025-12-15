@@ -39,10 +39,14 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
   // Generate a unique ID for the accordion
   const accordionId = useId();
 
+  // Create a fallback ref if parentRef is not provided (e.g., in design library)
+  const fallbackRef = useRef<HTMLDivElement | null>(null);
+  const effectiveParentRef = parentRef || fallbackRef;
+
   // Check if we're on mobile
   // Refs and state for hover effect
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const isMobile = useContainerQuery(parentRef, 'md', 'max');
+  const isMobile = useContainerQuery(effectiveParentRef, 'md', 'max');
 
   // Initialize item refs when items change
   useEffect(() => {
@@ -54,7 +58,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
   // Render mobile accordion view
   if (isMobile && header?.jsonValue?.value) {
     return (
-      <nav aria-label="Footer navigation">
+      <nav aria-label="Footer navigation" ref={fallbackRef}>
         <Accordion type="single" collapsible className="w-full" aria-labelledby={accordionId}>
           <AccordionItem value={`item-${header?.jsonValue?.value}`}>
             <AccordionTrigger className="text-lg font-medium" id={accordionId}>
@@ -83,10 +87,10 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
 
   // Render desktop view with hover effect
   return (
-    <nav aria-label="Footer navigation">
+    <nav aria-label="Footer navigation" ref={fallbackRef}>
       <AnimatedHoverNav
         disableMobile={false}
-        parentRef={parentRef}
+        parentRef={effectiveParentRef}
         indicatorClassName={indicatorClassName}
         itemsAlign={(alignItems as 'start' | 'end' | 'center') || 'start'}
         orientation={orientation}

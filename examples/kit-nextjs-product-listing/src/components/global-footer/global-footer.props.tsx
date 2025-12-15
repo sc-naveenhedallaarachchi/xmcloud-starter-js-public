@@ -43,7 +43,7 @@ export type FooterNavigationColumnProps = {
   orientation?: 'horizontal' | 'vertical';
   indicatorClassName?: string;
   alignItems?: 'start' | 'end' | 'center';
-  parentRef: React.RefObject<HTMLDivElement | null>;
+  parentRef?: React.RefObject<HTMLDivElement | null>;
   isPageEditing: boolean;
   header?: {
     jsonValue: Field<string>;
