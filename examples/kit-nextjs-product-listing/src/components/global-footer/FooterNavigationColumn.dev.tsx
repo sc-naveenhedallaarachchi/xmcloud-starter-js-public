@@ -25,12 +25,7 @@ import { cn } from '@/lib/utils';
  * It displays a header and a list of navigation links with a hover effect.
  */
 export const Default: FC<FooterNavigationColumnProps> = (props) => {
-  // Validate props exist
-  if (!props) {
-    return null;
-  }
-
-  // Safe destructuring with fallbacks
+  // Safe destructuring with fallbacks - must happen before any hooks
   const {
     items,
     header,
@@ -40,8 +35,9 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
     alignItems = 'start',
     orientation = 'horizontal',
     listClassName = '@sm:gap-8m-0 flex list-none flex-wrap gap-4 p-0',
-  } = props;
+  } = props || {};
 
+  // All hooks must be called unconditionally at the top level
   // Generate a unique ID for the accordion
   const accordionId = useId();
 
@@ -60,6 +56,12 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
       itemRefs.current = Array(items.length).fill(null);
     }
   }, [items]);
+
+  // Now we can do early returns after all hooks are called
+  // Validate props exist
+  if (!props) {
+    return null;
+  }
 
   // Filter out items with invalid or missing link fields
   // Validate that link fields have the proper structure expected by Sitecore SDK
