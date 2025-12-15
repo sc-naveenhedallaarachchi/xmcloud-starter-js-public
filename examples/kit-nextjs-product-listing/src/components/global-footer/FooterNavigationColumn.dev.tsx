@@ -25,6 +25,7 @@ import { cn } from '@/lib/utils';
  * It displays a header and a list of navigation links with a hover effect.
  */
 export const Default: FC<FooterNavigationColumnProps> = (props) => {
+  // Safe destructuring with fallbacks
   const {
     items,
     header,
@@ -34,7 +35,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
     alignItems = 'start',
     orientation = 'horizontal',
     listClassName = '@sm:gap-8m-0 flex list-none flex-wrap gap-4 p-0',
-  } = props;
+  } = props || {};
 
   // Generate a unique ID for the accordion
   const accordionId = useId();
@@ -42,14 +43,25 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
   // Check if we're on mobile
   // Refs and state for hover effect
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
-  const isMobile = useContainerQuery(parentRef, 'md', 'max');
+  // Create a fallback ref if parentRef is not provided (hooks must be called unconditionally)
+  const fallbackRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = parentRef || fallbackRef;
+  // Always call the hook - it handles null refs internally
+  const isMobile = useContainerQuery(containerRef, 'md', 'max');
 
   // Initialize item refs when items change
   useEffect(() => {
-    if (items) {
+    if (items && Array.isArray(items)) {
       itemRefs.current = Array(items.length).fill(null);
     }
   }, [items]);
+
+  // Early return if no items and not in editing mode
+  if (!items || !Array.isArray(items) || items.length === 0) {
+    if (!isPageEditing) {
+      return null;
+    }
+  }
 
   // Render mobile accordion view
   if (isMobile && header?.jsonValue?.value) {
@@ -62,17 +74,19 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
             </AccordionTrigger>
             <AccordionContent>
               <ul className="space-y-2 py-2">
-                {items?.map((item: FooterNavigationLink, index) => (
-                  <li key={`footerlinks-${index}-accordion-item`}>
-                    <Button
-                      variant="link"
-                      asChild
-                      className="h-auto text-pretty p-0 text-base font-normal text-white"
-                    >
-                      <Link field={item.link?.jsonValue} />
-                    </Button>
-                  </li>
-                ))}
+                {items && Array.isArray(items) && items.length > 0
+                  ? items.map((item: FooterNavigationLink, index) => (
+                      <li key={`footerlinks-${index}-accordion-item`}>
+                        <Button
+                          variant="link"
+                          asChild
+                          className="h-auto text-pretty p-0 text-base font-normal text-white"
+                        >
+                          <Link field={item?.link?.jsonValue} />
+                        </Button>
+                      </li>
+                    ))
+                  : null}
               </ul>
             </AccordionContent>
           </AccordionItem>
@@ -86,7 +100,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
     <nav aria-label="Footer navigation">
       <AnimatedHoverNav
         disableMobile={false}
-        parentRef={parentRef}
+        parentRef={parentRef || null}
         indicatorClassName={indicatorClassName}
         itemsAlign={(alignItems as 'start' | 'end' | 'center') || 'start'}
         orientation={orientation}
@@ -101,16 +115,18 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
             '@md:flex-row  flex-col ': orientation !== 'vertical',
           })}
         >
-          {items?.map((item: FooterNavigationLink, index) => (
-            <li key={index} className="relative">
-              <EditableButton
-                buttonLink={item.link?.jsonValue}
-                isPageEditing={isPageEditing}
-                variant="secondary"
-                className="bg-transparent text-lg hover:bg-transparent"
-              />
-            </li>
-          ))}
+          {items && Array.isArray(items) && items.length > 0
+            ? items.map((item: FooterNavigationLink, index) => (
+                <li key={index} className="relative">
+                  <EditableButton
+                    buttonLink={item?.link?.jsonValue}
+                    isPageEditing={isPageEditing}
+                    variant="secondary"
+                    className="bg-transparent text-lg hover:bg-transparent"
+                  />
+                </li>
+              ))
+            : null}
         </ul>
       </AnimatedHoverNav>
     </nav>
