@@ -31,6 +31,7 @@ import * as MiniCart from 'src/components/site-three/non-sitecore/MiniCart';
 import * as SecondaryNavigation from 'src/components/secondary-navigation/SecondaryNavigation';
 import * as PromoAnimatedImageRightdev from 'src/components/promo-animated/PromoAnimatedImageRight.dev';
 import * as PromoAnimatedDefaultdev from 'src/components/promo-animated/PromoAnimatedDefault.dev';
+import * as PromoAnimated from 'src/components/promo-animated/PromoAnimated';
 import * as ProductListingThreeUpdev from 'src/components/product-listing/ProductListingThreeUp.dev';
 import * as ProductListingSliderdev from 'src/components/product-listing/ProductListingSlider.dev';
 import * as ProductListingDefaultdev from 'src/components/product-listing/ProductListingDefault.dev';
@@ -50,12 +51,14 @@ import * as LocationSearchMapTopAllCentereddev from 'src/components/location-sea
 import * as LocationSearchMapRightTitleZipCentereddev from 'src/components/location-search/LocationSearchMapRightTitleZipCentered.dev';
 import * as LocationSearchMapRightdev from 'src/components/location-search/LocationSearchMapRight.dev';
 import * as LocationSearchDefaultdev from 'src/components/location-search/LocationSearchDefault.dev';
+import * as LocationSearch from 'src/components/location-search/LocationSearch';
 import * as GoogleMapdev from 'src/components/location-search/GoogleMap.dev';
 import * as ImageGalleryNoSpacingdev from 'src/components/image-gallery/ImageGalleryNoSpacing.dev';
 import * as ImageGalleryGriddev from 'src/components/image-gallery/ImageGalleryGrid.dev';
 import * as ImageGalleryFiftyFiftydev from 'src/components/image-gallery/ImageGalleryFiftyFifty.dev';
 import * as ImageGalleryFeaturedImagedev from 'src/components/image-gallery/ImageGalleryFeaturedImage.dev';
 import * as ImageGallerydev from 'src/components/image-gallery/ImageGallery.dev';
+import * as ImageGallery from 'src/components/image-gallery/ImageGallery';
 import * as ImageWrapperdev from 'src/components/image/ImageWrapper.dev';
 import * as imageoptimizationcontext from 'src/components/image/image-optimization.context';
 import * as Icon from 'src/components/icon/Icon';
@@ -119,6 +122,7 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['SecondaryNavigation', { ...SecondaryNavigation }],
   ['PromoAnimatedImageRight', { ...PromoAnimatedImageRightdev }],
   ['PromoAnimatedDefault', { ...PromoAnimatedDefaultdev }],
+  ['PromoAnimated', { ...PromoAnimated }],
   ['ProductListingThreeUp', { ...ProductListingThreeUpdev }],
   ['ProductListingSlider', { ...ProductListingSliderdev }],
   ['ProductListingDefault', { ...ProductListingDefaultdev }],
@@ -138,12 +142,13 @@ export const componentMap = new Map<string, NextjsContentSdkComponent>([
   ['LocationSearchMapRightTitleZipCentered', { ...LocationSearchMapRightTitleZipCentereddev }],
   ['LocationSearchMapRight', { ...LocationSearchMapRightdev }],
   ['LocationSearchDefault', { ...LocationSearchDefaultdev }],
+  ['LocationSearch', { ...LocationSearch }],
   ['GoogleMap', { ...GoogleMapdev }],
   ['ImageGalleryNoSpacing', { ...ImageGalleryNoSpacingdev }],
   ['ImageGalleryGrid', { ...ImageGalleryGriddev }],
   ['ImageGalleryFiftyFifty', { ...ImageGalleryFiftyFiftydev }],
   ['ImageGalleryFeaturedImage', { ...ImageGalleryFeaturedImagedev }],
-  ['ImageGallery', { ...ImageGallerydev }],
+  ['ImageGallery', { ...ImageGallerydev, ...ImageGallery }],
   ['ImageWrapper', { ...ImageWrapperdev }],
   ['image-optimization', { ...imageoptimizationcontext }],
   ['Icon', { ...Icon }],
