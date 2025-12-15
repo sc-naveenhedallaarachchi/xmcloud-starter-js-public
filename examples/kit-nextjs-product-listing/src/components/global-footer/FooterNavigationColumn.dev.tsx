@@ -25,6 +25,11 @@ import { cn } from '@/lib/utils';
  * It displays a header and a list of navigation links with a hover effect.
  */
 export const Default: FC<FooterNavigationColumnProps> = (props) => {
+  // Validate props exist
+  if (!props) {
+    return null;
+  }
+
   // Safe destructuring with fallbacks
   const {
     items,
@@ -35,7 +40,7 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
     alignItems = 'start',
     orientation = 'horizontal',
     listClassName = '@sm:gap-8m-0 flex list-none flex-wrap gap-4 p-0',
-  } = props || {};
+  } = props;
 
   // Generate a unique ID for the accordion
   const accordionId = useId();
@@ -57,14 +62,15 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
   }, [items]);
 
   // Filter out items with invalid or missing link fields
+  // Validate that link fields have the proper structure expected by Sitecore SDK
   const validItems = Array.isArray(items)
     ? items.filter((item: FooterNavigationLink) => {
-        return (
-          item &&
-          item.link &&
-          item.link.jsonValue !== null &&
-          item.link.jsonValue !== undefined
-        );
+        if (!item || !item.link || !item.link.jsonValue) {
+          return false;
+        }
+        const linkField = item.link.jsonValue;
+        // Ensure the link field has a value property (required by Sitecore SDK)
+        return linkField && typeof linkField === 'object' && 'value' in linkField;
       })
     : [];
 
@@ -73,22 +79,30 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
     return null;
   }
 
+  // Validate header field structure
+  const isValidHeader = header?.jsonValue && 
+    typeof header.jsonValue === 'object' && 
+    'value' in header.jsonValue;
+
   // Render mobile accordion view
-  if (isMobile && header?.jsonValue) {
+  if (isMobile && isValidHeader) {
     const headerValue = header.jsonValue?.value;
     return (
       <nav aria-label="Footer navigation">
         <Accordion type="single" collapsible className="w-full" aria-labelledby={accordionId}>
           <AccordionItem value={`item-${headerValue || accordionId}`}>
             <AccordionTrigger className="text-lg font-medium" id={accordionId}>
-              {header?.jsonValue && <Text field={header.jsonValue} />}
+              <Text field={header.jsonValue} />
             </AccordionTrigger>
             <AccordionContent>
               <ul className="space-y-2 py-2">
                 {validItems.length > 0
                   ? validItems.map((item: FooterNavigationLink, index) => {
                       const linkField = item?.link?.jsonValue;
-                      if (!linkField) return null;
+                      // Double-check link field is valid before rendering
+                      if (!linkField || typeof linkField !== 'object' || !('value' in linkField)) {
+                        return null;
+                      }
 
                       return (
                         <li key={`footerlinks-${index}-accordion-item`}>
@@ -134,7 +148,10 @@ export const Default: FC<FooterNavigationColumnProps> = (props) => {
           {validItems.length > 0
             ? validItems.map((item: FooterNavigationLink, index) => {
                 const linkField = item?.link?.jsonValue;
-                if (!linkField) return null;
+                // Double-check link field is valid before rendering
+                if (!linkField || typeof linkField !== 'object' || !('value' in linkField)) {
+                  return null;
+                }
 
                 return (
                   <li key={index} className="relative">
