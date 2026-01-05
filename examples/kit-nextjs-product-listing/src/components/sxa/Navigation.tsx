@@ -84,7 +84,8 @@ export const Default = (props: NavigationProps): JSX.Element => {
     );
   }
 
-  const handleToggleMenu = (event?: React.MouseEvent<HTMLElement>, flag?: boolean): void => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleToggleMenu = (event?: React.MouseEvent<HTMLElement>, _flag?: boolean): void => {
     // This is called from the client component, but we can handle it here if needed
     props.handleClick(event);
   };
