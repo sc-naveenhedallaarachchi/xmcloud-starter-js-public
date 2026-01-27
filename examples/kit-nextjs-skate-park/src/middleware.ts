@@ -51,7 +51,20 @@ const redirects = new RedirectsMiddleware({
   // Certain paths are ignored by default (e.g. Next.js API routes), but you may wish to disable more.
   // By default it is disabled while in development mode.
   // This is an important performance consideration since Next.js Edge middleware runs on every request.
-  skip: () => false,
+  // Skip redirects in preview/editing mode as site resolution may fail
+  skip: (req) => {
+    // Skip if in Next.js Draft Mode (preview/editing mode in XM Cloud)
+    const previewBypass = req.cookies.get('__prerender_bypass');
+    if (previewBypass) {
+      return true;
+    }
+    // Skip if editing query params are present (sc_itemid indicates editing request)
+    const url = req.nextUrl;
+    if (url.searchParams.has('sc_itemid') || url.searchParams.has('mode')) {
+      return true;
+    }
+    return false;
+  },
 });
 
 const personalize = new PersonalizeMiddleware({
@@ -65,7 +78,20 @@ const personalize = new PersonalizeMiddleware({
   // Certain paths are ignored by default (e.g. Next.js API routes), but you may wish to disable more.
   // By default it is disabled while in development mode.
   // This is an important performance consideration since Next.js Edge middleware runs on every request.
-  skip: () => false,
+  // Skip personalize in preview/editing mode as personalization doesn't apply and site resolution may fail
+  skip: (req) => {
+    // Skip if in Next.js Draft Mode (preview/editing mode in XM Cloud)
+    const previewBypass = req.cookies.get('__prerender_bypass');
+    if (previewBypass) {
+      return true;
+    }
+    // Skip if editing query params are present (sc_itemid indicates editing request)
+    const url = req.nextUrl;
+    if (url.searchParams.has('sc_itemid') || url.searchParams.has('mode')) {
+      return true;
+    }
+    return false;
+  },
 });
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
