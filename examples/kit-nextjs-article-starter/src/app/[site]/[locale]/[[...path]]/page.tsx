@@ -12,6 +12,9 @@ import Providers from 'src/Providers';
 import { NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 
+// Force dynamic rendering to support preview/editing mode with draftMode and searchParams
+export const dynamic = 'force-dynamic';
+
 type PageProps = {
   params: Promise<{
     site: string;
