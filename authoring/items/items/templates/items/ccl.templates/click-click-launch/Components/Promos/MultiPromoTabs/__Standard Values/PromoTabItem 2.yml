@@ -1,4 +1,4 @@
----
+﻿---
 ID: "93589f93-e277-460d-8d16-5fdcbaba9192"
 Parent: "275f1e79-c5e0-4202-9924-b4024fe44626"
 Template: "ccea3863-e5cc-4c75-8296-5b5ca47010fa"
@@ -23,7 +23,7 @@ Languages:
       Value: PromoTabItem 2
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value:
+      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |

@@ -1,4 +1,4 @@
----
+﻿---
 ID: "787dff86-1414-4260-9d94-830646318d97"
 Parent: "bd372d9d-6e4f-4ae9-a54c-dbc2acdebe2a"
 Template: "bd372d9d-6e4f-4ae9-a54c-dbc2acdebe2a"
@@ -27,7 +27,8 @@ Languages:
         <link text="Secondary Link CTA" linktype="external" url="https://www.sitecore.com" anchor="" target="" />
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value:
+      Value: |
+        "{4460E76C-87E9-4859-9DE6-DE122774937F}" 
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
