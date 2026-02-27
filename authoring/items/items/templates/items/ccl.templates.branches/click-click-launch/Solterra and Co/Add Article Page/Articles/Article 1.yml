@@ -4,13 +4,16 @@ Parent: "39a4de41-b99f-4781-8a38-bc77b726443b"
 Template: "b0602368-f67c-433c-8700-862d480546d0"
 Path: "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Add Article Page/Articles/Article 1"
 SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{B4F49B23-4BBA-4C79-BA22-F89F5F0D4E4F}"
 - ID: "c7c26117-dbb1-42b2-ab5e-f7223845cca3"
   Hint: __Thumbnail
   Value: |
-    <image mediaid="{1724B1B2-6C4C-44D8-8267-D6BEC79C07B9}" />
+    <image mediaid="{F094A80C-7911-4ED6-8FE7-09A1E437E0FB}" />
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
-  Value: "49756c5a-e324-419f-bda9-62071db8f98b"
+  Value: "b2e94261-3686-4feb-8f7f-51d5b726fdc8"
 Languages:
 - Language: en
   Versions:
@@ -31,21 +34,24 @@ Languages:
     - ID: "2fcae033-cf44-4b77-b8ad-91f41b56cb1c"
       Hint: pageDisplayDate
       Value: 20250407T000000Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
     - ID: "5272817a-75b7-4554-a5ef-2cc4930034d2"
       Hint: pageSubtitle
       Value: Article 1
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
-      Value:
+      Value: 
     - ID: "5c01b675-9b56-4d6b-aee4-0ecb1a0021f6"
       Hint: pageTitle
       Value: Article 1
     - ID: "5dd74568-4d4b-44c1-b513-0af5f4cda34f"
       Hint: __Created by
-      Value:
+      Value: 
     - ID: "8cdc337e-a112-42fb-bbb4-4143751e123f"
       Hint: __Revision
-      Value: "798a0a68-1d9b-4bd0-9549-513b4e1e9b85"
+      Value: "4e987b3d-0971-4a44-8566-5361352a17b6"
     - ID: "afd3e865-f6ac-4485-95f2-cae591dd8f0a"
       Hint: pageReadTime
       Value: 4 min
@@ -55,10 +61,10 @@ Languages:
     - ID: "badd9cf9-53e0-4d0c-bcc0-2d784c282f6a"
       Hint: __Updated by
       Value: |
-        sitecore\richard.seal@sitecore.com
+        sitecore\naveen.hedallaarachchi@sitecore.com
     - ID: "d9cf14b1-fa16-4ba6-9288-e8a174d4d522"
       Hint: __Updated
-      Value: 20250630T144339Z
+      Value: 20260227T065042Z
     - ID: "ed981ca0-271d-4543-b735-ecc955bd58a1"
       Hint: ogTitle
       Value: Article 1
