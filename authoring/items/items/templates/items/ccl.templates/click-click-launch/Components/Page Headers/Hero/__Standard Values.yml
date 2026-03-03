@@ -4,6 +4,10 @@ Parent: "a19c3230-c5ee-47a1-ae3f-12a1fc3c4273"
 Template: "a19c3230-c5ee-47a1-ae3f-12a1fc3c4273"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Page Headers/Hero/__Standard Values"
 SharedFields:
+- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
+  Hint: __Default workflow
+  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
+
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "27458191-4795-4f58-be6b-7e99ca02e7ff"
@@ -15,6 +19,10 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20250130T203111Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
+
     - ID: "3f384b8c-9364-4f44-91ea-7f7fa3a76de9"
       Hint: titleRequired
       Value: Title
