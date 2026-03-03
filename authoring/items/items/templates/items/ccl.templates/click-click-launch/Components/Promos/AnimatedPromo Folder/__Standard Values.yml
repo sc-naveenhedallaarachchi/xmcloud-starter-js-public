@@ -7,12 +7,6 @@ SharedFields:
 - ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
   Hint: __Masters
   Value: "{BD372D9D-6E4F-4AE9-A54C-DBC2ACDEBE2A}"
-- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
-  Hint: __Workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "e28fd68b-25a6-4288-b5fd-9734769e9226"
@@ -24,9 +18,6 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20240426T201657Z
-    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
-      Hint: __Workflow state
-      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |

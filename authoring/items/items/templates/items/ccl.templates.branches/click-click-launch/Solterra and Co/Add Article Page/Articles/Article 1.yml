@@ -4,9 +4,6 @@ Parent: "39a4de41-b99f-4781-8a38-bc77b726443b"
 Template: "b0602368-f67c-433c-8700-862d480546d0"
 Path: "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Add Article Page/Articles/Article 1"
 SharedFields:
-- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
-  Hint: __Workflow
-  Value: "{B4F49B23-4BBA-4C79-BA22-F89F5F0D4E4F}"
 - ID: "c7c26117-dbb1-42b2-ab5e-f7223845cca3"
   Hint: __Thumbnail
   Value: |
@@ -25,9 +22,6 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20250407T194551Z
-    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
-      Hint: __Workflow state
-      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
     - ID: "27cd428b-f652-4534-b76f-33f64b742659"
       Hint: pageShortTitle
       Value: Article 1
