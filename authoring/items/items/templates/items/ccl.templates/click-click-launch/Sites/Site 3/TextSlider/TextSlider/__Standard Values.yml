@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "4a4844c0-ed2e-4472-aa0e-c765a513c710"
 Parent: "bf764c63-df4b-460f-bf87-b4f16733a4fd"
 Template: "bf764c63-df4b-460f-bf87-b4f16733a4fd"
 Path: "/sitecore/templates/Project/click-click-launch/Sites/Site 3/TextSlider/TextSlider/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "f22de73f-cc66-42be-aebb-1a4cf2f4c025"

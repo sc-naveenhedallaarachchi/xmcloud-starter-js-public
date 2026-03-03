@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "fb5437a0-2623-40ad-aa02-27e3dabdeb33"
 Parent: "0909e354-25f8-4dd7-a6d1-a828dfd67709"
 Template: "0909e354-25f8-4dd7-a6d1-a828dfd67709"
@@ -7,9 +7,6 @@ SharedFields:
 - ID: "06d5295c-ed2f-4a54-9bf2-26228d113318"
   Hint: __Icon
   Value: /~/icon/apps/32x32/Location.png
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "64567b7b-1223-4f70-8fd2-364a3ee7b50f"

@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "837df228-78b8-44eb-8deb-9b212c99a24a"
 Parent: "f24978e9-cab5-4a7f-a836-d423ff20b830"
 Template: "f24978e9-cab5-4a7f-a836-d423ff20b830"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Global Elements/SocialLink/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "dba53ce4-b9aa-41b8-a2f6-9141b1727de4"

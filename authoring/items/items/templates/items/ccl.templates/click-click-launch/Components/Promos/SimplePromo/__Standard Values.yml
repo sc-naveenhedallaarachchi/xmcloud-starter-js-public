@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "bde3dd92-5e3e-4c1a-8666-f3ee4f488884"
 Parent: "f94c8c17-70e8-4d8b-9d35-d0465c0e0945"
 Template: "f94c8c17-70e8-4d8b-9d35-d0465c0e0945"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Promos/SimplePromo/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "466cddc2-7e6c-423e-87f0-18497b452e76"

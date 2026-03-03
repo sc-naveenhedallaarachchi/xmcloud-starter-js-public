@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "084b8c3a-8aa3-4140-b5f5-b4c52b168d62"
 Parent: "92762d36-183a-4ecb-ac35-c53f5a51619d"
 Template: "92762d36-183a-4ecb-ac35-c53f5a51619d"
@@ -7,9 +7,6 @@ SharedFields:
 - ID: "1172f251-dad4-4efb-a329-0c63500e4f1e"
   Hint: __Masters
   Value: "{CFD30FC4-07FA-471E-9F85-3A1BF425C718}"
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "abdf0b24-195b-4506-8eea-b14f0498391b"

@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "d1f7e32e-33c7-4e30-95ee-66c45dd62447"
 Parent: "275f1e79-c5e0-4202-9924-b4024fe44626"
 Template: "ccea3863-e5cc-4c75-8296-5b5ca47010fa"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Promos/MultiPromoTabs/__Standard Values/PromoTabItem 1"
 SharedFields:
-- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
-  Hint: __Workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "afba9382-fb05-4577-a9b6-fda03c44f11f"
@@ -21,9 +18,6 @@ Languages:
     - ID: "2c13f52a-6d13-4688-92f7-ecafe6c718e9"
       Hint: title
       Value: PromoTabItem 1
-    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
-      Hint: __Workflow state
-      Value: "{12FFAC4C-565F-4C9A-B63E-7F77E96B4D1F}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |

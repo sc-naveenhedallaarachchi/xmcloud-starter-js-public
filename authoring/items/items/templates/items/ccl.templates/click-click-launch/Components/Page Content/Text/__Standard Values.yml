@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "c58b3a3e-5a70-4568-825f-f0bf316ec02d"
 Parent: "58041043-7bea-44f0-b1b8-08e4ea7054f4"
 Template: "58041043-7bea-44f0-b1b8-08e4ea7054f4"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Page Content/Text/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "dfac6258-8252-4bac-be3a-aef70b99b3b0"

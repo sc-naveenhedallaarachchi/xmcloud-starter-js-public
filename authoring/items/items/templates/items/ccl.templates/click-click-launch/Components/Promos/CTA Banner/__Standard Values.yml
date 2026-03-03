@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "5ef9a029-c48f-4b06-a0d5-6ec51e9dc257"
 Parent: "bee4869d-b588-42c2-9797-76510c397e6a"
 Template: "bee4869d-b588-42c2-9797-76510c397e6a"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Promos/CTA Banner/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "88558bcc-96d7-46e9-be0b-929196593fbc"

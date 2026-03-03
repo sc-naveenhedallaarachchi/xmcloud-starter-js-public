@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "19a2d43c-0423-41c2-a532-0e94ad954776"
 Parent: "c241957a-b7cc-4bdd-962f-bf8652ed595c"
 Template: "c241957a-b7cc-4bdd-962f-bf8652ed595c"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Hero ST/HeroST/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "6ebf0e96-6c84-4f55-8d30-1ef5d0be6c48"

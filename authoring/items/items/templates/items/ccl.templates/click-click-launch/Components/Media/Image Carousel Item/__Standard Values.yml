@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "17cd171f-bf03-4dcf-9401-e264caff5698"
 Parent: "03ba85aa-ad3e-412b-b6c3-0c2af639b49f"
 Template: "03ba85aa-ad3e-412b-b6c3-0c2af639b49f"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Media/Image Carousel Item/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "9cce194e-0f79-470d-a5bb-7612d8c3c9a9"

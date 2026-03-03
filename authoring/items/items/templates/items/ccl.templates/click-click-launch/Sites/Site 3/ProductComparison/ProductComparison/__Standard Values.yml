@@ -1,12 +1,9 @@
-﻿---
+---
 ID: "4dfe86c6-7fe7-4b8c-8f61-3d461c4966fb"
 Parent: "6589a92d-1e47-457d-8cc1-d37d5868b89d"
 Template: "6589a92d-1e47-457d-8cc1-d37d5868b89d"
 Path: "/sitecore/templates/Project/click-click-launch/Sites/Site 3/ProductComparison/ProductComparison/__Standard Values"
 SharedFields:
-- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
-  Hint: __Default workflow
-  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "328f1199-63e8-460e-b934-0dc81c3f948a"
