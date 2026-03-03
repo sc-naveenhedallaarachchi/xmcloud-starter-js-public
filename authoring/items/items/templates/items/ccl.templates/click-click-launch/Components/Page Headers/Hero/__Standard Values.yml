@@ -4,6 +4,9 @@ Parent: "a19c3230-c5ee-47a1-ae3f-12a1fc3c4273"
 Template: "a19c3230-c5ee-47a1-ae3f-12a1fc3c4273"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Page Headers/Hero/__Standard Values"
 SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
   Hint: __Default workflow
   Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"

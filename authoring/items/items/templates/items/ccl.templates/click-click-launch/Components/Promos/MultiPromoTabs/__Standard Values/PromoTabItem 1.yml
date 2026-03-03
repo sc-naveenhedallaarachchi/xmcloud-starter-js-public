@@ -4,6 +4,9 @@ Parent: "275f1e79-c5e0-4202-9924-b4024fe44626"
 Template: "ccea3863-e5cc-4c75-8296-5b5ca47010fa"
 Path: "/sitecore/templates/Project/click-click-launch/Components/Promos/MultiPromoTabs/__Standard Values/PromoTabItem 1"
 SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
   Hint: __Default workflow
   Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"

@@ -4,6 +4,9 @@ Parent: "b754cb40-d82d-46e5-b001-e7f4434fd399"
 Template: "b754cb40-d82d-46e5-b001-e7f4434fd399"
 Path: "/sitecore/templates/Project/click-click-launch/Sites/Site 3/ImageBanner/ImageBanner/__Standard Values"
 SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
   Hint: __Default workflow
   Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"

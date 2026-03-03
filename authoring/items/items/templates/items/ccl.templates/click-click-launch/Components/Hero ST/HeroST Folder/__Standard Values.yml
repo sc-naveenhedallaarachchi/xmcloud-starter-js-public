@@ -9,6 +9,9 @@ SharedFields:
   Value: |
     {C241957A-B7CC-4BDD-962F-BF8652ED595C}
     {91F1954F-86D9-4859-9885-3E42E8D8A2A9}
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
   Hint: __Default workflow
   Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
