@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "173b58fd-9ee0-4991-ad75-b7add633d80d"
 Parent: "ac9de9be-8e86-4147-8fbc-739d5560408b"
 Template: "ac9de9be-8e86-4147-8fbc-739d5560408b"
@@ -12,7 +12,7 @@ SharedFields:
     {1B76AF75-DD75-450C-92E3-FF0F339F490B}
 - ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
   Hint: __Workflow
-  Value: 
+  Value: "{B4F49B23-4BBA-4C79-BA22-F89F5F0D4E4F}"
 - ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
   Hint: __Default workflow
   Value: "{B4F49B23-4BBA-4C79-BA22-F89F5F0D4E4F}"
@@ -29,7 +29,7 @@ Languages:
       Value: 20240304T202210Z
     - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
       Hint: __Workflow state
-      Value: 
+      Value: "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |

@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "ae9b6952-4fff-4e09-999e-5ac0bf9ae0ff"
 Parent: "407d4269-db05-473b-90ed-b0d96574ba76"
 Template: "407d4269-db05-473b-90ed-b0d96574ba76"
@@ -23,6 +23,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20250314T170845Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
     - ID: "42460973-3c52-4b54-8ee5-6b335f256705"
       Hint: tagline
       Value: Drive Beyond

@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "9633e8f8-24c1-4e24-a6c6-ffe792aeb996"
 Parent: "3766e92a-e97f-4118-91a0-06223312a461"
 Template: "3766e92a-e97f-4118-91a0-06223312a461"
@@ -18,6 +18,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20250717T135004Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |

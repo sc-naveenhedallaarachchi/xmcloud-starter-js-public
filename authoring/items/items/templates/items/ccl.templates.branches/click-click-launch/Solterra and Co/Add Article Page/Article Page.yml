@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "c6e8b6f6-e9c3-4205-a769-7ac1e9711e3d"
 Parent: "97509128-1b31-4a5b-9c07-d4c94b611d24"
 Template: "b0602368-f67c-433c-8700-862d480546d0"
@@ -77,6 +77,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20250326T150600Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
     - ID: "27cd428b-f652-4534-b76f-33f64b742659"
       Hint: pageShortTitle
       Value: Article Page
@@ -86,9 +89,6 @@ Languages:
     - ID: "2fcae033-cf44-4b77-b8ad-91f41b56cb1c"
       Hint: pageDisplayDate
       Value: 20250410T000000Z
-    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
-      Hint: __Workflow state
-      Value: "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
     - ID: "5272817a-75b7-4554-a5ef-2cc4930034d2"
       Hint: pageSubtitle
       Value: Article Page

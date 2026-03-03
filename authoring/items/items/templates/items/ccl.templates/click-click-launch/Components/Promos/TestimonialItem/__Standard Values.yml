@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "f72b924c-78ef-4e0b-a8a2-396987dfec76"
 Parent: "a2dbd4d1-e6db-49ef-a759-fd4f765227aa"
 Template: "a2dbd4d1-e6db-49ef-a759-fd4f765227aa"
@@ -18,6 +18,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20250221T183733Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
     - ID: "50747140-92d9-4912-83f4-8cfd2e251ba1"
       Hint: testimonialQuote
       Value: $name

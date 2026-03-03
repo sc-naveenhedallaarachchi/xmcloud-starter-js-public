@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "512c911c-473a-420f-bd79-4e484be930b5"
 Parent: "ddec7923-74b5-4c0c-86a6-04f551123581"
 Template: "ddec7923-74b5-4c0c-86a6-04f551123581"
@@ -9,6 +9,9 @@ SharedFields:
   Value: |
     {5A3D7AA7-0CB1-468A-9C8D-7BC02D6F110B}
     {DDEC7923-74B5-4C0C-86A6-04F551123581}
+- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
+  Hint: __Default workflow
+  Value: "{A053ED9F-4099-4682-9411-2B4C98E481E4}"
 - ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
   Hint: __Shared revision
   Value: "da8dfed1-9308-4ef5-a048-7ccbea5321f2"
@@ -20,6 +23,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20251217T062438Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{4460E76C-87E9-4859-9DE6-DE122774937F}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |

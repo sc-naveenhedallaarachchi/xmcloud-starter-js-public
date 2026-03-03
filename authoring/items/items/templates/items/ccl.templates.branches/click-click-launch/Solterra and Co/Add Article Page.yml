@@ -1,8 +1,18 @@
-﻿---
+---
 ID: "97509128-1b31-4a5b-9c07-d4c94b611d24"
 Parent: "8e22d73d-f890-427b-bfc2-cc7d72c731ad"
 Template: "35e75c72-4985-4e09-88c3-0eac6cd1e64f"
 Path: "/sitecore/templates/Branches/Project/click-click-launch/Solterra and Co/Add Article Page"
+SharedFields:
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{B4F49B23-4BBA-4C79-BA22-F89F5F0D4E4F}"
+- ID: "ca9b9f52-4fb0-4f87-a79f-24dea62cda65"
+  Hint: __Default workflow
+  Value: "{B4F49B23-4BBA-4C79-BA22-F89F5F0D4E4F}"
+- ID: "dbbbeca1-21c7-4906-9dd2-493c1efa59a2"
+  Hint: __Shared revision
+  Value: "7779fe72-b895-48e9-8ff1-a30ae1727812"
 Languages:
 - Language: en
   Versions:
@@ -11,6 +21,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20250528T193657Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |

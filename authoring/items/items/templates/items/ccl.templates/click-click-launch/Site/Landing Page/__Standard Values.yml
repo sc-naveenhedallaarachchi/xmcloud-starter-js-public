@@ -1,4 +1,4 @@
-﻿---
+---
 ID: "3bb96a84-03a5-4385-9f2c-b0588ae4c6c2"
 Parent: "c3c9fc9e-e7d3-44e6-b777-aa23496924c7"
 Template: "c3c9fc9e-e7d3-44e6-b777-aa23496924c7"
@@ -11,6 +11,9 @@ SharedFields:
     {26D9BBEB-8766-40C6-AD67-83C9DA93FA14}
     {84DBE64B-0FED-4125-A971-725C0155C321}
     {9A52202D-3A77-4F6D-B9BD-6AECED9BD49A}
+- ID: "a4f985d9-98b3-4b52-aaaf-4344f6e747c6"
+  Hint: __Workflow
+  Value: "{B4F49B23-4BBA-4C79-BA22-F89F5F0D4E4F}"
 Languages:
 - Language: en
   Versions:
@@ -19,6 +22,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20240304T202210Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
@@ -42,6 +48,9 @@ Languages:
     - ID: "25bed78c-4957-4165-998a-ca1b52f67497"
       Hint: __Created
       Value: 20240304T202210Z
+    - ID: "3e431de1-525e-47a3-b6b0-1ccbec3a8c98"
+      Hint: __Workflow state
+      Value: "{F7FE5BDD-A991-4A58-9735-CD08F9B097AB}"
     - ID: "52807595-0f8f-4b20-8d2a-cb71d28c6103"
       Hint: __Owner
       Value: |
