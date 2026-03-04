@@ -235,11 +235,9 @@ SharedFields:
                     $siteItem.Editing.BeginEdit()
                     $siteItem.Fields[$workflowStateFieldId].Value = $approvedStateId
                     $siteItem.Editing.EndEdit()
-                    Write-Verbose "Set workflow to Approved: $($siteItem.Paths.Path)"
+                    Write-Verbose "Set workflow to Approved for $($siteItem.Paths.Path)"
                 }
             }
-
-    
             Write-Verbose "Create dictionary items"
             $dictionaryRoot = Get-Item -Path "$sitePath/Dictionary" -Language $Site.Language
             $dictionaryBranchTemplate = Get-Item -Path "/sitecore/templates/Branches/Project/click-click-launch/SYNC/Add Dictionary Items" -Language $Site.Language
