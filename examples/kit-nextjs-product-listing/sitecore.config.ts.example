@@ -12,7 +12,8 @@ export default defineConfig({
         process.env.NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID ||
         '',
       clientContextId: process.env.NEXT_PUBLIC_SITECORE_EDGE_CONTEXT_ID,
-      edgeUrl: process.env.SITECORE_EDGE_URL || process.env.NEXT_PUBLIC_SITECORE_EDGE_URL,
+      // Optional. Content SDK 2.0+ resolves the Edge Platform URL automatically.
+      // For a custom host, set SITECORE_EDGE_PLATFORM_HOSTNAME (hostname or full https URL).
     },
     local: {
       apiKey: process.env.NEXT_PUBLIC_SITECORE_API_KEY || '',
