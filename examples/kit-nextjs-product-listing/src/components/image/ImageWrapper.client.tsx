@@ -1,5 +1,6 @@
 'use client';
 
+import type React from 'react';
 import { useContext, useRef } from 'react';
 import { useInView } from 'framer-motion';
 import NextImage, { ImageProps } from 'next/image';
@@ -12,13 +13,36 @@ type Props = {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  emptyFieldEditingComponent?: React.ComponentType<{ className?: string }>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
-export default function ClientImage({ image, className, sizes, priority, ...rest }: Props) {
+function isRealAuthorMediaSrc(src: string | undefined | null): boolean {
+  if (src == null || typeof src !== 'string') return false;
+  const s = src.trim();
+  if (!s) return false;
+  if (s.startsWith('data:')) return false;
+  if (s.startsWith('blob:')) return false;
+  return true;
+}
+
+function fieldForSdkWithCustomEmpty(field: ImageField | undefined): ImageField | undefined {
+  if (!field) return field;
+  if (isRealAuthorMediaSrc(field.value?.src)) return field;
+  return { ...field, value: {} as ImageField['value'] };
+}
+
+export default function ClientImage({
+  image,
+  className,
+  sizes,
+  priority,
+  emptyFieldEditingComponent,
+  ...rest
+}: Props) {
   const { page } = useSitecore();
-  const { isEditing, isPreview } = page.mode;
+  const { isEditing, isPreview, isDesignLibrary } = page.mode;
 
   const { unoptimized } = useContext(ImageOptimizationContext);
   const ref = useRef(null);
@@ -28,9 +52,11 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
   const src = image?.value?.src ?? '';
   const isSvg = src.endsWith('.svg');
   const isPicsum = src.includes('picsum.photos');
+  const shouldRenderCustomEmptyEditingImage =
+    Boolean(emptyFieldEditingComponent) && !isRealAuthorMediaSrc(src);
 
-  // Return null if not in editing/preview mode and no image source
-  if (!isEditing && !isPreview && !src) {
+  // Return null if not in editing/preview/design library and no image source
+  if (!isEditing && !isPreview && !isDesignLibrary && !src) {
     return null;
   }
 
@@ -41,8 +67,20 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
       typeof window !== 'undefined' &&
       !src.includes(window.location.hostname));
 
-  if (isEditing || isPreview || isSvg) {
-    return <ContentSdkImage field={image} className={className} />;
+  if (isEditing || isPreview || isSvg || isDesignLibrary) {
+    const fieldForSdk = emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image;
+
+    if (shouldRenderCustomEmptyEditingImage && emptyFieldEditingComponent) {
+      const EmptyFieldEditingComponent = emptyFieldEditingComponent;
+      return <EmptyFieldEditingComponent className={className} />;
+    }
+
+    return (
+      <ContentSdkImage
+        field={fieldForSdk}
+        className={className}
+      />
+    );
   }
 
   // For priority images (LCP), use priority prop, otherwise use inView for lazy loading

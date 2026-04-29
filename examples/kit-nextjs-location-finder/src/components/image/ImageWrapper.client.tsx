@@ -1,5 +1,6 @@
 'use client';
 
+import type React from 'react';
 import { useContext, useRef } from 'react';
 import { useInView } from 'framer-motion';
 import NextImage, { ImageProps } from 'next/image';
@@ -13,9 +14,25 @@ type Props = {
   className?: string;
   sizes?: string;
   priority?: boolean;
+  emptyFieldEditingComponent?: React.ComponentType<{ className?: string }>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
+
+function isRealAuthorMediaSrc(src: string | undefined | null): boolean {
+  if (src == null || typeof src !== 'string') return false;
+  const s = src.trim();
+  if (!s) return false;
+  if (s.startsWith('data:')) return false;
+  if (s.startsWith('blob:')) return false;
+  return true;
+}
+
+function fieldForSdkWithCustomEmpty(field: ImageField | undefined): ImageField | undefined {
+  if (!field) return field;
+  if (isRealAuthorMediaSrc(field.value?.src)) return field;
+  return { ...field, value: {} as ImageField['value'] };
+}
 
 const shouldOptimize = (src: string): boolean => {
   if (!src.startsWith('http')) {
@@ -36,9 +53,16 @@ const shouldOptimize = (src: string): boolean => {
   }
 };
 
-export default function ClientImage({ image, className, sizes, priority, ...rest }: Props) {
+export default function ClientImage({
+  image,
+  className,
+  sizes,
+  priority,
+  emptyFieldEditingComponent,
+  ...rest
+}: Props) {
   const { page } = useSitecore();
-  const { isEditing, isPreview } = page.mode;
+  const { isEditing, isPreview, isDesignLibrary } = page.mode;
 
   const { unoptimized } = useContext(ImageOptimizationContext);
   const ref = useRef(null);
@@ -53,15 +77,29 @@ export default function ClientImage({ image, className, sizes, priority, ...rest
     }
   })();
   const isPicsum = src.includes('picsum.photos');
+  const shouldRenderCustomEmptyEditingImage =
+    Boolean(emptyFieldEditingComponent) && !isRealAuthorMediaSrc(src);
 
-  if (!isEditing && !isPreview && !src) {
+  if (!isEditing && !isPreview && !isDesignLibrary && !src) {
     return null;
   }
 
   const isUnoptimized = unoptimized || isSvg || (src.startsWith('http') && !shouldOptimize(src));
 
-  if (isEditing || isPreview || isSvg) {
-    return <ContentSdkImage field={image} className={className} />;
+  if (isEditing || isPreview || isSvg || isDesignLibrary) {
+    const fieldForSdk = emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image;
+
+    if (shouldRenderCustomEmptyEditingImage && emptyFieldEditingComponent) {
+      const EmptyFieldEditingComponent = emptyFieldEditingComponent;
+      return <EmptyFieldEditingComponent className={className} />;
+    }
+
+    return (
+      <ContentSdkImage
+        field={fieldForSdk}
+        className={className}
+      />
+    );
   }
 
   const shouldPrioritize = priority === true;

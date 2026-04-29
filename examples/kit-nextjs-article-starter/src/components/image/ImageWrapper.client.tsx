@@ -36,15 +36,32 @@ export type ImageWrapperProps = {
   blurDataURL?: string;
   alt?: string;
   wrapperClass?: string;
+  emptyFieldEditingComponent?: React.ComponentType<{ className?: string }>;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 };
 
+function isRealAuthorMediaSrc(src: string | undefined | null): boolean {
+  if (src == null || typeof src !== 'string') return false;
+  const s = src.trim();
+  if (!s) return false;
+  if (s.startsWith('data:')) return false;
+  if (s.startsWith('blob:')) return false;
+  return true;
+}
+
+function fieldForSdkWithCustomEmpty(field: ImageField | undefined): ImageField | undefined {
+  if (!field) return field;
+  if (isRealAuthorMediaSrc(field.value?.src)) return field;
+  return { ...field, value: {} as ImageField['value'] };
+}
+
 export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
-  const { image, className, wrapperClass, sizes, ...rest } = props;
+  const { image, className, wrapperClass, sizes, emptyFieldEditingComponent, ...rest } = props;
   const { page } = useSitecore();
   const isPageEditing = page.mode.isEditing;
   const isPreview = page?.mode.isPreview;
+  const isDesignLibrary = page.mode.isDesignLibrary;
 
   const { unoptimized } = useContext(ImageOptimizationContext);
   const ref = useRef(null);
@@ -58,12 +75,14 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
     setIsClient(true);
   }, []);
 
-  if (!isPageEditing && !image?.value?.src) {
+  if (!isPageEditing && !isPreview && !isDesignLibrary && !image?.value?.src) {
     return <></>;
   }
 
   const imageSrc = image?.value?.src ? image?.value?.src : '';
   const isSvg = imageSrc.includes('.svg');
+  const shouldRenderCustomEmptyEditingImage =
+    Boolean(emptyFieldEditingComponent) && !isRealAuthorMediaSrc(imageSrc);
   // Only disable optimization for: context override, SVG, or external URLs not in remotePatterns.
   // Sitecore/XM Cloud URLs (edge*, xmc-*, *.sitecore-staging.cloud, *.sitecorecloud.io) are
   // allowed in next.config and should be optimized to fix Lighthouse "Improve image delivery".
@@ -75,11 +94,19 @@ export const ImageWrapperClient: React.FC<ImageWrapperProps> = (props) => {
   const isUnoptimized = unoptimized || isSvg || isExternalNotAllowed;
 
   const isPicsumImage = imageSrc.includes('picsum.photos');
+  const EmptyFieldEditingComponent = emptyFieldEditingComponent;
 
   return (
     <div className={cn('image-container', wrapperClass)}>
-      {isPageEditing || isPreview || isSvg ? (
-        <ContentSdkImage field={image} className={className} />
+      {isPageEditing || isPreview || isSvg || isDesignLibrary ? (
+        shouldRenderCustomEmptyEditingImage && EmptyFieldEditingComponent ? (
+          <EmptyFieldEditingComponent className={className} />
+        ) : (
+          <ContentSdkImage
+            field={emptyFieldEditingComponent ? fieldForSdkWithCustomEmpty(image) : image}
+            className={className}
+          />
+        )
       ) : (
         <NextImage
           loader={isPicsumImage ? placeholderImageLoader : undefined}
