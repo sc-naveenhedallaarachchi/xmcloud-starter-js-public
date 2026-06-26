@@ -8,6 +8,7 @@ import StructuredData from 'components/structured-data/StructuredData';
 import { getFieldValue } from 'lib/component-props';
 import { buildProductJsonLd } from 'src/lib/structured-data/schema';
 import { PromoContentProps, PromoFields as Fields, PromoProps } from './promo.props';
+import { UseStateToggleRepro } from '../use-state-toggle-repro/UseStateToggleRepro';
 
 const PromoContent = (props: PromoContentProps): JSX.Element => {
   const { fields, params, renderText } = props;
@@ -74,6 +75,7 @@ export const Default = (props: PromoProps): JSX.Element => {
         <div className="field-promolink">
           {promoLinkField ? <CompatibleLink field={promoLinkField} /> : null}
         </div>
+        {promoTextField ? <UseStateToggleRepro fields={{ Text: promoTextField }} /> : null}
       </>
     );
   };

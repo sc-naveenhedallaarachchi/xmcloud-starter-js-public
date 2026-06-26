@@ -8,10 +8,9 @@ import { UseStateToggleReproProps } from './use-state-toggle-repro.props';
  * Repro component for Pages editing + useState conditional render.
  * Toggle hides/shows a Text field to verify scpm re-binding after remount.
  */
-export const Default = (props: UseStateToggleReproProps) => {
+export const UseStateToggleRepro = (props: UseStateToggleReproProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
-  const textdata = props?.fields?.Text ?? 'TEST DATA';
   return (
     <div className="container-default component">
       <button type="button" onClick={() => setIsVisible(!isVisible)}>
@@ -25,3 +24,5 @@ export const Default = (props: UseStateToggleReproProps) => {
     </div>
   );
 };
+
+export const Default = UseStateToggleRepro;
