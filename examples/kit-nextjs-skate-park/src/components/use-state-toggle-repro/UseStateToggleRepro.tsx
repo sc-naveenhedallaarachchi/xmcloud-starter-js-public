@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Text } from '@sitecore-content-sdk/nextjs';
+import { RichText, Text } from '@sitecore-content-sdk/nextjs';
 import { UseStateToggleReproProps } from './use-state-toggle-repro.props';
 
 /**
@@ -18,7 +18,7 @@ export const UseStateToggleRepro = (props: UseStateToggleReproProps) => {
       </button>
       {isVisible && (
         <div className="component-content">
-          <Text field={props.fields.Text} />
+          <RichText field={props.fields.Text} />
         </div>
       )}
     </div>
