@@ -71,14 +71,14 @@ export const Default = (props: PromoProps): JSX.Element => {
     return (
       <>
         <div className="field-promotext">
-          <ContentSdkRichText field={promoTextField} />
+          <ContentSdkText field={promoTextField} encode={false} />
         </div>
         <div className="field-promolink">
           {promoLinkField ? <CompatibleLink field={promoLinkField} /> : null}
         </div>
-        {promoTextField ? <UseStateToggleRepro fields={{ Text: promoTextField }} /> : null}
+        {/* {promoTextField ? <UseStateToggleRepro fields={{ Text: promoTextField }} /> : null}
         <hr />
-        {promoTextField ? <ContentSdkText className="whitespace-pre-line" field={promoTextField} encode={false} /> : null}
+        {promoTextField ? <ContentSdkText className="whitespace-pre-line" field={promoTextField} encode={false} /> : null} */}
       </>
     );
   };
