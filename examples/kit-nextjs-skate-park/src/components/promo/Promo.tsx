@@ -2,7 +2,6 @@ import React, { JSX } from 'react';
 import {
   NextImage as ContentSdkImage,
   RichText as ContentSdkRichText,
-  Text as ContentSdkText,
 } from '@sitecore-content-sdk/nextjs';
 import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
 import StructuredData from 'components/structured-data/StructuredData';
@@ -67,25 +66,16 @@ export const Default = (props: PromoProps): JSX.Element => {
   const renderText = (fields: Fields) => {
     const promoTextField = getFieldValue(fields.PromoText);
     const promoLinkField = getFieldValue(fields.PromoLink);
+
     return (
       <>
         <div className="field-promotext">
-          <ContentSdkText field={promoTextField} encode={false} />
+          <ContentSdkRichText field={promoTextField} />
         </div>
-        <hr />
-        <div className="field-promotext">
-          <ContentSdkText field={promoTextField} encode={true} />
-        </div>
-        <hr />
-        <div className="field-promotext">
-          <ContentSdkText field={promoTextField}/>
-        </div>
-        {/* <div className="field-promolink">
+        <div className="field-promolink">
           {promoLinkField ? <CompatibleLink field={promoLinkField} /> : null}
-        </div> */}
-        {/* {promoTextField ? <UseStateToggleRepro fields={{ Text: promoTextField }} /> : null}
-        <hr />
-        {promoTextField ? <ContentSdkText className="whitespace-pre-line" field={promoTextField} encode={false} /> : null} */}
+        </div>
+        {promoTextField ? <UseStateToggleRepro fields={{ Text: promoTextField }} /> : null}
       </>
     );
   };

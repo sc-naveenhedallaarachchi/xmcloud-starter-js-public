@@ -59,7 +59,11 @@ export default async function Page({ params }: PageProps) {
   return (
     <NextIntlClientProvider>
       <Providers page={page} componentProps={componentProps}>
-        <Layout page={page} baseUrl={baseUrl || undefined} />
+        <Layout
+          page={page}
+          baseUrl={baseUrl || undefined}
+          isHomePage={!path?.length}
+        />
       </Providers>
     </NextIntlClientProvider>
   );

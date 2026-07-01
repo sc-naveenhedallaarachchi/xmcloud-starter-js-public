@@ -1,5 +1,11 @@
 import React, { JSX } from "react";
-import { Field, ImageField, Page } from "@sitecore-content-sdk/nextjs";
+import {
+  Field,
+  ImageField,
+  Page,
+  Text as ContentSdkText,
+  TextField,
+} from "@sitecore-content-sdk/nextjs";
 import Scripts from "src/Scripts";
 import SitecoreStyles from "components/content-sdk/SitecoreStyles";
 import { DesignLibraryApp } from "@sitecore-content-sdk/nextjs";
@@ -16,6 +22,7 @@ import { getBaseUrl } from "src/lib/utils";
 interface LayoutProps {
   page: Page;
   baseUrl?: string;
+  isHomePage?: boolean;
 }
 
 export interface RouteFields {
@@ -32,7 +39,7 @@ export interface RouteFields {
   thumbnailImage?: ImageField;
 }
 
-const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
+const Layout = ({ page, baseUrl: baseUrlProp, isHomePage }: LayoutProps): JSX.Element => {
   const { layout, mode } = page;
   const { route } = layout.sitecore;
   const mainClassPageEditing = mode.isEditing ? "editing-mode" : "prod-mode";
@@ -49,6 +56,17 @@ const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
     undefined,
     "Skate Park demo site showcasing component examples"
   );
+
+  const homePageRichTextBlocks: TextField[] = [
+    {
+      value:
+        "<p>Test 01</p>",
+    } as TextField,
+    {
+      value:
+        "<p>Test 02</p>",
+    } as TextField,
+  ];
 
   return (
     <>
@@ -96,6 +114,39 @@ const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
                 )}
               </div>
             </main>
+            {isHomePage && (
+              <section aria-label="Home page highlights" className="mx-auto max-w-6xl px-4 py-12">
+                {/* <div className="grid gap-6 md:grid-cols-2">
+                  {homePageRichTextBlocks.map((block, index) => (
+                    <div
+                      key={`home-rich-text-${index}`}
+                      className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm"
+                    >
+                      <ContentSdkRichText field={block} />
+                    </div>
+                  ))}
+                </div> */}
+
+
+
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div
+                      key={`home-rich-text-0`}
+                      className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm"
+                    >
+                      <ContentSdkText field={homePageRichTextBlocks[0]} encode={false} />
+                    </div>
+                </div>
+                <div className="grid gap-6 md:grid-cols-2">
+                  <div
+                      key={`home-rich-text-1`}
+                      className="rounded-lg border border-slate-200 bg-white p-8 shadow-sm"
+                    >
+                      <ContentSdkText field={homePageRichTextBlocks[1]} encode={true} />
+                    </div>
+                </div>
+              </section>
+            )}
             <footer>
               <div id="footer">
                 {route && (
