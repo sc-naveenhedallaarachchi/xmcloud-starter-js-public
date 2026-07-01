@@ -53,11 +53,12 @@ export const Default: React.FC<CtaBannerProps> = (props) => {
         <div className="mx-auto w-full max-w-4xl">
           {/* Use Text component with fallback for heading */}
           <AnimatedSection direction="up" isPageEditing={isPageEditing}>
-            <Text tag="h2" className={ctaTitleVariants({ colorScheme })} field={titleRequired} />
+            <Text tag="h2" className={ctaTitleVariants({ colorScheme })} field={titleRequired} encode={false} />
             <Text
               tag="p"
               className="mx-auto mb-16 max-w-xl text-lg antialiased"
               field={descriptionOptional}
+              encode={true}
             />
 
             {/* Render button with link */}
