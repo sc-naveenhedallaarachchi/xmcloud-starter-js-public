@@ -65,17 +65,28 @@ const PromoContent = (props: PromoContentProps): JSX.Element => {
 
 export const Default = (props: PromoProps): JSX.Element => {
   const renderText = (fields: Fields) => {
-    const promoTextField = getFieldValue(fields.PromoText);
+    // const promoTextField = getFieldValue(fields.PromoText);
     const promoLinkField = getFieldValue(fields.PromoLink);
-
+    const promoText2Field = getFieldValue(fields.PromoText);
+    if (promoText2Field) {
+      promoText2Field.value = 'This is a second text field | encode disabled';
+    }
+    const promoText3Field = getFieldValue(fields.PromoText);
+    if (promoText3Field) {
+      promoText3Field.value = 'This is a third text field | encode enabled';
+    }
     return (
       <>
         <div className="field-promotext">
-          <ContentSdkText field={promoTextField} encode={true} />
+          <ContentSdkText field={promoText2Field} encode={false} />
         </div>
-        <div className="field-promolink">
+        <hr />
+        <div className="field-promotext">
+          <ContentSdkText field={promoText3Field} encode={true} />
+        </div>
+        {/* <div className="field-promolink">
           {promoLinkField ? <CompatibleLink field={promoLinkField} /> : null}
-        </div>
+        </div> */}
         {/* {promoTextField ? <UseStateToggleRepro fields={{ Text: promoTextField }} /> : null}
         <hr />
         {promoTextField ? <ContentSdkText className="whitespace-pre-line" field={promoTextField} encode={false} /> : null} */}
