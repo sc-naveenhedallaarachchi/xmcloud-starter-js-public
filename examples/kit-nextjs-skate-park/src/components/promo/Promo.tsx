@@ -71,7 +71,7 @@ export const Default = (props: PromoProps): JSX.Element => {
     return (
       <>
         <div className="field-promotext">
-          <ContentSdkText field={promoTextField} encode={false} />
+          <ContentSdkText field={promoTextField} encode={true} />
         </div>
         <div className="field-promolink">
           {promoLinkField ? <CompatibleLink field={promoLinkField} /> : null}
