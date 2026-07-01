@@ -69,12 +69,23 @@ export const Default = (props: PromoProps): JSX.Element => {
     const promoLinkField = getFieldValue(fields.PromoLink);
     const promoText2Field = getFieldValue(fields.PromoText);
     if (promoText2Field) {
-      promoText2Field.value = 'This is a second text field | encode disabled';
+      promoText2Field.value = `'<h3>Encode disabled</h3>\r\n' +
+    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.</p>\n' +
+    '<a href="#"> Hola </a>'`;
     }
     const promoText3Field = getFieldValue(fields.PromoText);
     if (promoText3Field) {
-      promoText3Field.value = 'This is a third text field | encode enabled';
+      promoText3Field.value = `'<h3>Encode Enabled</h3>\r\n' +
+    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.</p>\n' +
+    '<a href="#"> Hola </a>'`;
     }
+    const promoText4Field = getFieldValue(fields.PromoText);
+    if (promoText4Field) {
+      promoText4Field.value = `'<h3>No Encoding</h3>\r\n' +
+    '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eu turpis molestie, dictum est a, mattis tellus.</p>\n' +
+    '<a href="#"> Hola </a>'`;
+    }
+    console.log('renderText fields:', promoText2Field);
     return (
       <>
         <div className="field-promotext">
@@ -83,6 +94,10 @@ export const Default = (props: PromoProps): JSX.Element => {
         <hr />
         <div className="field-promotext">
           <ContentSdkText field={promoText3Field} encode={true} />
+        </div>
+        <hr />
+        <div className="field-promotext">
+          <ContentSdkText field={promoText4Field}/>
         </div>
         {/* <div className="field-promolink">
           {promoLinkField ? <CompatibleLink field={promoLinkField} /> : null}
