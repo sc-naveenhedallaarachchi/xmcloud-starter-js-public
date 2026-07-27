@@ -1,6 +1,6 @@
 import { isDesignLibraryPreviewData } from "@sitecore-content-sdk/nextjs/editing";
 import { notFound } from "next/navigation";
-import { draftMode, headers as nextHeaders } from "next/headers";
+import { draftMode } from "next/headers";
 import { SiteInfo } from "@sitecore-content-sdk/nextjs";
 import sites from ".sitecore/sites.json";
 import { routing } from "src/i18n/routing";
@@ -20,9 +20,10 @@ type PageProps = {
     path?: string[];
     [key: string]: string | string[] | undefined;
   }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
   const { site, locale, path } = await params;
   const draft = await draftMode();
   const baseUrl = getBaseUrl();
@@ -33,8 +34,8 @@ export default async function Page({ params }: PageProps) {
   // Fetch the page data from Sitecore
   let page;
   if (draft.isEnabled) {
-    const headers = await nextHeaders();
-    const previewData = client.getPreviewData(headers);
+    // App Router passes editing preview data via query string (not preview cookies)
+    const previewData = await searchParams;
     if (isDesignLibraryPreviewData(previewData)) {
       page = await client.getDesignLibraryData(previewData);
     } else {

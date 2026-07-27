@@ -1,9 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SiteResolver } from '@sitecore-content-sdk/content/site';
-import type { SitemapXmlOptions } from '@sitecore-content-sdk/content/client';
+import { SiteResolver } from '@sitecore-content-sdk/nextjs/site';
+import type { SitecoreClient } from '@sitecore-content-sdk/nextjs/client';
 import type { SiteInfo } from '@sitecore-content-sdk/nextjs';
 import client from 'lib/sitecore-client';
 import sites from '.sitecore/sites.json';
+
+type SitemapXmlOptions = Parameters<SitecoreClient['getSiteMap']>[0];
 
 export const dynamic = 'force-dynamic';
 
