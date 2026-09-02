@@ -7,14 +7,22 @@ import {
 } from '@sitecore-content-sdk/nextjs/codegen';
 // end of built-in imports
 
-import { jsx, Fragment } from 'react/jsx-runtime';
-import { Placeholder, CdpHelper, useSitecore } from '@sitecore-content-sdk/nextjs';
+import { jsx, Fragment, jsxs } from 'react/jsx-runtime';
+import { Text, AppPlaceholder, RichText, NextImage, useSitecore, Link, CdpHelper, withDatasourceCheck } from '@sitecore-content-sdk/nextjs';
+import { CompatibleLink } from 'components/content-sdk/CompatibleLink';
+import { getDatasource, getFieldValue } from 'lib/component-props';
+import { toJsonLdString } from 'src/lib/structured-data/jsonld';
+import componentMap from '.sitecore/component-map';
+import StructuredData from 'components/structured-data/StructuredData';
+import { buildProductJsonLd, buildArticleJsonLd } from 'src/lib/structured-data/schema';
+import { useState, forwardRef, useEffect } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import client from 'lib/sitecore-client';
 import Image from 'next/image';
 import * as FEAAS from '@sitecore-feaas/clientside/react';
 import nextConfig from 'next.config';
-import { useEffect } from 'react';
+import NextLink from 'next/link';
 import { pageView } from '@sitecore-content-sdk/events';
 import config from 'sitecore.config';
 
@@ -24,14 +32,67 @@ const importMap = [
     exports: [
       { name: 'jsx', value: jsx },
       { name: 'Fragment', value: Fragment },
+      { name: 'jsxs', value: jsxs },
     ]
   },
   {
     module: '@sitecore-content-sdk/nextjs',
     exports: [
-      { name: 'Placeholder', value: Placeholder },
-      { name: 'CdpHelper', value: CdpHelper },
+      { name: 'Text', value: Text },
+      { name: 'AppPlaceholder', value: AppPlaceholder },
+      { name: 'RichText', value: RichText },
+      { name: 'NextImage', value: NextImage },
       { name: 'useSitecore', value: useSitecore },
+      { name: 'Link', value: Link },
+      { name: 'CdpHelper', value: CdpHelper },
+      { name: 'withDatasourceCheck', value: withDatasourceCheck },
+    ]
+  },
+  {
+    module: 'components/content-sdk/CompatibleLink',
+    exports: [
+      { name: 'CompatibleLink', value: CompatibleLink },
+    ]
+  },
+  {
+    module: 'lib/component-props',
+    exports: [
+      { name: 'getDatasource', value: getDatasource },
+      { name: 'getFieldValue', value: getFieldValue },
+    ]
+  },
+  {
+    module: 'src/lib/structured-data/jsonld',
+    exports: [
+      { name: 'toJsonLdString', value: toJsonLdString },
+    ]
+  },
+  {
+    module: '.sitecore/component-map',
+    exports: [
+      { name: 'default', value: componentMap },
+    ]
+  },
+  {
+    module: 'components/structured-data/StructuredData',
+    exports: [
+      { name: 'default', value: StructuredData },
+    ]
+  },
+  {
+    module: 'src/lib/structured-data/schema',
+    exports: [
+      { name: 'buildProductJsonLd', value: buildProductJsonLd },
+      { name: 'buildArticleJsonLd', value: buildArticleJsonLd },
+    ]
+  },
+  {
+    module: 'react',
+    exports: [
+      { name: 'useState', value: useState },
+      { name: 'forwardRef', value: forwardRef },
+      { name: 'useEffect', value: useEffect },
+      { name: 'default', value: React },
     ]
   },
   {
@@ -65,9 +126,9 @@ const importMap = [
     ]
   },
   {
-    module: 'react',
+    module: 'next/link',
     exports: [
-      { name: 'useEffect', value: useEffect },
+      { name: 'default', value: NextLink },
     ]
   },
   {
