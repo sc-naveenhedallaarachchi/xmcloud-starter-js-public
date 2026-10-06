@@ -4,6 +4,7 @@ import type React from 'react';
 import { PromoAnimatedProps } from './promo-animated.props';
 import { PromoAnimatedDefault } from './PromoAnimatedDefault.dev';
 import { PromoAnimatedImageRight } from './PromoAnimatedImageRight.dev';
+import { PromoAnimatedNewTest } from './PromoAnimatedNewTest.dev';
 
 // Data source checks are done in the child components
 
@@ -17,4 +18,9 @@ export const Default: React.FC<PromoAnimatedProps> = (props) => {
 export const ImageRight: React.FC<PromoAnimatedProps> = (props) => {
   const isPageEditing = props.page.mode.isEditing;
   return <PromoAnimatedImageRight {...props} isPageEditing={isPageEditing} />;
+};
+
+export const NewTest: React.FC<PromoAnimatedProps> = (props) => {
+  const isPageEditing = props.page.mode.isEditing;
+  return <PromoAnimatedNewTest {...props} isPageEditing={isPageEditing} />;
 };

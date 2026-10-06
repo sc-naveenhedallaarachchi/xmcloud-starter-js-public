@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { Default as PromoAnimated, ImageRight } from '@/components/promo-animated/PromoAnimated';
+import {
+  Default as PromoAnimated,
+  ImageRight,
+  NewTest,
+} from '@/components/promo-animated/PromoAnimated';
 import type { PromoAnimatedProps } from '@/components/promo-animated/promo-animated.props';
 import type { ImageField, LinkField } from '@sitecore-content-sdk/nextjs';
 import {
@@ -21,6 +25,16 @@ import {
 interface MockTextProps {
   field?: { value?: string };
   tag?: string;
+}
+
+interface MockLinkProps {
+  field?: { value?: { href?: string; text?: string } };
+  className?: string;
+}
+
+interface MockImageProps {
+  field?: { value?: { src?: string; alt?: string } };
+  className?: string;
 }
 
 interface MockRichTextProps {
@@ -76,6 +90,18 @@ jest.mock('@sitecore-content-sdk/nextjs', () => ({
     const Tag = tag || 'span';
     return React.createElement(Tag, {}, field?.value || '');
   },
+  Link: ({ field, className }: MockLinkProps) =>
+    React.createElement(
+      'a',
+      { href: field?.value?.href, className },
+      field?.value?.text || ''
+    ),
+  Image: ({ field, className }: MockImageProps) =>
+    React.createElement('img', {
+      src: field?.value?.src,
+      alt: field?.value?.alt,
+      className,
+    }),
   RichText: ({ field }: MockRichTextProps) =>
     React.createElement('div', {
       dangerouslySetInnerHTML: { __html: field?.value || '' },
@@ -431,6 +457,85 @@ describe('PromoAnimated Component - ImageRight Variant', () => {
       expect(defaultImageContainer).not.toHaveClass('@md:order-2');
       expect(imageRightImageContainer).toHaveClass('@md:order-2');
     });
+  });
+});
+
+describe('PromoAnimated Component - NewTest Variant', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should render promo fields with the modern theme by default', () => {
+    const { container } = render(<NewTest {...defaultProps} />);
+
+    expect(screen.getByText('Discover Excellence')).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Shop Now' })).toHaveAttribute('href', '/shop/premium');
+    expect(screen.getByRole('link', { name: 'Learn More' })).toHaveAttribute('href', '/learn-more');
+    expect(screen.getByRole('img', { name: 'Promo Animated Image' })).toHaveAttribute(
+      'src',
+      '/images/promo-animated.jpg'
+    );
+
+    const section = container.querySelector('section[data-component="PromoAnimated"]');
+    expect(section).toHaveAttribute('data-aesthetic', 'modern');
+    expect(container.querySelector('article')).toHaveClass('shadow-slate-200/60');
+  });
+
+  it('should apply the aesthetic from rendering params', () => {
+    const { container } = render(
+      <NewTest
+        {...defaultProps}
+        rendering={{
+          ...defaultProps.rendering,
+          uid: 'rendering-uid',
+          dataSource: 'datasource-id',
+          params: { aesthetic: 'Bold' },
+        }}
+      />
+    );
+
+    const section = container.querySelector('section[data-component="PromoAnimated"]');
+    expect(section).toHaveAttribute('data-aesthetic', 'bold');
+    expect(section).toHaveAttribute('data-rendering-id', 'rendering-uid');
+    expect(section).toHaveAttribute('data-rendering-source', 'datasource-id');
+    expect(container.querySelector('article')).toHaveClass('bg-slate-900');
+    expect(screen.getByText('bold')).toHaveClass('text-cyan-300');
+  });
+
+  it('should use variantName when aesthetic is not set', () => {
+    const { container } = render(
+      <NewTest
+        {...defaultProps}
+        params={{ ...defaultProps.params, variantName: 'playful' }}
+      />
+    );
+
+    expect(
+      container.querySelector('section[data-component="PromoAnimated"]')
+    ).toHaveAttribute('data-aesthetic', 'playful');
+  });
+
+  it('should show an image placeholder when the image has no source', () => {
+    render(
+      <NewTest
+        {...defaultProps}
+        fields={{
+          ...defaultProps.fields,
+          image: { value: { src: '', alt: '' } },
+        }}
+      />
+    );
+
+    expect(screen.getByText('Image')).toBeInTheDocument();
+    expect(screen.queryByRole('img')).not.toBeInTheDocument();
+  });
+
+  it('should render NoDataFallback when fields is null', () => {
+    render(<NewTest {...propsWithoutFields} />);
+
+    const fallback = screen.getByTestId('no-data-fallback');
+    expect(fallback).toBeInTheDocument();
+    expect(fallback).toHaveTextContent('Promo Animated: New Test');
   });
 });
 
