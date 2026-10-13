@@ -61,6 +61,15 @@ const Layout = ({ page, baseUrl: baseUrlProp }: LayoutProps): JSX.Element => {
       />
       {/* root placeholder for the app, which we add components to using route data */}
       <div className={mainClassPageEditing}>
+        <div className="sample-logo-wrap">
+          <img
+            className="sample-logo"
+            src="/sample-logo.svg"
+            alt="Skate Park sample logo"
+            width={160}
+            height={40}
+          />
+        </div>
         {mode.isDesignLibrary ? (
           route && (
             <DesignLibraryApp
