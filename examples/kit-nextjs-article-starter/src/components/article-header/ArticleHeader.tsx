@@ -345,7 +345,6 @@ export const Default: React.FC<ArticleHeaderProps> = ({ fields, page }) => {
                         className="@md:inline-block block text-pretty"
                       >
                         <DateField
-                          tag="span"
                           field={pageDisplayDateField}
                           render={(date) => formatDateInUTC(String(date))}
                         />
